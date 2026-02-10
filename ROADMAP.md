@@ -1,4 +1,4 @@
-# Roadmap de Desenvolvimento - Backpack Recycling Mod
+# Roadmap de Desenvolvimento - Scavenger's Toolkit
 
 ## Filosofia de Desenvolvimento
 - **Iterativo**: Sempre ter algo funcionando
@@ -13,11 +13,11 @@
 ### Semana 0 - Setup Inicial
 **Tempo estimado: 5-8 horas**
 
-- [ ] **Dia 1-2: Ambiente de Dev**
-  - [ ] Instalar ferramentas (VS Code, Notepad++)
-  - [ ] Localizar pasta de mods do PZ
-  - [ ] Criar estrutura básica de pastas do mod
-  - [ ] Configurar mod.info inicial
+- [x] **Dia 1-2: Ambiente de Dev**
+  - [x] Instalar ferramentas (VS Code, Notepad++)
+  - [x] Localizar pasta de mods do PZ
+  - [x] Criar estrutura básica de pastas do mod
+  - [x] Configurar mod.info inicial
 
 - [ ] **Dia 3-4: Engenharia Reversa**
   - [ ] Localizar e extrair Backpack Borders (ID: 2996978365)
@@ -25,10 +25,10 @@
   - [ ] Estudar estrutura de ambos os mods
   - [ ] Documentar aprendizados em NOTES.md
 
-- [ ] **Dia 5: Primeiro Teste**
-  - [ ] Criar "Hello World" mod (apenas aparece no menu de mods)
-  - [ ] Testar que o jogo reconhece o mod
-  - [ ] Familiarizar com reload de scripts (Ctrl+R em debug)
+- [x] **Dia 5: Primeiro Teste**
+  - [x] Criar "Hello World" mod (apenas aparece no menu de mods)
+  - [x] Testar que o jogo reconhece o mod
+  - [x] Familiarizar com reload de scripts (Ctrl+R em debug)
 
 **Entregável**: Mod vazio que carrega sem erros
 
@@ -39,10 +39,13 @@
 ### Sprint 1.1 - Primeiro Componente
 **Tempo estimado: 4-6 horas**
 
-- [ ] Criar item: `BasicFabric` (componente mais simples)
-- [ ] Definir propriedades (peso, icon, categoria)
+- [x] Criar item: `BasicFabric` (BackpackFabricBasic - componente mais simples)
+- [x] Definir propriedades (peso, icon, categoria)
+- [x] Criar texturas para o item
+- [x] Criar modelos 3D para o item
+- [x] Adicionar traduções (EN/PTBR)
 - [ ] Testar spawn do item via debug
-- [ ] Verificar que aparece no inventário corretamente
+- [x] Verificar que aparece no inventário corretamente
 
 **Critério de Sucesso**: Item aparece no jogo e é utilizável
 
@@ -77,11 +80,14 @@
 ### Sprint 2.1 - Todos os Componentes Básicos
 **Tempo estimado: 6-8 horas**
 
-- [ ] Implementar BasicStraps
-- [ ] Implementar Buckles
-- [ ] Implementar QuickAccessPouch
+- [x] Criar BasicStraps (BackpackStrapsBasic)
+- [x] Criar Buckles (BeltBuckleReinforced)
+- [x] Criar QuickAccessPouch
+- [x] Criar todas as variantes (Basic/Reinforced/Tactical)
+- [x] Criar texturas e modelos 3D
+- [x] Adicionar traduções (EN/PTBR)
 - [ ] Testar todos spawnando corretamente
-- [ ] Criar icons (ou reaproveitar vanilla)
+- [x] Criar icons (ou reaproveitar vanilla)
 
 ### Sprint 2.2 - Desmontagem Tier 1
 **Tempo estimado: 6-8 horas**
@@ -119,11 +125,13 @@
 ### Sprint 3.1 - Componentes Avançados
 **Tempo estimado: 4-6 horas**
 
-- [ ] DurableFabric (Tier 2)
-- [ ] ReinforcedStraps (Tier 2)
-- [ ] TacticalFabric (Tier 3)
-- [ ] MilitaryStraps (Tier 3)
-- [ ] HeavyBuckles (Tier 3)
+- [x] DurableFabric (BackpackFabricReinforced)
+- [x] ReinforcedStraps (BackpackStrapsReinforced)
+- [x] TacticalFabric (BackpackFabricTactical)
+- [x] MilitaryStraps (BackpackStrapsTactical)
+- [x] HeavyBuckles (BeltBuckleReinforced)
+- [x] Criar todas as variantes e traduções
+- [ ] Criar texturas e modelos 3D
 
 ### Sprint 3.2 - Desmontagem Tier 2 e 3
 **Tempo estimado: 8-10 horas**
@@ -176,11 +184,11 @@
 ### Sprint 4.3 - Documentação de Usuário
 **Tempo estimado: 3-4 horas**
 
-- [ ] Escrever README.md para Workshop
-- [ ] Listar todas as receitas (guia rápido)
+- [x] Escrever README.md para Workshop
+- [x] Listar todas as receitas (guia rápido)
 - [ ] Screenshots/exemplos
-- [ ] Changelog inicial
-- [ ] Licença e créditos
+- [x] Changelog inicial
+- [x] Licença e créditos
 
 ### Sprint 4.4 - Workshop Upload
 **Tempo estimado: 2-3 horas**
@@ -208,6 +216,28 @@
 - [ ] **v2.5**: Mais containers (coletes, jaquetas)
 - [ ] **v3.0**: Slots customizados especiais
 - [ ] **v3.5**: Compatibilidade com outros mods populares
+- [ ] **v4.0**: Sistema de desgaste e reparo de equipamentos
+- [ ] **v4.5**: Integração com sistemas de sobrevivência (temperatura, hidratação)
+- [ ] **v5.0**: Sistema de customização visual de containers
+
+---
+
+## FASE 6: Internacionalização (Futuro)
+
+### Sprint 6.1 - Traduções Adicionais
+**Tempo estimado: 6-8 horas**
+
+- [ ] Espanhol (ES)
+- [ ] Francês (FR)
+- [ ] Russo (RU)
+- [ ] Alemão (DE)
+
+### Sprint 6.2 - Adaptação Cultural
+**Tempo estimado: 4-6 horas**
+
+- [ ] Ajustar nomes de itens para diferentes culturas
+- [ ] Adaptar descrições para diferentes públicos
+- [ ] Testar com falantes nativos
 
 ---
 
