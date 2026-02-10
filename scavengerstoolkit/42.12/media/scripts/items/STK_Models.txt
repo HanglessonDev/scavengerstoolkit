@@ -6,4 +6,25 @@ module STK
         texture = WorldItems/AmmoStrap_Shells,
         scale = 0.25,
     }
+    
+    model BackpackFabricBasic_Ground
+    {
+        mesh = WorldItems/BurlapFabric_Piece,
+        texture = WorldItems/BackpackFabricBasic_Piece,
+        scale = 0.05,
+    }
+    
+    model BackpackFabricReinforced_Ground
+    {
+        mesh = WorldItems/BurlapFabric_Piece,
+        texture = WorldItems/BackpackFabricReinforced_Piece,
+        scale = 0.05,
+    }
+    
+    model BackpackFabricTactical_Ground
+    {
+        mesh = WorldItems/BurlapFabric_Piece,
+        texture = WorldItems/BackpackFabricTactical_Piece,
+        scale = 0.05,
+    }
 }

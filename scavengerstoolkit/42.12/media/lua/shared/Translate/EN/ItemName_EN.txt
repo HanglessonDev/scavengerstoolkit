@@ -2,4 +2,7 @@ ItemName_EN = {
     ItemName_STK.BackpackStrapsBasic = "Basic Backpack Straps"
     ItemName_STK.BackpackStrapsReinforced = "Reinforced Backpack Straps"
     ItemName_STK.BackpackStrapsTactical = "Tactical Backpack Straps"
+    ItemName_STK.BackpackFabricBasic = "Basic Backpack Fabric"
+    ItemName_STK.BackpackFabricReinforced = "Reinforced Backpack Fabric"
+    ItemName_STK.BackpackFabricTactical = "Tactical Backpack Fabric"
 }

@@ -30,4 +30,31 @@ module STK
         Icon             = BackpackStrapsTactical,
         WorldStaticModel = BackpackStraps_Ground,
     }
+    
+    item BackpackFabricBasic
+    {
+        Type             = Normal,
+        Weight           = 0.5,
+        DisplayCategory  = Material,
+        Icon             = BackpackFabricBasic,
+        WorldStaticModel = BackpackFabricBasic_Ground,
+    }
+    
+    item BackpackFabricReinforced
+    {
+        Type             = Normal,
+        Weight           = 0.5,
+        DisplayCategory  = Material,
+        Icon             = BackpackFabricReinforced,
+        WorldStaticModel = BackpackFabricReinforced_Ground,
+    }
+    
+    item BackpackFabricTactical
+    {
+        Type             = Normal,
+        Weight           = 0.5,
+        DisplayCategory  = Material,
+        Icon             = BackpackFabricTactical,
+        WorldStaticModel = BackpackFabricTactical_Ground,
+    }
 }
