@@ -1,0 +1,33 @@
+module STK
+{
+    imports
+    {
+        Base
+    }
+    item BackpackStrapsBasic
+    {
+        Type             = Normal,
+        Weight           = 0.3,
+        DisplayCategory  = Material,
+        Icon             = BackpackStrapsBasic,
+        WorldStaticModel = BackpackStraps_Ground,
+    }
+    
+    item BackpackStrapsReinforced
+    {
+        Type             = Normal,
+        Weight           = 0.3,
+        DisplayCategory  = Material,
+        Icon             = BackpackStrapsReinforced,
+        WorldStaticModel = BackpackStraps_Ground,
+    }
+    
+    item BackpackStrapsTactical
+    {
+        Type             = Normal,
+        Weight           = 0.3,
+        DisplayCategory  = Material,
+        Icon             = BackpackStrapsTactical,
+        WorldStaticModel = BackpackStraps_Ground,
+    }
+}

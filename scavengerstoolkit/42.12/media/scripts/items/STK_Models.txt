@@ -1,0 +1,9 @@
+module STK
+{
+    model BackpackStraps_Ground
+    {
+        mesh = WorldItems/AmmoStrap,
+        texture = WorldItems/AmmoStrap_Shells,
+        scale = 0.25,
+    }
+}

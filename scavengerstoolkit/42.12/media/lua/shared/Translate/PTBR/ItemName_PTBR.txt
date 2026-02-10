@@ -1,0 +1,5 @@
+ItemName_PTBR = {
+    ItemName_STK.BackpackStrapsBasic = "Alças Básicas de Mochila"
+    ItemName_STK.BackpackStrapsReinforced = "Alças Reforçadas de Mochila"
+    ItemName_STK.BackpackStrapsTactical = "Alças Táticas de Mochila"
+}
