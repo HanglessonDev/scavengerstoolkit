@@ -48,6 +48,16 @@ Um mod realista para Project Zomboid que permite desmontar containers encontrado
 
 ---
 
+## Componentes do Mod
+- **Backpack Straps (Alças de Mochila)**: Melhora redução de peso
+  - Basic Backpack Straps, Reinforced Backpack Straps, Tactical Backpack Straps
+- **Backpack Fabric (Tecido de Mochila)**: Aumenta capacidade
+  - Basic Backpack Fabric, Reinforced Backpack Fabric, Tactical Backpack Fabric
+- **Belt Buckle (Fivela de Cinto)**: Componente auxiliar para upgrades
+  - Standard Buckles, Reinforced Belt Buckle
+
+---
+
 ## Referências
 - Inspiração: [Backpack Borders](https://steamcommunity.com/sharedfiles/filedetails/?id=2996978365)
 - Abordagem: Criar itens novos (não ModData) para v1.0
@@ -58,5 +68,6 @@ Um mod realista para Project Zomboid que permite desmontar containers encontrado
 ## Notas Técnicas
 - Usar estrutura de receitas vanilla
 - Items novos seguem nomenclatura: `Base.NomeOriginal_Upgraded`
+- Componentes do mod usam namespace `STK`: `STK.BackpackStrapsBasic`, `STK.BackpackFabricReinforced`, etc.
 - Componentes são items consumíveis no crafting
 - Texturas podem reutilizar sprites vanilla inicialmente

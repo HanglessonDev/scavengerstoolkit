@@ -10,53 +10,53 @@
 |-----------|-----------|-------------------|---------------|
 | Basic Straps | School Bag, Tote Bag, Fanny Pack | +5% | Lvl 2 |
 | Reinforced Straps | Hiking Bag, Duffel Bag | +8% | Lvl 4 |
-| Military Straps | ALICE Pack, Military Bags | +10% | Lvl 6 |
+| Tactical Straps | ALICE Pack, Military Bags | +10% | Lvl 6 |
 
 **Propriedades do Item**:
 ```
 Type = Normal
 Weight = 0.3
 DisplayCategory = Crafting
-Icon = (reutilizar sprite de Belt ou similar)
+Icon = BackpackStrapsBasic (para Basic), BackpackStrapsReinforced (para Reinforced), BackpackStrapsTactical (para Tactical)
 ```
 
 ---
 
-### 2. Pocket Fabric (Tecido de Compartimento)
+### 2. Backpack Fabric (Tecido de Mochila)
 **Fonte**: Qualquer container desmontado
 **Uso**: Aumentar capacidade
 
 | Qualidade | Obtido de | Capacity Bonus | Tailoring Req |
 |-----------|-----------|----------------|---------------|
 | Basic Fabric | School Bag, Purse, Satchel | +2 units | Lvl 2 |
-| Durable Fabric | Hiking Bag, Duffel Bag | +4 units | Lvl 4 |
+| Reinforced Fabric | Hiking Bag, Duffel Bag | +4 units | Lvl 4 |
 | Tactical Fabric | ALICE Pack, Military items | +6 units | Lvl 6 |
 
 **Propriedades do Item**:
 ```
 Type = Normal
-Weight = 0.2
-DisplayCategory = Crafting
-Icon = (reutilizar sprite de RippedSheets ou Fabric)
+Weight = 0.5
+DisplayCategory = Material
+Icon = BackpackFabricBasic (para Basic), BackpackFabricReinforced (para Reinforced), BackpackFabricTactical (para Tactical)
 ```
 
 ---
 
-### 3. Buckles and Fasteners (Fivelas e Fixadores)
+### 3. Belt Buckle (Fivela de Cinto)
 **Fonte**: Mochilas de qualidade
 **Uso**: Crafting material auxiliar
 
 | Qualidade | Obtido de | Uso | Quantidade |
 |-----------|-----------|-----|------------|
 | Standard Buckles | Hiking Bags, Duffels | Upgrades Tier 2 | 2-3 por desmontagem |
-| Heavy Duty Buckles | ALICE, Military | Upgrades Tier 3 | 3-4 por desmontagem |
+| Reinforced Buckle | ALICE, Military | Upgrades Tier 3 | 3-4 por desmontagem |
 
 **Propriedades do Item**:
 ```
 Type = Normal
 Weight = 0.1
-DisplayCategory = Crafting
-Icon = (reutilizar sprite de Screw ou Metal)
+DisplayCategory = Material
+Icon = BeltBuckleReinforced
 ```
 
 ---

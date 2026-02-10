@@ -1,3 +1,11 @@
 {"type":"_aim","source":"mcp-knowledge-graph"}
 {"type":"entity","name":"Diretório de Traduções Scavenger's Toolkit","entityType":"localização","observations":["Caminho: f:\\GitHub\\Lua\\PzModding\\scavengerstoolkit\\scavengerstoolkit\\42.12\\media\\lua\\shared\\Translate"]}
 {"type":"entity","name":"Padrão de Commits Conventional Commits","entityType":"padrão","observations":["Formato: tipo(escopo): :emoji: mensagem","Tipos comuns: feat, fix, chore, docs, style, refactor, test, build","Exemplo: feat(items): :sparkles: adicionado os itens alças de mochila"]}
+{"type":"entity","name":"Padrão de Nomenclatura de Itens","entityType":"padrão","observations":["Hierarquia: Basic, Reinforced, Tactical","Nomes de arquivos consistentes com esta hierarquia","Exemplos: BackpackStrapsBasic, BackpackStrapsReinforced, BackpackStrapsTactical"]}
+{"type":"entity","name":"Boas Práticas de Modding","entityType":"prática","observations":["Reutilizar texturas/modelos existentes do jogo base quando possível","Criar cópias apenas quando necessária aparência distinta","Manter consistência com hierarquia de itens (Basic/Reinforced/Tactical)"]}
+{"type":"entity","name":"Estrutura de Arquivos do Projeto","entityType":"estrutura","observations":["Traduções em: scavengerstoolkit/42.12/media/lua/shared/Translate/{EN|PTBR}/","Scripts de itens em: scavengerstoolkit/42.12/media/scripts/items/","Texturas em: scavengerstoolkit/42.12/media/textures/ e subdiretórios"]}
+{"type":"entity","name":"Convenções de Commit","entityType":"padrão","observations":["Usar Conventional Commits com tipo(escopo): :emoji: mensagem","Tipos comuns: feat, fix, chore, refactor","Exemplos: feat(items): :sparkles:, refactor(textures): :recycle:"]}
+{"type":"relation","from":"Diretório de Traduções Scavenger's Toolkit","relationType":"segue","to":"Padrão de Nomenclatura de Itens"}
+{"type":"relation","from":"Diretório de Traduções Scavenger's Toolkit","relationType":"segue","to":"Boas Práticas de Modding"}
+{"type":"relation","from":"Diretório de Traduções Scavenger's Toolkit","relationType":"segue","to":"Estrutura de Arquivos do Projeto"}
+{"type":"relation","from":"Diretório de Traduções Scavenger's Toolkit","relationType":"segue","to":"Convenções de Commit"}

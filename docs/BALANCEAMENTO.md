@@ -131,14 +131,14 @@ School Bag Tactical:
 
 | Componente | Valor Relativo | Obtido de | Crafting Equivalente |
 |------------|----------------|-----------|----------------------|
-| Basic Fabric | 1.0 | Tote, School, Satchel | +2 capacity |
-| Basic Straps | 1.2 | School, Satchel | +5% weight red |
-| Durable Fabric | 2.0 | Hiking, Duffel | +4 capacity |
-| Reinforced Straps | 2.5 | Hiking, Big Hiking | +8% weight red |
-| Buckles | 0.5 | Hiking, Duffel | Auxiliary material |
-| Tactical Fabric | 3.0 | ALICE, Military | +6 capacity |
-| Military Straps | 3.5 | ALICE | +10% weight red |
-| Heavy Buckles | 0.8 | ALICE, Military | Auxiliary material |
+| Basic Backpack Fabric | 1.0 | Tote, School, Satchel | +2 capacity |
+| Basic Backpack Straps | 1.2 | School, Satchel | +5% weight red |
+| Reinforced Backpack Fabric | 2.0 | Hiking, Duffel | +4 capacity |
+| Reinforced Backpack Straps | 2.5 | Hiking, Big Hiking | +8% weight red |
+| Belt Buckle | 0.5 | Hiking, Duffel | Auxiliary material |
+| Tactical Backpack Fabric | 3.0 | ALICE, Military | +6 capacity |
+| Tactical Backpack Straps | 3.5 | ALICE | +10% weight red |
+| Reinforced Belt Buckle | 0.8 | ALICE, Military | Auxiliary material |
 | Quick-Access Pouch | 1.5 | Fanny, Holster | +1 cap + 2% weight |
 | Hydration System | 2.5 | Hydration Pack | +2 cap + 3% weight |
 
@@ -147,7 +147,7 @@ School Bag Tactical:
 **Tier 1 Upgrade**: 2.0-3.0 valor total
 ```
 School Bag Reinforced:
-  - 2x Basic Fabric (2.0)
+  - 2x Basic Backpack Fabric (2.0)
   - 2x Thread (0.5)
   Total: 2.5
 ```
@@ -155,8 +155,8 @@ School Bag Reinforced:
 **Tier 2 Upgrade**: 4.0-6.0 valor total
 ```
 Hiking Bag Enhanced:
-  - 2x Durable Fabric (4.0)
-  - 2x Buckles (1.0)
+  - 2x Reinforced Backpack Fabric (4.0)
+  - 2x Belt Buckle (1.0)
   - 3x Thread (0.75)
   Total: 5.75
 ```
@@ -164,9 +164,9 @@ Hiking Bag Enhanced:
 **Tier 3 Upgrade**: 7.0-10.0 valor total
 ```
 Advanced Hiking Bag:
-  - 1x Reinforced Straps (2.5)
-  - 1x Durable Fabric (2.0)
-  - 3x Buckles (1.5)
+  - 1x Reinforced Backpack Straps (2.5)
+  - 1x Reinforced Backpack Fabric (2.0)
+  - 3x Belt Buckle (1.5)
   - 4x Thread (1.0)
   Total: 7.0
 ```

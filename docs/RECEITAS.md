@@ -5,9 +5,9 @@
 ### R001 - Disassemble School Bag
 ```
 Input: Bag_SchoolBag (condition > 30%)
-Output: 
-  - Basic Straps x1
-  - Basic Fabric x1
+Output:
+  - Basic Backpack Straps x1
+  - Basic Backpack Fabric x1
 Time: 30 min
 Skill: Tailoring 2
 Tools: Needle (not consumed)
@@ -26,7 +26,7 @@ Tools: Needle
 ### R003 - Disassemble Tote Bag
 ```
 Input: Tote Bag
-Output: Basic Fabric x2
+Output: Basic Backpack Fabric x2
 Time: 25 min
 Skill: Tailoring 2
 Tools: Needle
@@ -36,8 +36,8 @@ Tools: Needle
 ```
 Input: Bag_Satchel
 Output:
-  - Basic Straps x1
-  - Basic Fabric x1
+  - Basic Backpack Straps x1
+  - Basic Backpack Fabric x1
 Time: 30 min
 Skill: Tailoring 2
 Tools: Needle
@@ -47,9 +47,9 @@ Tools: Needle
 ```
 Input: Bag_NormalHikingBag (condition > 40%)
 Output:
-  - Reinforced Straps x1
-  - Durable Fabric x1
-  - Buckles x2
+  - Reinforced Backpack Straps x1
+  - Reinforced Backpack Fabric x1
+  - Belt Buckle x2
 Time: 45 min
 Skill: Tailoring 4
 Tools: Needle
@@ -59,8 +59,8 @@ Tools: Needle
 ```
 Input: Bag_DuffelBag
 Output:
-  - Durable Fabric x2
-  - Buckles x2
+  - Reinforced Backpack Fabric x2
+  - Belt Buckle x2
 Time: 40 min
 Skill: Tailoring 4
 Tools: Needle
@@ -70,9 +70,9 @@ Tools: Needle
 ```
 Input: Bag_BigHikingBag (condition > 50%)
 Output:
-  - Reinforced Straps x1
-  - Durable Fabric x2
-  - Buckles x3
+  - Reinforced Backpack Straps x1
+  - Reinforced Backpack Fabric x2
+  - Belt Buckle x3
 Time: 60 min
 Skill: Tailoring 5
 Tools: Needle
@@ -82,9 +82,9 @@ Tools: Needle
 ```
 Input: Bag_ALICEpack (condition > 50%)
 Output:
-  - Military Straps x1
-  - Tactical Fabric x2
-  - Heavy Buckles x4
+  - Tactical Backpack Straps x1
+  - Tactical Backpack Fabric x2
+  - Reinforced Belt Buckle x4
 Time: 90 min
 Skill: Tailoring 6
 Tools: Needle
@@ -95,7 +95,7 @@ Tools: Needle
 Input: Hydration Pack
 Output:
   - Hydration System x1
-  - Basic Fabric x1
+  - Basic Backpack Fabric x1
 Time: 35 min
 Skill: Tailoring 3
 Tools: Needle
@@ -104,7 +104,7 @@ Tools: Needle
 ### R010 - Disassemble Cloth Gun Case
 ```
 Input: Cloth Gun Case
-Output: Basic Fabric x2
+Output: Basic Backpack Fabric x2
 Time: 25 min
 Skill: Tailoring 2
 Tools: Needle
@@ -136,7 +136,7 @@ Tools: Needle
 ```
 Input:
   - Bag_SchoolBag
-  - Basic Fabric x2
+  - Basic Backpack Fabric x2
   - Thread x2
 Output: Bag_SchoolBag_Reinforced
   (Capacity: 15 → 18, WeightRed: 70%)
@@ -150,7 +150,7 @@ OnGiveXP: Tailoring_15
 ```
 Input:
   - Bag_Satchel
-  - Basic Fabric x1
+  - Basic Backpack Fabric x1
   - Thread x1
 Output: Bag_Satchel_Expanded
   (Capacity: 10 → 13, WeightRed: 60%)
@@ -164,8 +164,8 @@ OnGiveXP: Tailoring_12
 ```
 Input:
   - Bag_NormalHikingBag
-  - Durable Fabric x2
-  - Buckles x2
+  - Reinforced Backpack Fabric x2
+  - Belt Buckle x2
   - Thread x3
 Output: Bag_HikingBag_Enhanced
   (Capacity: 20 → 24, WeightRed: 75%)
@@ -179,7 +179,7 @@ OnGiveXP: Tailoring_25
 ```
 Input:
   - Purse
-  - Basic Fabric x1
+  - Basic Backpack Fabric x1
   - Quick-Access Pouch x1
   - Thread x2
 Output: Purse_Expanded
@@ -198,7 +198,7 @@ OnGiveXP: Tailoring_10
 ```
 Input:
   - Bag_SchoolBag
-  - Basic Straps x2
+  - Basic Backpack Straps x2
   - Thread x2
 Output: Bag_SchoolBag_Comfortable
   (Capacity: 15, WeightRed: 70% → 78%)
@@ -212,7 +212,7 @@ OnGiveXP: Tailoring_15
 ```
 Input:
   - Bag_NormalHikingBag
-  - Reinforced Straps x1
+  - Reinforced Backpack Straps x1
   - Thread x2
 Output: Bag_HikingBag_Comfortable
   (Capacity: 20, WeightRed: 75% → 83%)
@@ -226,8 +226,8 @@ OnGiveXP: Tailoring_20
 ```
 Input:
   - Bag_DuffelBag
-  - Reinforced Straps x2
-  - Buckles x2
+  - Reinforced Backpack Straps x2
+  - Belt Buckle x2
   - Thread x3
 Output: Bag_DuffelBag_Optimized
   (Capacity: 22, WeightRed: 60% → 70%)
@@ -245,8 +245,8 @@ OnGiveXP: Tailoring_22
 ```
 Input:
   - Bag_SchoolBag
-  - Basic Straps x1
-  - Basic Fabric x1
+  - Basic Backpack Straps x1
+  - Basic Backpack Fabric x1
   - Quick-Access Pouch x1
   - Thread x3
 Output: Bag_SchoolBag_Tactical
@@ -261,8 +261,8 @@ OnGiveXP: Tailoring_20
 ```
 Input:
   - Bag_Satchel
-  - Basic Straps x1
-  - Basic Fabric x1
+  - Basic Backpack Straps x1
+  - Basic Backpack Fabric x1
   - Thread x2
 Output: Bag_Satchel_Professional
   (Capacity: 10 → 12, WeightRed: 60% → 65%)
@@ -276,9 +276,9 @@ OnGiveXP: Tailoring_18
 ```
 Input:
   - Bag_NormalHikingBag
-  - Reinforced Straps x1
-  - Durable Fabric x1
-  - Buckles x3
+  - Reinforced Backpack Straps x1
+  - Reinforced Backpack Fabric x1
+  - Belt Buckle x3
   - Thread x4
 Output: Bag_HikingBag_Advanced
   (Capacity: 20 → 23, WeightRed: 75% → 80%)
@@ -309,6 +309,7 @@ OnGiveXP: Tailoring_25
 
 ### Nomenclatura de Items
 - Base vanilla: `Bag_SchoolBag`
+- Componentes do mod: `BackpackStrapsBasic`, `BackpackFabricReinforced`, `BeltBuckleReinforced`, etc.
 - Upgraded: `Bag_SchoolBag_Reinforced`, `Bag_SchoolBag_Comfortable`, etc.
 - Sufixos: `_Reinforced`, `_Enhanced`, `_Comfortable`, `_Optimized`, `_Tactical`, `_Advanced`, `_Expanded`
 
@@ -317,19 +318,19 @@ OnGiveXP: Tailoring_25
 recipe Reinforce School Bag (Capacity)
 {
     Bag_SchoolBag,
-    BasicFabric=2,
+    STK.BackpackFabricBasic=2,
     Thread=2,
-    
+
     Result: Bag_SchoolBag_Reinforced,
     Time: 60.0,
     Category: Tailoring,
-    
+
     NeedToBeLearn: true,
     CanBeDoneFromFloor: true,
-    
+
     RequiredSkills: Tailoring:3,
     OnGiveXP: Tailoring:15,
-    
+
     AnimNode: RipSheets,
     Sound: ClothesRipping,
 }
@@ -354,17 +355,17 @@ recipe Reinforce School Bag (Capacity)
 | Versão | Capacity | Weight Red. | Custo para fazer |
 |--------|----------|-------------|------------------|
 | Vanilla | 15 | 70% | N/A |
-| Reinforced (Cap) | 18 | 70% | 2 Fabric, 2 Thread, 60min, Lvl3 |
-| Comfortable (WR) | 15 | 78% | 2 Straps, 2 Thread, 60min, Lvl3 |
+| Reinforced (Cap) | 18 | 70% | 2 Backpack Fabric, 2 Thread, 60min, Lvl3 |
+| Comfortable (WR) | 15 | 78% | 2 Backpack Straps, 2 Thread, 60min, Lvl3 |
 | Tactical (Hybrid) | 17 | 75% | 1 Strap, 1 Fabric, 1 Pouch, 3 Thread, 90min, Lvl4 |
 
 ### Hiking Bag Vanilla vs Upgraded
 | Versão | Capacity | Weight Red. | Custo para fazer |
 |--------|----------|-------------|------------------|
 | Vanilla | 20 | 75% | N/A |
-| Enhanced (Cap) | 24 | 75% | 2 Fabric, 2 Buckles, 3 Thread, 90min, Lvl5 |
-| Comfortable (WR) | 20 | 83% | 1 Straps, 2 Thread, 75min, Lvl4 |
-| Advanced (Hybrid) | 23 | 80% | 1 Straps, 1 Fabric, 3 Buckles, 4 Thread, 120min, Lvl6 |
+| Enhanced (Cap) | 24 | 75% | 2 Backpack Fabric, 2 Belt Buckle, 3 Thread, 90min, Lvl5 |
+| Comfortable (WR) | 20 | 83% | 1 Backpack Straps, 2 Thread, 75min, Lvl4 |
+| Advanced (Hybrid) | 23 | 80% | 1 Straps, 1 Fabric, 3 Belt Buckle, 4 Thread, 120min, Lvl6 |
 | Hydration | 22 | 78% | 1 Hydro System, 3 Thread, 100min, Lvl5 |
 
 ---
