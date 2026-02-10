@@ -1,0 +1,65 @@
+# In: <project>/.gemini/commands/changelog.toml
+# Invoked via: /changelog 1.2.0 added "Support for default argument parsing."
+
+description = "Gera/atualiza automaticamente o CHANGELOG.md analisando commits desde a última tag (ou range especificado)."
+
+prompt = """
+# Tarefa: Gerar/Atualizar CHANGELOG automaticamente via Git
+
+Você é um mantenedor especialista em projetos de software. O usuário invocou o comando /changelog [opcional: versão] [opcional: --since <tag/commit/range>]
+
+**Comando bruto do usuário (incluindo argumentos):** {{args}}
+
+Seu objetivo é:
+- Gerar entradas no formato "Keep a Changelog"[](https://keepachangelog.com)
+- Baseado **somente** nas alterações reais detectadas no git
+- Atualizar o arquivo CHANGELOG.md usando a ferramenta `write_file`
+
+## Passos obrigatórios:
+
+1. **Determinar o range de commits**
+   - Se o usuário passou --since <ref> → use <ref>..HEAD
+   - Se passou uma versão (ex: 1.3.0) sem --since → tente usar a tag anterior à nova versão ou a última tag semântica
+   - Senão → use a última tag semântica .. HEAD (git describe --tags --abbrev=0)
+   - Se não houver tags → use --root ou avise que precisa de uma tag base
+
+2. **Coletar alterações**
+   Use os comandos shell disponíveis via !{...} para obter:
+   - Última tag: !{git describe --tags --abbrev=0 2>/dev/null || echo "sem tag anterior (use --root)"}
+   - Commits no range: !{git log <range> --pretty=format:"* %s (%h) — %an" --reverse}
+   Ou (melhor para classificação): !{git log <range> --pretty=format:"%s"}
+
+   Se precisar de diff completo (para entender melhor): !{git diff <range anterior> HEAD -- . ':(exclude)CHANGELOG.md'}
+
+3. **Classificar as mudanças** (siga Conventional Commits ou heurística):
+   - feat(:.*)? → ### Added
+   - fix(:.*)? → ### Fixed
+   - refactor|perf|style|test → ### Changed
+   - docs → ### Documentation
+   - chore|ci|build → ignorar (ou ### Internal)
+   - BREAKING CHANGE|!: destacar como **breaking change**
+   - Outros → ### Changed ou pedir esclarecimento
+
+4. **Ler CHANGELOG atual**
+   @{CHANGELOG.md}
+
+5. **Gerar a nova seção**
+   - Se a versão já existir → adicionar itens nas subseções existentes
+   - Senão → criar nova seção no topo (depois do ## Unreleased se existir)
+   - Formato exato:
+     ### [1.3.0] - 2025-12-29
+     ### Added
+     - Mensagem curta e clara
+     ### Fixed
+     - ...
+
+6. **Atualizar o arquivo**
+   - Gere o conteúdo **completo** do novo CHANGELOG.md
+   - Use a ferramenta `write_file` para sobrescrever CHANGELOG.md com o novo conteúdo
+   - Sempre preserve o cabeçalho existente (## Unreleased, links, etc.)
+
+Responda apenas após coletar as informações via !{...}. Se faltar contexto git, informe o comando exato que o usuário deve confirmar.
+Se o git log estiver vazio, avise: "Nenhuma alteração detectada desde a última tag."
+
+Comece executando os comandos shell necessários agora.
+"""

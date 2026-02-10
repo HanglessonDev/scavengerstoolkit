@@ -1,0 +1,12 @@
+{
+    "extensions.ignoreRecommendations": false,
+    "files.associations": {
+        "*.txt": "ZedScripts"
+    },
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+    },
+    "Lua.diagnostics.globals": [
+        "Events"
+    ],
+}
