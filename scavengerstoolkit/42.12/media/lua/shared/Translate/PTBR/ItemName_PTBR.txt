@@ -5,4 +5,5 @@ ItemName_PTBR = {
     ItemName_STK.BackpackFabricBasic = "Tecido Básico de Mochila"
     ItemName_STK.BackpackFabricReinforced = "Tecido Reforçado de Mochila"
     ItemName_STK.BackpackFabricTactical = "Tecido Tático de Mochila"
+    ItemName_STK.BeltBuckleReinforced = "Fivela de Cinto Reforçada"
 }

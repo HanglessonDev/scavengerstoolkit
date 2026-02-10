@@ -5,4 +5,5 @@ ItemName_EN = {
     ItemName_STK.BackpackFabricBasic = "Basic Backpack Fabric"
     ItemName_STK.BackpackFabricReinforced = "Reinforced Backpack Fabric"
     ItemName_STK.BackpackFabricTactical = "Tactical Backpack Fabric"
+    ItemName_STK.BeltBuckleReinforced = "Reinforced Belt Buckle"
 }

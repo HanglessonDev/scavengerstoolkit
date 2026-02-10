@@ -57,4 +57,13 @@ module STK
         Icon             = BackpackFabricTactical,
         WorldStaticModel = BackpackFabricTactical_Ground,
     }
+    
+    item BeltBuckleReinforced
+    {
+        Type             = Normal,
+        Weight           = 0.1,
+        DisplayCategory  = Material,
+        Icon             = BeltBuckleReinforced,
+        WorldStaticModel = BeltBuckleReinforced_Ground,
+    }
 }
