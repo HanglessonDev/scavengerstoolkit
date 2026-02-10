@@ -13,7 +13,8 @@
             ".docs",
             "docs",
             "Logs",
-            "tmp"
+            "tmp",
+            ".template-language"
         ]
     },
     "diagnostics": {
