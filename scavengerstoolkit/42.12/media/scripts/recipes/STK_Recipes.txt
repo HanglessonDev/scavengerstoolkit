@@ -1,0 +1,67 @@
+module STK
+{
+    
+    /* R001 */
+    craftRecipe DisassembleSchoolBag
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 100,
+        xpaward         = Tailoring:5,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 [Base.Bag_Schoolbag;Base.Bag_Schoolbag_Kids;Base.Bag_Schoolbag_Medical;Base.Bag_Schoolbag_Patches;Base.Bag_Schoolbag_Travel],
+        }
+        outputs
+        {
+            item 2 STK.BackpackStrapsBasic,
+            item 2 Base.Buckle,
+            item 1 STK.BackpackFabricBasic,
+        }
+    }
+    /* R002 - Outputs temporarios pois ainda não tem item para adicionar slot de Quick-Access */
+    craftRecipe DisassembleFannyPack
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 100,
+        xpaward         = Tailoring:5,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[Base.Bag_FannyPackFront;Base.Bag_FannyPackBack],
+        }
+        outputs
+        {
+            item 1 STK.BackpackStrapsBasic,
+            item 1 Base.Buckle,
+            item 1 STK.BackpackFabricBasic,
+        }
+    }
+    /* R004 */
+    craftRecipe DisassembleSatchelBag
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 100,
+        xpaward         = Tailoring:5,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[DisassembleSatchel],
+        }
+        outputs
+        {
+            item 1 STK.BackpackStrapsBasic,
+            item 1 Base.Buckle,
+            item 1 STK.BackpackFabricBasic,
+        }
+    }
+}
