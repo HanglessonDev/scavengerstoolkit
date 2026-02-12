@@ -7,6 +7,14 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-02-12
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/ItemName_EN.txt` e `PTBR/ItemName_PTBR.txt`: removidas entradas de receitas para separar em novo arquivo
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Recipes_EN.txt` e `PTBR/Recipes_PTBR.txt`: novos arquivos criados para armazenar traduções de receitas
+* `scavengerstoolkit/42.12/media/scripts/items/STK_BagTags.txt`: atualização das tags de desmontagem (FannyPack, SatchelBag, Schoolbag)
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: atualização das tags usadas nas receitas de desmontagem
+
 ## [0.2.0] - 2026-02-11
 
 ### Adicionado
