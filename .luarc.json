@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+    "runtime": {
+        "version": "Lua 5.1",
+        "pathStrict": false
+    },
+    "workspace": {
+        "library": [
+            ".libraries"
+        ],
+        "checkThirdParty": false,
+        "ignoreDir": [
+            ".git",
+            ".vscode",
+            "media/lua/shared/!debug",
+            "media/lua/client/!debug",
+            "media/lua/server/!debug"
+        ]
+    },
+    "diagnostics": {
+        "globals": [
+            "STK",
+            "Events",
+            "getCore",
+            "getScriptManager",
+            "getPlayer",
+            "getSpecificPlayer",
+            "getWorld",
+            "IsoPlayer",
+            "ISTooltipUI",
+            "ISInventoryPane",
+            "ISHotbar",
+            "BodyDamage",
+            "SandboxVars",
+            "ModData"
+        ]
+    },
+    "hint": {
+        "enable": true,
+        "arrayIndex": "Enable"
+    },
+    "completion": {
+        "callSnippet": "Replace"
+    }
+}
