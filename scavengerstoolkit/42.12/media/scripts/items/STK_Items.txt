@@ -1,3 +1,4 @@
+/* ZedScript-Ignore-File: DEPRECATED_PARAMETER */
 module STK
 {
     imports

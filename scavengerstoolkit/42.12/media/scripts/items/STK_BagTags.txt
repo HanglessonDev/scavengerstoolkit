@@ -1,0 +1,74 @@
+module Base
+{
+    /* Fanny Pack */
+    item Bag_FannyPackFront
+    {
+        tags = DisassembleFannyPack,
+    }
+
+    item Bag_FannyPackBack
+    {
+        tags = DisassembleFannyPack,
+    }
+    /* Satchel Bags */
+    item Bag_Satchel
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    item Bag_SatchelPhoto
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    item Bag_Satchel_Military
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    item Bag_Satchel_Medical
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    item Bag_Satchel_Leather
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    item Bag_Satchel_Mail
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    item Bag_Satchel_Fishing
+    {
+        tags = DisassembleSatchel,
+    }
+    
+    /* Schoolbags */
+    item Bag_Schoolbag
+    {
+        tags = DisassembleSchoolbag,
+    }
+    
+    item Bag_Schoolbag_Kids
+    {
+        tags = DisassembleSchoolbag,
+    }
+    
+    item Bag_Schoolbag_Medical
+    {
+        tags = DisassembleSchoolbag,
+    }
+    
+    item Bag_Schoolbag_Patches
+    {
+        tags = DisassembleSchoolbag,
+    }
+    
+    item Bag_Schoolbag_Travel
+    {
+        tags = DisassembleSchoolbag,
+    }
+}
