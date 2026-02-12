@@ -1,6 +1,5 @@
 /* ZedScript-Ignore-File: NOT_VALID_BLOCK */
 ItemName_PTBR = {
-    /* Items */
     ItemName_STK.BackpackStrapsBasic = "Alças Básicas de Mochila"
     ItemName_STK.BackpackStrapsReinforced = "Alças Reforçadas de Mochila"
     ItemName_STK.BackpackStrapsTactical = "Alças Táticas de Mochila"
@@ -8,8 +7,4 @@ ItemName_PTBR = {
     ItemName_STK.BackpackFabricReinforced = "Tecido Reforçado de Mochila"
     ItemName_STK.BackpackFabricTactical = "Tecido Tático de Mochila"
     ItemName_STK.BeltBuckleReinforced = "Fivela de Cinto Reforçada"
-    /* Recipes */
-    Recipe_STK.DisassembleSchoolBag = "Desmontar Mochila Escolar"
-    Recipe_STK.DisassembleFannyPack = "Desmontar Pochete"
-    Recipe_STK.DisassembleSatchel = "Desmontar Bolsa de Ombro"
 }

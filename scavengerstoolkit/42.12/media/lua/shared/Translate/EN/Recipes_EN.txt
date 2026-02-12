@@ -1,0 +1,6 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+Recipes_EN = {
+    Recipe_DisassembleSchoolBag = "Disassemble School Bag"
+    Recipe_DisassembleFannyPack = "Disassemble Fanny Pack"
+    Recipe_DisassembleSatchelBag = "Disassemble Satchel"
+}

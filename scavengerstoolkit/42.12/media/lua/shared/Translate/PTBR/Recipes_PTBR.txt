@@ -1,0 +1,6 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+Recipes_PTBR = {
+    Recipe_DisassembleSchoolBag = "Desmontar Mochila Escolar"
+    Recipe_DisassembleFannyPack = "Desmontar Pochete"
+    Recipe_DisassembleSatchelBag = "Desmontar Bolsa de Ombro"
+}

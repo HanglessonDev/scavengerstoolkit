@@ -3,72 +3,72 @@ module Base
     /* Fanny Pack */
     item Bag_FannyPackFront
     {
-        tags = DisassembleFannyPack,
+        tags = FannyPack,
     }
-
+    
     item Bag_FannyPackBack
     {
-        tags = DisassembleFannyPack,
+        tags = FannyPack,
     }
     /* Satchel Bags */
     item Bag_Satchel
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     item Bag_SatchelPhoto
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     item Bag_Satchel_Military
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     item Bag_Satchel_Medical
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     item Bag_Satchel_Leather
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     item Bag_Satchel_Mail
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     item Bag_Satchel_Fishing
     {
-        tags = DisassembleSatchel,
+        tags = SatchelBag,
     }
     
     /* Schoolbags */
     item Bag_Schoolbag
     {
-        tags = DisassembleSchoolbag,
+        tags = Schoolbag,
     }
     
     item Bag_Schoolbag_Kids
     {
-        tags = DisassembleSchoolbag,
+        tags = Schoolbag,
     }
     
     item Bag_Schoolbag_Medical
     {
-        tags = DisassembleSchoolbag,
+        tags = Schoolbag,
     }
     
     item Bag_Schoolbag_Patches
     {
-        tags = DisassembleSchoolbag,
+        tags = Schoolbag,
     }
     
     item Bag_Schoolbag_Travel
     {
-        tags = DisassembleSchoolbag,
+        tags = Schoolbag,
     }
 }

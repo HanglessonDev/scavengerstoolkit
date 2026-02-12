@@ -7,8 +7,4 @@ ItemName_EN = {
     ItemName_STK.BackpackFabricReinforced = "Reinforced Backpack Fabric"
     ItemName_STK.BackpackFabricTactical = "Tactical Backpack Fabric"
     ItemName_STK.BeltBuckleReinforced = "Reinforced Belt Buckle"
-    /* Recipes */
-    Recipe_STK.DisassembleSchoolBag = "Disassemble School Bag"
-    Recipe_STK.DisassembleFannyPack = "Disassemble Fanny Pack"
-    Recipe_STK.DisassembleSatchel = "Disassemble Satchel"
 }

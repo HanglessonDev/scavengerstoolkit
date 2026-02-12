@@ -34,7 +34,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[Base.Bag_FannyPackFront;Base.Bag_FannyPackBack],
+            item 1 tags[FannyPack],
         }
         outputs
         {
@@ -55,7 +55,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[DisassembleSatchel],
+            item 1 tags[SatchelBag],
         }
         outputs
         {
