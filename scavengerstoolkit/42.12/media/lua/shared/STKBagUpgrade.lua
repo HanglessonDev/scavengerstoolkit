@@ -201,9 +201,8 @@ function STKBagUpgrade.getUpgradeItems(container)
 		return upgradeItems
 	end
 
-	local inventory = container:getInventory()
-	for i = 0, inventory:getItems():size() - 1 do
-		local item = inventory:getItems():get(i)
+	for i = 0, container:getItems():size() - 1 do
+		local item = container:getItems():get(i)
 		if item and item:getType() then
 			-- MUDANÇA 5: Procura por itens STK de upgrade
 			local itemType = item:getType():gsub("^STK%.", "")
