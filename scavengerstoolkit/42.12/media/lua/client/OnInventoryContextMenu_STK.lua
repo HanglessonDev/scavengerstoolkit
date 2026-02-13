@@ -3,7 +3,7 @@
 -- ============================================================================
 
 local STKBagUpgrade = require("STKBagUpgrade")
-require("ISSTKBagUpgradeAction")
+require("TimedActions/ISSTKBagUpgradeAction")
 
 -- ============================================================================
 -- LOGGING
@@ -38,17 +38,17 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		STKBagUpgrade.initBag(bag)
 
 		-- Submenu para ADICIONAR upgrades
-		local addUpgradeSubMenu = context:getNew()
-		local addUpgradeOption = context:addOption("🎒 Adicionar Upgrade STK", nil, nil)
+		local addUpgradeSubMenu = ISContextMenu:getNew(context)
+		local addUpgradeOption = context:addOption("🎒 Adicionar Upgrade STK")
 		context:addSubMenu(addUpgradeOption, addUpgradeSubMenu)
 
 		-- Validação 1: Mochila está cheia de upgrades?
 		if not STKBagUpgrade.canAddUpgrade(bag) then
 			Logger.log("Validação FALHOU: Mochila já tem máximo de upgrades")
 			addUpgradeOption.notAvailable = true
-			addUpgradeOption
-				:getOrCreateToolTip()
-				:setInfo("Esta mochila já atingiu o máximo de upgrades.", 0.8, 0.8, 0.8, 1)
+			local tooltip = ISInventoryPaneContextMenu.addToolTip()
+			addUpgradeOption.toolTip = tooltip
+			tooltip.description = "Esta mochila já atingiu o máximo de upgrades."
 			return
 		end
 
@@ -56,9 +56,9 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		if not STKBagUpgrade.hasRequiredTools(player, "add") then
 			Logger.log("Validação FALHOU: Falta Agulha ou Linha")
 			addUpgradeOption.notAvailable = true
-			addUpgradeOption
-				:getOrCreateToolTip()
-				:setInfo("Você precisa de Agulha e Linha para costurar upgrades.", 1, 0.5, 0.5, 1)
+			local tooltip = ISInventoryPaneContextMenu.addToolTip()
+			addUpgradeOption.toolTip = tooltip
+			tooltip.description = "Você precisa de Agulha e Linha para costurar upgrades."
 			return
 		end
 
@@ -69,14 +69,10 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		if #availableUpgrades == 0 then
 			Logger.log("Validação FALHOU: Nenhum item de upgrade no inventário")
 			addUpgradeOption.notAvailable = true
-			addUpgradeOption:getOrCreateToolTip():setInfo(
-				"Você não tem nenhum item de upgrade STK no inventário.\n"
-					.. "Procure por: Straps, Fabric ou Belt Buckle.",
-				0.8,
-				0.8,
-				0.8,
-				1
-			)
+			local tooltip = ISInventoryPaneContextMenu.addToolTip()
+			addUpgradeOption.toolTip = tooltip
+			tooltip.description = "Você não tem nenhum item de upgrade STK no inventário.\n"
+				.. "Procure por: Straps, Fabric ou Belt Buckle."
 			return
 		end
 
@@ -105,23 +101,23 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		-- Submenu para REMOVER upgrades
 		-- ====================================================================
 		local imd = bag:getModData()
-		if #imd.LUpgrades > 0 then
+		if imd.LUpgrades and #imd.LUpgrades > 0 then
 			Logger.log("Mochila tem " .. #imd.LUpgrades .. " upgrade(s), criando menu de remoção")
-			local removeUpgradeSubMenu = context:getNew()
-			local removeUpgradeOption = context:addOption("✂️ Remover Upgrade STK", nil, nil)
+			local removeUpgradeSubMenu = ISContextMenu:getNew(context)
+			local removeUpgradeOption = context:addOption("✂️ Remover Upgrade STK")
 			context:addSubMenu(removeUpgradeOption, removeUpgradeSubMenu)
 
 			-- Validação: Jogador tem tesoura?
 			if not STKBagUpgrade.hasRequiredTools(player, "remove") then
 				Logger.log("Validação FALHOU: Falta tesoura para remover")
 				removeUpgradeOption.notAvailable = true
-				removeUpgradeOption
-					:getOrCreateToolTip()
-					:setInfo("Você precisa de uma Tesoura para remover upgrades.", 1, 0.5, 0.5, 1)
+				local tooltip = ISInventoryPaneContextMenu.addToolTip()
+				removeUpgradeOption.toolTip = tooltip
+				tooltip.description = "Você precisa de uma Tesoura para remover upgrades."
 			else
 				-- Listar todos os upgrades aplicados
 				for _, upgradeType in ipairs(imd.LUpgrades) do
-					local displayName = upgradeType -- Pode melhorar com getText() depois
+					local displayName = getText("ContextMenu_" .. upgradeType)
 					local value = STKBagUpgrade.getUpgradeValue(upgradeType)
 
 					if value > 0 then
