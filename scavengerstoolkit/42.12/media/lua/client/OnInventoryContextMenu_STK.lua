@@ -114,7 +114,13 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 				else
 					-- Listar todos os upgrades aplicados
 					for _, upgradeType in ipairs(imd.LUpgrades) do
-						local displayName = getText("ContextMenu_" .. upgradeType)
+						local itemScript = getScriptManager():getItem("STK." .. upgradeType)
+						local displayName
+						if itemScript then
+							displayName = itemScript:getDisplayName()
+						else
+							displayName = upgradeType -- Fallback
+						end
 						local value = STKBagUpgrade.getUpgradeValue(upgradeType)
 
 						if value > 0 then
