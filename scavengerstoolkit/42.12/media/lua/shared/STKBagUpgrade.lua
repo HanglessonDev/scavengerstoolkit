@@ -139,7 +139,7 @@ function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 			table.remove(imd.LUpgrades, i)
 
 			-- MUDANÇA 3: Retorna o item STK específico
-			local newItem = bag:getInventory():AddItem("STK." .. upgradeTypeToRemove)
+			local newItem = player:getInventory():AddItem("STK." .. upgradeTypeToRemove)
 			if not newItem then
 				Logger.log("ERRO: Não foi possível criar STK." .. upgradeTypeToRemove)
 				player:Say("Erro ao remover upgrade.")
