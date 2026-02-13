@@ -1,0 +1,23 @@
+module STK
+{
+    craftRecipe Create_SchoolBag_Reinforced
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 100,
+        xpaward         = Tailoring:5,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 2 tags[Thread;Twine],
+            item 2 [STK.BackpackFabricBasic],
+            item 1 tags[Schoolbag],
+        }
+        outputs
+        {
+            item 1 STK.Bag_Schoolbag_Reinforced,
+        }
+    }
+}
