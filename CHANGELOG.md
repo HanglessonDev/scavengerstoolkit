@@ -7,6 +7,39 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-02-13
+
+### Adicionado
+* `docs/PLANO_TESTES_CORE.md`: novo documento com plano detalhado de testes para o sistema de upgrades de mochilas
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: adição de anotações LuaLS (@class, @param, @return, etc.)
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: adição de anotações LuaLS completas
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: adição de anotações LuaLS e melhorias de tipagem
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: 
+  - Corrige avisos de tipagem relacionados a valores nil em operações matemáticas
+  - Adiciona verificações `value and value > 0` para evitar erros
+  - Atualiza construtores para garantir tipagem correta
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
+  - Adiciona verificação de valores nil antes de operações matemáticas
+  - Melhora consistência na tipagem de funções
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`:
+  - Ajusta construtores de classes para garantir tipagem correta
+  - Corrige problemas com herança de classes e metatables
+  - Melhora consistência na tipagem de classes herdadas
+* `.luarc.json`: atualiza configuração para melhor suporte a tipagem do Project Zomboid
+  - Adiciona caminhos para bibliotecas de tipagem do jogo
+  - Atualiza lista de globals com funções do mod
+
+### Corrigido
+* Erros de tipagem "param-type-mismatch" e "return-type-mismatch" no sistema de timed actions
+* Problemas com herança de classes em LuaLS causando avisos incorretos
+* Verificações de valores nil em operações matemáticas para evitar crashes
+* Erro de exibição de nomes corretos para itens de upgrade no menu de remoção
+* Erro de item de upgrade não retornando ao inventário ao ser removido
+* Erro de 'call to nil' ao buscar itens de upgrade
+* Erro de 'player of non-table' no menu de contexto
+
 ## [0.2.1] - 2026-02-12
 
 ### Modificado
