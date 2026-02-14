@@ -1,3 +1,5 @@
+--- @file scavengerstoolkit\42.12\media\lua\client\OnInventoryContextMenu_STK.lua
+
 --- @class STKContextMenu
 --- Context Menu para Upgrades de Mochilas STK
 local STKContextMenu = {}

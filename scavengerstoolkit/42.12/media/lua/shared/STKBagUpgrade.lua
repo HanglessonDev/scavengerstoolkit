@@ -1,4 +1,5 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
+
 --- @class STKBagUpgrade
 --- Módulo para gerenciar upgrades de mochilas usando itens STK
 local STKBagUpgrade = {}
