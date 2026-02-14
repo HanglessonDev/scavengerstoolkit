@@ -7,6 +7,15 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-02-13
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/ContextMenu_PTBR.txt`: corrige acentuação e caracteres especiais em português brasileiro
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/ContextMenu_EN.txt`: adiciona arquivo de tradução para contexto em inglês
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Tooltip_EN.txt`: adiciona arquivo de tradução para tooltips em inglês
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Tooltip_PTBR.txt`: adiciona arquivo de tradução para tooltips em português brasileiro
+* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`: atualiza com correções de nomenclatura
+
 ## [0.3.0] - 2026-02-13
 
 ### Adicionado
