@@ -13,9 +13,9 @@ Sandbox_PTBR = {
     Sandbox_STK_SchoolbagLimit_tooltip = "Numero maximo de upgrades que uma mochila escolar pode ter.",
     
     /* Straps (Alcas) */
-    Sandbox_STK_StrapsBasicBonus = "Bonus - Alcas Basicas",
-    Sandbox_STK_StrapsReinforcedBonus = "Bonus - Alcas Reforcadas",
-    Sandbox_STK_StrapsTacticalBonus = "Bonus - Alcas Taticas",
+    Sandbox_STK_StrapsBasicBonus = "Bonus - Alcas Basicas (%)",
+    Sandbox_STK_StrapsReinforcedBonus = "Bonus - Alcas Reforcadas (%)",
+    Sandbox_STK_StrapsTacticalBonus = "Bonus - Alcas Taticas (%)",
     
     /* Fabric (Tecido) */
     Sandbox_STK_FabricBasicBonus = "Bonus - Tecido Basico",

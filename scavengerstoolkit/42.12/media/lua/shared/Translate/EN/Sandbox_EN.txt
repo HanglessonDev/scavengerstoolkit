@@ -1,46 +1,47 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
 Sandbox_EN = {
-	Sandbox_STK = "Scavenger's Toolkit",
-	
-	-- Container Limits
-	Sandbox_STK_FannyPackLimit = "Upgrade Limit - Fanny Pack",
-	Sandbox_STK_FannyPackLimit_tooltip = "Maximum number of upgrades a fanny pack can have.",
-	
-	Sandbox_STK_SatchelLimit = "Upgrade Limit - Satchel",
-	Sandbox_STK_SatchelLimit_tooltip = "Maximum number of upgrades a satchel can have.",
-	
-	Sandbox_STK_SchoolbagLimit = "Upgrade Limit - Schoolbag",
-	Sandbox_STK_SchoolbagLimit_tooltip = "Maximum number of upgrades a schoolbag can have.",
-	
-	-- Straps
-	Sandbox_STK_StrapsBasicBonus = "Bonus - Basic Straps",
-	Sandbox_STK_StrapsReinforcedBonus = "Bonus - Reinforced Straps",
-	Sandbox_STK_StrapsTacticalBonus = "Bonus - Tactical Straps",
-	
-	-- Fabric
-	Sandbox_STK_FabricBasicBonus = "Bonus - Basic Fabric",
-	Sandbox_STK_FabricReinforcedBonus = "Bonus - Reinforced Fabric",
-	Sandbox_STK_FabricTacticalBonus = "Bonus - Tactical Fabric",
-	
-	-- Belt Buckle
-	Sandbox_STK_BeltBuckleBonus = "Bonus - Belt Buckle",
-	
-	-- Tooltips
-	Sandbox_STK_WeightReductionTooltip = "Weight reduction bonus (0.05 = 5% weight reduction).",
-	Sandbox_STK_CapacityTooltip = "Capacity bonus (number of slots added).",
-	
-	-- Tailoring
-	Sandbox_STK_TailoringEnabled = "Enable Tailoring Bonus",
-	Sandbox_STK_TailoringEnabled_tooltip = "If enabled, Tailoring skill level affects upgrade limit.",
-	
-	Sandbox_STK_TailoringModifier = "Tailoring Levels per Extra Slot",
-	Sandbox_STK_TailoringModifierTooltip = "Every X levels of Tailoring grants +1 upgrade slot.<br>(0 to disable)",
-	
-	-- Knife Alternative
-	Sandbox_STK_KnifeAlternative = "Knives Can Remove Upgrades",
-	Sandbox_STK_KnifeAlternativeTooltip = "If enabled, knives can be used instead of scissors to remove upgrades.",
-	
-	-- Craft Time
-	Sandbox_STK_AddUpgradeTime = "Time to Add Upgrade",
-	Sandbox_STK_RemoveUpgradeTime = "Time to Remove Upgrade",
-	Sandbox_STK_CraftTimeTooltip = "Time in ticks (100 ticks = ~3 seconds).",
+    Sandbox_STK = "Scavenger's Toolkit",
+    
+    -- Container Limits
+    Sandbox_STK_FannyPackLimit = "Upgrade Limit - Fanny Pack",
+    Sandbox_STK_FannyPackLimit_tooltip = "Maximum number of upgrades a fanny pack can have.",
+    
+    Sandbox_STK_SatchelLimit = "Upgrade Limit - Satchel",
+    Sandbox_STK_SatchelLimit_tooltip = "Maximum number of upgrades a satchel can have.",
+    
+    Sandbox_STK_SchoolbagLimit = "Upgrade Limit - Schoolbag",
+    Sandbox_STK_SchoolbagLimit_tooltip = "Maximum number of upgrades a schoolbag can have.",
+    
+    -- Straps
+    Sandbox_STK_StrapsBasicBonus = "Bonus - Basic Straps (%)",
+    Sandbox_STK_StrapsReinforcedBonus = "Bonus - Reinforced Straps (%)",
+    Sandbox_STK_StrapsTacticalBonus = "Bonus - Tactical Straps (%)",
+    
+    -- Fabric
+    Sandbox_STK_FabricBasicBonus = "Bonus - Basic Fabric",
+    Sandbox_STK_FabricReinforcedBonus = "Bonus - Reinforced Fabric",
+    Sandbox_STK_FabricTacticalBonus = "Bonus - Tactical Fabric",
+    
+    -- Belt Buckle
+    Sandbox_STK_BeltBuckleBonus = "Bonus - Belt Buckle",
+    
+    -- Tooltips
+    Sandbox_STK_WeightReductionTooltip = "Weight reduction bonus (0.05 = 5% weight reduction).",
+    Sandbox_STK_CapacityTooltip = "Capacity bonus (number of slots added).",
+    
+    -- Tailoring
+    Sandbox_STK_TailoringEnabled = "Enable Tailoring Bonus",
+    Sandbox_STK_TailoringEnabled_tooltip = "If enabled, Tailoring skill level affects upgrade limit.",
+    
+    Sandbox_STK_TailoringModifier = "Tailoring Levels per Extra Slot",
+    Sandbox_STK_TailoringModifierTooltip = "Every X levels of Tailoring grants +1 upgrade slot.<br>(0 to disable)",
+    
+    -- Knife Alternative
+    Sandbox_STK_KnifeAlternative = "Knives Can Remove Upgrades",
+    Sandbox_STK_KnifeAlternativeTooltip = "If enabled, knives can be used instead of scissors to remove upgrades.",
+    
+    -- Craft Time
+    Sandbox_STK_AddUpgradeTime = "Time to Add Upgrade",
+    Sandbox_STK_RemoveUpgradeTime = "Time to Remove Upgrade",
+    Sandbox_STK_CraftTimeTooltip = "Time in ticks (100 ticks = ~3 seconds).",
 }

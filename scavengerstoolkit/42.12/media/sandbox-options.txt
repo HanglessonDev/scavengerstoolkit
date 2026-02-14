@@ -40,10 +40,10 @@ UPGRADE VALUES - STRAPS (Alcas - Weight Reduction)
 
 option STK.StrapsBasicBonus
 {
-    type = double,
-    default = 0.05,
-    min = 0.01,
-    max = 0.5,
+    type = integer,
+    default = 5,
+    min = 1,
+    max = 50,
     page = STK,
     translation = STK_StrapsBasicBonus,
     tooltip = STK_WeightReductionTooltip,
@@ -51,10 +51,10 @@ option STK.StrapsBasicBonus
 
 option STK.StrapsReinforcedBonus
 {
-    type = double,
-    default = 0.10,
-    min = 0.01,
-    max = 0.5,
+    type = integer,
+    default = 10,
+    min = 1,
+    max = 50,
     page = STK,
     translation = STK_StrapsReinforcedBonus,
     tooltip = STK_WeightReductionTooltip,
@@ -62,10 +62,10 @@ option STK.StrapsReinforcedBonus
 
 option STK.StrapsTacticalBonus
 {
-    type = double,
-    default = 0.15,
-    min = 0.01,
-    max = 0.5,
+    type = integer,
+    default = 15,
+    min = 1,
+    max = 50,
     page = STK,
     translation = STK_StrapsTacticalBonus,
     tooltip = STK_WeightReductionTooltip,

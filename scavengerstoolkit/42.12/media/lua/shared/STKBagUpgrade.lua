@@ -137,11 +137,11 @@ function STKBagUpgrade.getUpgradeValue(itemType)
 
 	-- Read from Sandbox or use defaults
 	if cleanType == "BackpackStrapsBasic" then
-		return -(SandboxVars.STK.StrapsBasicBonus or 0.05)
+		return -((SandboxVars.STK.StrapsBasicBonus or 5) / 100)
 	elseif cleanType == "BackpackStrapsReinforced" then
-		return -(SandboxVars.STK.StrapsReinforcedBonus or 0.10)
+		return -((SandboxVars.STK.StrapsReinforcedBonus or 10) / 100)
 	elseif cleanType == "BackpackStrapsTactical" then
-		return -(SandboxVars.STK.StrapsTacticalBonus or 0.15)
+		return -((SandboxVars.STK.StrapsTacticalBonus or 15) / 100)
 	elseif cleanType == "BackpackFabricBasic" then
 		return SandboxVars.STK.FabricBasicBonus or 3
 	elseif cleanType == "BackpackFabricReinforced" then
