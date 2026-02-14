@@ -1,0 +1,47 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+Sandbox_PTBR = {
+    Sandbox_STK = "Scavenger's Toolkit",
+    
+    /* Container Limits */
+    Sandbox_STK_FannyPackLimit = "Limite de Upgrades - Pochete",
+    Sandbox_STK_FannyPackLimit_tooltip = "Numero maximo de upgrades que uma pochete pode ter.",
+    
+    Sandbox_STK_SatchelLimit = "Limite de Upgrades - Satchel",
+    Sandbox_STK_SatchelLimit_tooltip = "Numero maximo de upgrades que uma satchel pode ter.",
+    
+    Sandbox_STK_SchoolbagLimit = "Limite de Upgrades - Mochila Escolar",
+    Sandbox_STK_SchoolbagLimit_tooltip = "Numero maximo de upgrades que uma mochila escolar pode ter.",
+    
+    /* Straps (Alcas) */
+    Sandbox_STK_StrapsBasicBonus = "Bonus - Alcas Basicas",
+    Sandbox_STK_StrapsReinforcedBonus = "Bonus - Alcas Reforcadas",
+    Sandbox_STK_StrapsTacticalBonus = "Bonus - Alcas Taticas",
+    
+    /* Fabric (Tecido) */
+    Sandbox_STK_FabricBasicBonus = "Bonus - Tecido Basico",
+    Sandbox_STK_FabricReinforcedBonus = "Bonus - Tecido Reforcado",
+    Sandbox_STK_FabricTacticalBonus = "Bonus - Tecido Tatico",
+    
+    /* Belt Buckle */
+    Sandbox_STK_BeltBuckleBonus = "Bonus - Fivela de Cinto",
+    
+    /* Tooltips */
+    Sandbox_STK_WeightReductionTooltip = "Bonus de reducao de peso (0.05 = 5% de reducao de peso).",
+    Sandbox_STK_CapacityTooltip = "Bonus de capacidade (quantidade de slots adicionados).",
+    
+    /* Tailoring */
+    Sandbox_STK_TailoringEnabled = "Habilitar Bonus de Costura",
+    Sandbox_STK_TailoringEnabled_tooltip = "Se ativado, nivel de Costura afeta limite de upgrades.",
+    
+    Sandbox_STK_TailoringModifier = "Niveis de Costura por Slot Extra",
+    Sandbox_STK_TailoringModifierTooltip = "A cada X niveis de Costura, ganhe +1 slot de upgrade.<br>(0 para desativar)",
+    
+    /* Knife Alternative */
+    Sandbox_STK_KnifeAlternative = "Facas Podem Remover Upgrades",
+    Sandbox_STK_KnifeAlternativeTooltip = "Se ativado, facas podem ser usadas no lugar de tesouras para remover upgrades.",
+    
+    /* Craft Time */
+    Sandbox_STK_AddUpgradeTime = "Tempo para Adicionar Upgrade",
+    Sandbox_STK_RemoveUpgradeTime = "Tempo para Remover Upgrade",
+    Sandbox_STK_CraftTimeTooltip = "Tempo em ticks (100 ticks = ~3 segundos).",
+}

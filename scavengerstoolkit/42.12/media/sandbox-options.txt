@@ -1,1 +1,186 @@
 VERSION = 1,
+
+/* ============================================================================
+CONTAINER LIMITS (Limites de Upgrades por Tipo de Mochila)
+============================================================================ */
+
+option STK.FannyPackLimit
+{
+    type = integer,
+    default = 1,
+    min = 0,
+    max = 5,
+    page = STK,
+    translation = STK_FannyPackLimit,
+}
+
+option STK.SatchelLimit
+{
+    type = integer,
+    default = 2,
+    min = 0,
+    max = 5,
+    page = STK,
+    translation = STK_SatchelLimit,
+}
+
+option STK.SchoolbagLimit
+{
+    type = integer,
+    default = 3,
+    min = 0,
+    max = 6,
+    page = STK,
+    translation = STK_SchoolbagLimit,
+}
+
+/* ============================================================================
+UPGRADE VALUES - STRAPS (Alcas - Weight Reduction)
+============================================================================ */
+
+option STK.StrapsBasicBonus
+{
+    type = double,
+    default = 0.05,
+    min = 0.01,
+    max = 0.5,
+    page = STK,
+    translation = STK_StrapsBasicBonus,
+    tooltip = STK_WeightReductionTooltip,
+}
+
+option STK.StrapsReinforcedBonus
+{
+    type = double,
+    default = 0.10,
+    min = 0.01,
+    max = 0.5,
+    page = STK,
+    translation = STK_StrapsReinforcedBonus,
+    tooltip = STK_WeightReductionTooltip,
+}
+
+option STK.StrapsTacticalBonus
+{
+    type = double,
+    default = 0.15,
+    min = 0.01,
+    max = 0.5,
+    page = STK,
+    translation = STK_StrapsTacticalBonus,
+    tooltip = STK_WeightReductionTooltip,
+}
+
+/* ============================================================================
+UPGRADE VALUES - FABRIC (Tecido - Capacidade)
+============================================================================ */
+
+option STK.FabricBasicBonus
+{
+    type = integer,
+    default = 3,
+    min = 1,
+    max = 20,
+    page = STK,
+    translation = STK_FabricBasicBonus,
+    tooltip = STK_CapacityTooltip,
+}
+
+option STK.FabricReinforcedBonus
+{
+    type = integer,
+    default = 5,
+    min = 1,
+    max = 20,
+    page = STK,
+    translation = STK_FabricReinforcedBonus,
+    tooltip = STK_CapacityTooltip,
+}
+
+option STK.FabricTacticalBonus
+{
+    type = integer,
+    default = 8,
+    min = 1,
+    max = 20,
+    page = STK,
+    translation = STK_FabricTacticalBonus,
+    tooltip = STK_CapacityTooltip,
+}
+
+/* ============================================================================
+UPGRADE VALUES - BELT BUCKLE (Fivela - Weight Reduction)
+============================================================================ */
+
+option STK.BeltBuckleBonus
+{
+    type = double,
+    default = 0.10,
+    min = 0.01,
+    max = 0.5,
+    page = STK,
+    translation = STK_BeltBuckleBonus,
+    tooltip = STK_WeightReductionTooltip,
+}
+
+/* ============================================================================
+TAILORING SKILL BONUS
+============================================================================ */
+
+option STK.TailoringEnabled
+{
+    type = boolean,
+    default = true,
+    page = STK,
+    translation = STK_TailoringEnabled,
+}
+
+option STK.TailoringModifier
+{
+    type = integer,
+    default = 10,
+    min = 0,
+    max = 20,
+    page = STK,
+    translation = STK_TailoringModifier,
+    tooltip = STK_TailoringModifierTooltip,
+}
+
+/* ============================================================================
+KNIFE ALTERNATIVE
+============================================================================ */
+
+option STK.KnifeAlternative
+{
+    type = boolean,
+    default = false,
+    page = STK,
+    translation = STK_KnifeAlternative,
+    tooltip = STK_KnifeAlternativeTooltip,
+}
+
+/* ============================================================================
+CRAFTING TIME (Tempo de Craft)
+============================================================================ */
+
+option STK.AddUpgradeTime
+{
+    type = integer,
+    default = 100,
+    min = 10,
+    max = 500,
+    page = STK,
+    translation = STK_AddUpgradeTime,
+    tooltip = STK_CraftTimeTooltip,
+}
+
+option STK.RemoveUpgradeTime
+{
+    type = integer,
+    default = 80,
+    min = 10,
+    max = 500,
+    page = STK,
+    translation = STK_RemoveUpgradeTime,
+    tooltip = STK_CraftTimeTooltip,
+}

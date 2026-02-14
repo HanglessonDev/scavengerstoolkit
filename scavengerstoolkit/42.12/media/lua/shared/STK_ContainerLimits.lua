@@ -1,5 +1,4 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\features\STK_ContainerLimits.lua
-
 --- Feature: Dynamic upgrade limits based on container type
 --- Uses hook system to modify bag behavior without touching core
 
@@ -26,31 +25,28 @@ Logger.log("Feature carregada: Container Limits")
 -- CONTAINER LIMITS TABLE
 -- ============================================================================
 
---- Define max upgrades for each container type
-local containerLimits = {
-	-- Small bags (1-2 upgrades)
-	["Base.Bag_FannyPackFront"] = 1,
-	["Base.Bag_FannyPackBack"] = 1,
+--- Get limit from Sandbox or use default
+--- @param bagType string Full type of bag
+--- @return number limit Maximum upgrades
+local function getLimitForBagType(bagType)
+	-- FannyPacks
+	if bagType == "Base.Bag_FannyPackFront" or bagType == "Base.Bag_FannyPackBack" then
+		return SandboxVars.STK.FannyPackLimit or 1
+	end
 
-	-- Medium bags (2 upgrades)
-	["Base.Bag_Satchel"] = 2,
-	["Base.Bag_SatchelPhoto"] = 2,
-	["Base.Bag_Satchel_Military"] = 2,
-	["Base.Bag_Satchel_Medical"] = 2,
-	["Base.Bag_Satchel_Leather"] = 2,
-	["Base.Bag_Satchel_Mail"] = 2,
-	["Base.Bag_Satchel_Fishing"] = 2,
+	-- Satchels (all variants)
+	if bagType:find("Satchel") then
+		return SandboxVars.STK.SatchelLimit or 2
+	end
 
-	-- Large bags (3 upgrades) - DEFAULT
-	["Base.Bag_Schoolbag"] = 3,
-	["Base.Bag_Schoolbag_Kids"] = 3,
-	["Base.Bag_Schoolbag_Medical"] = 3,
-	["Base.Bag_Schoolbag_Patches"] = 3,
-	["Base.Bag_Schoolbag_Travel"] = 3,
-}
+	-- Schoolbags (all variants)
+	if bagType:find("Schoolbag") then
+		return SandboxVars.STK.SchoolbagLimit or 3
+	end
 
--- Default limit for bags not in the table
-local DEFAULT_LIMIT = 3
+	-- Default for unknown bags
+	return SandboxVars.STK.SchoolbagLimit or 3
+end
 
 -- ============================================================================
 -- HOOK: Modify bag limits on initialization
@@ -61,7 +57,7 @@ local DEFAULT_LIMIT = 3
 --- @param isFirstInit boolean Whether this is the first time initializing this bag
 local function setContainerLimit(bag, isFirstInit)
 	local bagType = bag:getFullType()
-	local limit = containerLimits[bagType] or DEFAULT_LIMIT
+	local limit = getLimitForBagType(bagType)
 
 	local imd = bag:getModData()
 	imd.LMaxUpgrades = limit
@@ -94,15 +90,7 @@ local STK_ContainerLimits = {}
 --- @param bagType string Full type of the bag (e.g., "Base.Bag_Schoolbag")
 --- @return number limit The maximum number of upgrades
 function STK_ContainerLimits.getLimit(bagType)
-	return containerLimits[bagType] or DEFAULT_LIMIT
-end
-
---- Set a custom limit for a bag type (for other mods/features to use)
---- @param bagType string Full type of the bag
---- @param limit number Maximum upgrades
-function STK_ContainerLimits.setLimit(bagType, limit)
-	containerLimits[bagType] = limit
-	Logger.log("Limite customizado definido: " .. bagType .. " = " .. limit)
+	return getLimitForBagType(bagType)
 end
 
 return STK_ContainerLimits
