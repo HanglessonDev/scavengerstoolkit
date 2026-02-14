@@ -1,0 +1,6 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+UI_EN = {
+    UI_STK_Slots = "Slots",
+    UI_STK_Capacity = "Capacity",
+    UI_STK_WeightReduction = "Weight Reduction",
+}

@@ -1,0 +1,6 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+UI_PTBR = {
+    UI_STK_Slots = "Slots",
+    UI_STK_Capacity = "Capacidade",
+    UI_STK_WeightReduction = "Reducao de Peso",
+}
