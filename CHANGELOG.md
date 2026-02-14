@@ -7,6 +7,25 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-02-14
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: novo script para estender a funcionalidade de tooltips
+  - Implementa sistema dinâmico para exibir informações de upgrades nas mochilas
+  - Exibe slots disponíveis/utilizados, bônus de capacidade e redução de peso
+  - Exibe valores de upgrade para itens de melhoria (capacidade e redução de peso)
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`: arquivo de tradução para textos de interface em inglês
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`: arquivo de tradução para textos de interface em português brasileiro
+
+### Modificado
+* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`:
+  - Comentários nas linhas de tooltip para evitar conflitos com o novo sistema dinâmico
+  - Linhas afetadas: BackpackStrapsBasic, BackpackStrapsReinforced, BackpackStrapsTactical, BackpackFabricBasic, BackpackFabricReinforced, BackpackFabricTactical, BeltBuckleReinforced
+
+### Renomeado
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Tooltip_EN.txt` → `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Tooltip_.txt`
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Tooltip_PTBR.txt` → `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Tooltip_.txt`
+
 ## [0.5.0] - 2026-02-14
 
 ### Adicionado
