@@ -1,0 +1,15 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+Tooltip_EN = {
+    /* Backpack Straps - Weight Reduction */
+    Tooltip_STK_StrapsBasic = "Bag upgrade material.<br>+5% Weight Reduction",
+    Tooltip_STK_StrapsReinforced = "Bag upgrade material.<br>+10% Weight Reduction",
+    Tooltip_STK_StrapsTactical = "Bag upgrade material.<br>+15% Weight Reduction",
+    
+    /* Backpack Fabric - Capacity */
+    Tooltip_STK_FabricBasic = "Bag upgrade material.<br>+3 Capacity",
+    Tooltip_STK_FabricReinforced = "Bag upgrade material.<br>+5 Capacity",
+    Tooltip_STK_FabricTactical = "Bag upgrade material.<br>+8 Capacity",
+    
+    /* Belt Buckle - Weight Reduction */
+    Tooltip_STK_BeltBuckle = "Bag upgrade material.<br>+10% Weight Reduction",
+}

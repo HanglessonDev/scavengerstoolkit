@@ -1,0 +1,12 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+ContextMenu_PTBR = {
+    /* Menu principal */
+    ContextMenu_STK_AddUpgrade = "Adicionar Upgrade STK",
+    ContextMenu_STK_RemoveUpgrade = "Remover Upgrade STK",
+
+    /* Tooltips de validação */
+    ContextMenu_STK_MaxUpgrades = "Esta mochila já atingiu o máximo de upgrades.",
+    ContextMenu_STK_NeedTools = "Você precisa de Agulha e Linha para costurar upgrades.",
+    ContextMenu_STK_NoItems = "Você não tem nenhum item de upgrade STK no inventário.\nProcure por: Alças, Tecido ou Fivela.",
+    ContextMenu_STK_NeedScissors = "Você precisa de uma Tesoura para remover upgrades.",
+}

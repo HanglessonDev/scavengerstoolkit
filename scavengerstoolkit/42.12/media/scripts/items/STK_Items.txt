@@ -12,6 +12,7 @@ module STK
         DisplayCategory  = Material,
         Icon             = BackpackStrapsBasic,
         WorldStaticModel = BackpackStraps_Ground,
+        Tooltip          = Tooltip_STK_StrapsBasic,
     }
     
     item BackpackStrapsReinforced
@@ -21,6 +22,7 @@ module STK
         DisplayCategory  = Material,
         Icon             = BackpackStrapsReinforced,
         WorldStaticModel = BackpackStraps_Ground,
+        Tooltip          = Tooltip_STK_StrapsReinforced,
     }
     
     item BackpackStrapsTactical
@@ -30,6 +32,7 @@ module STK
         DisplayCategory  = Material,
         Icon             = BackpackStrapsTactical,
         WorldStaticModel = BackpackStraps_Ground,
+        Tooltip          = Tooltip_STK_StrapsTactical,
     }
     
     item BackpackFabricBasic
@@ -39,6 +42,7 @@ module STK
         DisplayCategory  = Material,
         Icon             = BackpackFabricBasic,
         WorldStaticModel = BackpackFabricBasic_Ground,
+        Tooltip          = Tooltip_STK_FabricBasic,
     }
     
     item BackpackFabricReinforced
@@ -48,6 +52,7 @@ module STK
         DisplayCategory  = Material,
         Icon             = BackpackFabricReinforced,
         WorldStaticModel = BackpackFabricReinforced_Ground,
+        Tooltip          = Tooltip_STK_FabricReinforced,
     }
     
     item BackpackFabricTactical
@@ -57,6 +62,7 @@ module STK
         DisplayCategory  = Material,
         Icon             = BackpackFabricTactical,
         WorldStaticModel = BackpackFabricTactical_Ground,
+        Tooltip          = Tooltip_STK_FabricTactical,
     }
     
     item BeltBuckleReinforced
@@ -66,5 +72,6 @@ module STK
         DisplayCategory  = Material,
         Icon             = BeltBuckleReinforced,
         WorldStaticModel = BeltBuckleReinforced_Ground,
+        Tooltip          = Tooltip_STK_BeltBuckle,
     }
 }

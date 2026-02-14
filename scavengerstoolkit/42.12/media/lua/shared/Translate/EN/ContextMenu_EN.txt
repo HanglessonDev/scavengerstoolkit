@@ -1,0 +1,12 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+ContextMenu_EN = {
+    /* Main menu */
+    ContextMenu_STK_AddUpgrade = "Add STK Upgrade",
+    ContextMenu_STK_RemoveUpgrade = "Remove STK Upgrade",
+    
+    /* Validation tooltips */
+    ContextMenu_STK_MaxUpgrades = "This bag has reached the maximum number of upgrades.",
+    ContextMenu_STK_NeedTools = "You need a Needle and Thread to sew upgrades.",
+    ContextMenu_STK_NoItems = "You don't have any STK upgrade items in your inventory.\nLook for: Straps, Fabric, or Belt Buckle.",
+    ContextMenu_STK_NeedScissors = "You need Scissors to remove upgrades.",
+}

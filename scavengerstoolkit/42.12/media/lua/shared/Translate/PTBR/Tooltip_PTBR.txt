@@ -1,0 +1,15 @@
+/* ZedScript-Ignore-File: NOT_VALID_BLOCK */
+Tooltip_PTBR = {
+    /* Backpack Straps (Alcas) - Weight Reduction */
+    Tooltip_STK_StrapsBasic = "Material de upgrade para mochilas.<br>+5% Reducao de Peso",
+    Tooltip_STK_StrapsReinforced = "Material de upgrade para mochilas.<br>+10% Reducao de Peso",
+    Tooltip_STK_StrapsTactical = "Material de upgrade para mochilas.<br>+15% Reducao de Peso",
+    
+    /* Backpack Fabric (Tecido) - Capacidade */
+    Tooltip_STK_FabricBasic = "Material de upgrade para mochilas.<br>+3 Capacidade",
+    Tooltip_STK_FabricReinforced = "Material de upgrade para mochilas.<br>+5 Capacidade",
+    Tooltip_STK_FabricTactical = "Material de upgrade para mochilas.<br>+8 Capacidade",
+    
+    /* Belt Buckle (Fivela) - Weight Reduction */
+    Tooltip_STK_BeltBuckle = "Material de upgrade para mochilas.<br>+10% Reducao de Peso",
+}

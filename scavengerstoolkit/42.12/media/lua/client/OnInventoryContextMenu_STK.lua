@@ -39,62 +39,52 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 	end
 
 	-- ========================================================================
-	-- CENÁRIO 1: Jogador clicou em uma MOCHILA
+	-- CENARIO 1: Jogador clicou em uma MOCHILA
 	-- ========================================================================
 	if STKBagUpgrade.isBagValid(selectedItem) then
-		Logger.log("Mochila válida detectada: " .. selectedItem:getType())
+		Logger.log("Mochila valida detectada: " .. selectedItem:getType())
 		local bag = selectedItem
 		STKBagUpgrade.initBag(bag)
 
 		-- Bloco para ADICIONAR upgrades (executado de forma independente)
 		do
 			local addUpgradeSubMenu = ISContextMenu:getNew(context)
-			local addUpgradeOption = context:addOption("Adicionar Upgrade STK")
+			local addUpgradeOption = context:addOption(getText("ContextMenu_STK_AddUpgrade"))
 			context:addSubMenu(addUpgradeOption, addUpgradeSubMenu)
 
-			-- Validação 1: Mochila está cheia de upgrades?
+			-- Validacao 1: Mochila esta cheia de upgrades?
 			if not STKBagUpgrade.canAddUpgrade(bag) then
-				Logger.log("Validação ADIÇÃO FALHOU: Mochila já tem máximo de upgrades")
+				Logger.log("Validacao ADICAO FALHOU: Mochila ja tem maximo de upgrades")
 				addUpgradeOption.notAvailable = true
 				local tooltip = ISInventoryPaneContextMenu.addToolTip()
 				addUpgradeOption.toolTip = tooltip
-				tooltip.description = "Esta mochila já atingiu o máximo de upgrades."
-			-- Validação 2: Jogador tem as ferramentas (agulha + linha)?
+				tooltip.description = getText("ContextMenu_STK_MaxUpgrades")
+			-- Validacao 2: Jogador tem as ferramentas (agulha + linha)?
 			elseif not STKBagUpgrade.hasRequiredTools(player, "add") then
-				Logger.log("Validação ADIÇÃO FALHOU: Falta Agulha ou Linha")
+				Logger.log("Validacao ADICAO FALHOU: Falta Agulha ou Linha")
 				addUpgradeOption.notAvailable = true
 				local tooltip = ISInventoryPaneContextMenu.addToolTip()
 				addUpgradeOption.toolTip = tooltip
-				tooltip.description = "Você precisa de Agulha e Linha para costurar upgrades."
+				tooltip.description = getText("ContextMenu_STK_NeedTools")
 			else
-				-- Validação 3: Jogador tem itens de upgrade STK?
+				-- Validacao 3: Jogador tem itens de upgrade STK?
 				local availableUpgrades = STKBagUpgrade.getUpgradeItems(player:getInventory())
-				Logger.log("Upgrades disponíveis para adição: " .. #availableUpgrades)
+				Logger.log("Upgrades disponiveis para adicao: " .. #availableUpgrades)
 
 				if #availableUpgrades == 0 then
-					Logger.log("Validação ADIÇÃO FALHOU: Nenhum item de upgrade no inventário")
+					Logger.log("Validacao ADICAO FALHOU: Nenhum item de upgrade no inventario")
 					addUpgradeOption.notAvailable = true
 					local tooltip = ISInventoryPaneContextMenu.addToolTip()
 					addUpgradeOption.toolTip = tooltip
-					tooltip.description = "Você não tem nenhum item de upgrade STK no inventário.\n"
-						.. "Procure por: Straps, Fabric ou Belt Buckle."
+					tooltip.description = getText("ContextMenu_STK_NoItems")
 				else
-					-- Tudo OK! Mostrar opções de upgrade
-					Logger.log("Validações de ADIÇÃO passaram! Mostrando menu de upgrades")
+					-- Tudo OK! Mostrar opcoes de upgrade
+					-- MUDANCA: Agora mostra APENAS o nome do item, sem stats
+					-- Os stats estao nos tooltips dos itens quando passa o mouse
+					Logger.log("Validacoes de ADICAO passaram! Mostrando menu de upgrades")
 					for _, upgradeItem in ipairs(availableUpgrades) do
 						local displayName = upgradeItem:getDisplayName()
-						local value = STKBagUpgrade.getUpgradeValue(upgradeItem:getType())
-						Logger.log("  - " .. upgradeItem:getType() .. " (valor: " .. tostring(value) .. ")")
-
-						-- Adiciona informação visual do que o upgrade faz
-						if value and value > 0 then
-							displayName = displayName .. " (+" .. value .. " Capacidade)"
-						elseif value then
-							displayName = displayName
-							.. " (+"
-								.. math.floor(math.abs(value) * 100)
-								.. "% Redução de Peso)"
-						end
+						Logger.log("  - " .. upgradeItem:getType())
 
 						addUpgradeSubMenu:addOption(displayName, nil, function()
 							ISTimedActionQueue.add(ISSTKBagAddUpgradeAction:new(player, bag, upgradeItem))
@@ -108,20 +98,21 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		do
 			local imd = bag:getModData()
 			if imd.LUpgrades and #imd.LUpgrades > 0 then
-				Logger.log("Mochila tem " .. #imd.LUpgrades .. " upgrade(s), criando menu de remoção")
+				Logger.log("Mochila tem " .. #imd.LUpgrades .. " upgrade(s), criando menu de remocao")
 				local removeUpgradeSubMenu = ISContextMenu:getNew(context)
-				local removeUpgradeOption = context:addOption("Remover Upgrade STK")
+				local removeUpgradeOption = context:addOption(getText("ContextMenu_STK_RemoveUpgrade"))
 				context:addSubMenu(removeUpgradeOption, removeUpgradeSubMenu)
 
-				-- Validação: Jogador tem tesoura?
+				-- Validacao: Jogador tem tesoura?
 				if not STKBagUpgrade.hasRequiredTools(player, "remove") then
-					Logger.log("Validação REMOÇÃO FALHOU: Falta tesoura para remover")
+					Logger.log("Validacao REMOCAO FALHOU: Falta tesoura para remover")
 					removeUpgradeOption.notAvailable = true
 					local tooltip = ISInventoryPaneContextMenu.addToolTip()
 					removeUpgradeOption.toolTip = tooltip
-					tooltip.description = "Você precisa de uma Tesoura para remover upgrades."
+					tooltip.description = getText("ContextMenu_STK_NeedScissors")
 				else
 					-- Listar todos os upgrades aplicados
+					-- MUDANCA: Agora mostra APENAS o nome do item, sem stats
 					for _, upgradeType in ipairs(imd.LUpgrades) do
 						local itemScript = getScriptManager():getItem("STK." .. upgradeType)
 						local displayName
@@ -129,13 +120,6 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 							displayName = itemScript:getDisplayName()
 						else
 							displayName = upgradeType -- Fallback
-						end
-						local value = STKBagUpgrade.getUpgradeValue(upgradeType)
-
-						if value and value > 0 then
-							displayName = displayName .. " (+" .. value .. " Capacidade)"
-						elseif value then
-							displayName = displayName .. " (+" .. math.floor(math.abs(value) * 100) .. "% Redução)"
 						end
 
 						removeUpgradeSubMenu:addOption(displayName, nil, function()
