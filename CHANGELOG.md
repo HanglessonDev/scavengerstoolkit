@@ -7,6 +7,24 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-02-14
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Sandbox_EN.txt`: arquivo de tradução para opções de sandbox em inglês
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Sandbox_PTBR.txt`: arquivo de tradução para opções de sandbox em português brasileiro
+* `scavengerstoolkit/42.12/media/sandbox-options.txt`: opções configuráveis via sandbox para ajustar limites de upgrade e valores de itens
+  - Opções para definir limites de upgrade por tipo de mochila (FannyPack, Satchel, Schoolbag)
+  - Opções para ajustar valores dos upgrades (alças, tecido, fivela)
+  - Opções para habilidades como costura e tempo de craft
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
+  - Atualização para ler valores de upgrade do SandboxVars em vez de valores fixos
+  - Implementação de lógica condicional para obter valores configuráveis de sandbox
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`:
+  - Atualização para ler limites de container do SandboxVars em vez de valores fixos
+  - Implementação de função getLimitForBagType para obter limites configuráveis
+
 ## [0.4.1] - 2026-02-13
 
 ### Adicionado
@@ -16,7 +34,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Melhorias no sistema de logging com informações detalhadas de prioridade
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: 
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
   - Implementação do sistema de hooks para suportar prioridades de execução
   - Atualização do sistema de registro de hooks para aceitar parâmetro de prioridade
   - Melhoria na ordenação e execução de hooks baseada em prioridades
@@ -37,7 +55,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Atualiza lógica para suportar limites dinâmicos de containers
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: 
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`:
   - Atualiza menu de contexto para usar sistema de tradução
   - Remove exibição de estatísticas nos nomes dos itens no menu (agora exibidos em tooltips)
   - Melhora consistência com sistema de tradução existente
@@ -66,7 +84,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 * `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: adição de anotações LuaLS e melhorias de tipagem
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: 
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`:
   - Corrige avisos de tipagem relacionados a valores nil em operações matemáticas
   - Adiciona verificações `value and value > 0` para evitar erros
   - Atualiza construtores para garantir tipagem correta
