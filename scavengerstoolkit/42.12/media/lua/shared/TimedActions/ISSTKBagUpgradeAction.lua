@@ -1,7 +1,5 @@
--- ============================================================================
--- Timed Actions para Upgrades de Mochilas STK - VERSÃO 100% FUNCIONAL
--- ============================================================================
-
+--- @file scavengerstoolkit\42.12\media\lua\shared\TimedActions\ISSTKBagUpgradeAction.lua
+--- Timed Actions para Upgrades de Mochilas STK - VERSÃO 100% FUNCIONAL
 require("TimedActions/ISBaseTimedAction")
 local STKBagUpgrade = require("STKBagUpgrade")
 
@@ -9,18 +7,32 @@ local STKBagUpgrade = require("STKBagUpgrade")
 -- CLASSE BASE PARA AÇÕES STK
 -- ============================================================================
 
+--- @class ISSTKBagUpgradeAction : ISBaseTimedAction
+--- @field character any The character performing the action
+--- @field onComplete function The function to call when the action is complete
+--- @field bag any The bag being upgraded
+--- @field itemInfo any The item information
+--- @field jobType string The job type description
+--- @field maxTime number The time required for the action
+--- @field stopOnWalk boolean Whether to stop the action when walking
+--- @field stopOnRun boolean Whether to stop the action when running
+--- @field forceProgressBar boolean Whether to force the progress bar to show
 ISSTKBagUpgradeAction = ISBaseTimedAction:derive("ISSTKBagUpgradeAction")
 
+--- Validate the action
+--- @return boolean isValid True if the action is valid, false otherwise
 function ISSTKBagUpgradeAction:isValid()
 	return self.character and self.bag and self.character:getInventory():contains(self.bag)
 end
 
+--- Update the action progress
 function ISSTKBagUpgradeAction:update()
 	self.character:setMetabolicTarget(Metabolics.UsingTools)
 	-- FIX: Atualiza barra de progresso no item
 	self.bag:setJobDelta(self:getJobDelta())
 end
 
+--- Start the action
 function ISSTKBagUpgradeAction:start()
 	self:setActionAnim(CharacterActionAnims.Craft)
 	-- FIX: Mostra barra de progresso no item
@@ -28,12 +40,14 @@ function ISSTKBagUpgradeAction:start()
 	self.bag:setJobDelta(0.0)
 end
 
+--- Stop the action
 function ISSTKBagUpgradeAction:stop()
 	-- FIX: Remove barra de progresso
 	self.bag:setJobDelta(0.0)
 	ISBaseTimedAction.stop(self)
 end
 
+--- Perform the action
 function ISSTKBagUpgradeAction:perform()
 	-- FIX: Remove barra de progresso
 	self.bag:setJobDelta(0.0)
@@ -45,6 +59,14 @@ function ISSTKBagUpgradeAction:perform()
 	ISBaseTimedAction.perform(self)
 end
 
+--- Constructor for ISSTKBagUpgradeAction
+--- @param character any The character performing the action
+--- @param onComplete function The function to call when the action is complete
+--- @param bag any The bag being upgraded
+--- @param itemInfo any The item information
+--- @param jobType string The job type description
+--- @param time number The time required for the action
+--- @return ISSTKBagUpgradeAction The new action instance
 function ISSTKBagUpgradeAction:new(character, onComplete, bag, itemInfo, jobType, time)
 	local o = {}
 	setmetatable(o, self)
@@ -67,9 +89,11 @@ end
 -- AÇÃO: ADICIONAR UPGRADE
 -- ============================================================================
 
+--- @class ISSTKBagAddUpgradeAction : ISSTKBagUpgradeAction
 ISSTKBagAddUpgradeAction = ISSTKBagUpgradeAction:derive("ISSTKBagAddUpgradeAction")
 
--- FIX: Validação completa durante a ação
+--- Validate the add upgrade action
+--- @return boolean isValid True if the action is valid, false otherwise
 function ISSTKBagAddUpgradeAction:isValid()
 	-- Validação da classe pai (personagem e mochila existem)
 	if not ISSTKBagUpgradeAction.isValid(self) then
@@ -94,6 +118,7 @@ function ISSTKBagAddUpgradeAction:isValid()
 	return #imd.LUpgrades < imd.LMaxUpgrades
 end
 
+--- Perform the add upgrade action
 function ISSTKBagAddUpgradeAction:perform()
 	-- Consumir linha (já estava funcionando)
 	local thread = self.character:getInventory():getFirstType("Base.Thread")
@@ -105,15 +130,25 @@ function ISSTKBagAddUpgradeAction:perform()
 	ISSTKBagUpgradeAction.perform(self)
 end
 
+--- Constructor for ISSTKBagAddUpgradeAction
+--- @param character any The character performing the action
+--- @param bag any The bag being upgraded
+--- @param upgradeItem any The upgrade item to add
+--- @return ISSTKBagAddUpgradeAction The new action instance
 function ISSTKBagAddUpgradeAction:new(character, bag, upgradeItem)
-	local o = ISSTKBagUpgradeAction:new(
-		character,
-		STKBagUpgrade.applyUpgrade,
-		bag,
-		upgradeItem,
-		"Instalando upgrade STK...",
-		100 -- ~3 segundos
-	)
+	local o = {}
+	setmetatable(o, self)
+
+	o.character = character
+	o.onComplete = STKBagUpgrade.applyUpgrade
+	o.bag = bag
+	o.itemInfo = upgradeItem
+	o.jobType = "Instalando upgrade STK..."
+	o.maxTime = 100
+	o.stopOnWalk = true
+	o.stopOnRun = true
+	o.forceProgressBar = true
+
 	return o
 end
 
@@ -121,9 +156,20 @@ end
 -- AÇÃO: REMOVER UPGRADE
 -- ============================================================================
 
+--- @class ISSTKBagRemoveUpgradeAction : ISSTKBagUpgradeAction
+--- @field character any The character performing the action
+--- @field onComplete function The function to call when the action is complete
+--- @field bag any The bag being upgraded
+--- @field itemInfo any The item information
+--- @field jobType string The job type description
+--- @field maxTime number The time required for the action
+--- @field stopOnWalk boolean Whether to stop the action when walking
+--- @field stopOnRun boolean Whether to stop the action when running
+--- @field forceProgressBar boolean Whether to force the progress bar to show
 ISSTKBagRemoveUpgradeAction = ISSTKBagUpgradeAction:derive("ISSTKBagRemoveUpgradeAction")
 
--- FIX: Validação completa durante a ação
+--- Validate the remove upgrade action
+--- @return boolean isValid True if the action is valid, false otherwise
 function ISSTKBagRemoveUpgradeAction:isValid()
 	-- Validação da classe pai
 	if not ISSTKBagUpgradeAction.isValid(self) then
@@ -147,7 +193,7 @@ function ISSTKBagRemoveUpgradeAction:isValid()
 	return false
 end
 
--- FIX: Desgastar tesoura ao remover upgrade
+--- Perform the remove upgrade action
 function ISSTKBagRemoveUpgradeAction:perform()
 	local scissors = self.character:getInventory():getFirstType("Base.Scissors")
 	if scissors then
@@ -164,14 +210,24 @@ function ISSTKBagRemoveUpgradeAction:perform()
 	ISSTKBagUpgradeAction.perform(self)
 end
 
+--- Constructor for ISSTKBagRemoveUpgradeAction
+--- @param character any The character performing the action
+--- @param bag any The bag being upgraded
+--- @param upgradeTypeToRemove string The type of upgrade to remove
+--- @return ISSTKBagRemoveUpgradeAction The new action instance
 function ISSTKBagRemoveUpgradeAction:new(character, bag, upgradeTypeToRemove)
-	local o = ISSTKBagUpgradeAction:new(
-		character,
-		STKBagUpgrade.removeUpgrade,
-		bag,
-		upgradeTypeToRemove,
-		"Removendo upgrade STK...",
-		80 -- ~2.5 segundos (remover é mais rápido)
-	)
+	local o = {}
+	setmetatable(o, self)
+
+	o.character = character
+	o.onComplete = STKBagUpgrade.removeUpgrade
+	o.bag = bag
+	o.itemInfo = upgradeTypeToRemove
+	o.jobType = "Removendo upgrade STK..."
+	o.maxTime = 80
+	o.stopOnWalk = true
+	o.stopOnRun = true
+	o.forceProgressBar = true
+
 	return o
 end

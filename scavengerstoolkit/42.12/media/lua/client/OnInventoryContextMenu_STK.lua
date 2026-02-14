@@ -1,6 +1,6 @@
--- ============================================================================
--- Context Menu para Upgrades de Mochilas STK
--- ============================================================================
+--- @class STKContextMenu
+--- Context Menu para Upgrades de Mochilas STK
+local STKContextMenu = {}
 
 local STKBagUpgrade = require("STKBagUpgrade")
 require("TimedActions/ISSTKBagUpgradeAction")
@@ -10,7 +10,10 @@ require("TimedActions/ISSTKBagUpgradeAction")
 -- ============================================================================
 local DEBUG_MODE = true
 
+--- @class STKLogger
 local Logger = {
+	--- Log a message if debug mode is enabled
+	--- @param message string
 	log = function(message)
 		if not DEBUG_MODE then
 			return
@@ -21,6 +24,10 @@ local Logger = {
 
 Logger.log("Context Menu carregado.")
 
+--- Handler for filling inventory context menu
+--- @param playerNum number Player number
+--- @param context any Context object
+--- @param items any[] Array of items
 local function onFillInventoryContextMenu(playerNum, context, items)
 	local player = getSpecificPlayer(playerNum)
 	local selectedItem = items[1]
@@ -78,9 +85,9 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 						Logger.log("  - " .. upgradeItem:getType() .. " (valor: " .. tostring(value) .. ")")
 
 						-- Adiciona informação visual do que o upgrade faz
-						if value > 0 then
+						if value and value > 0 then
 							displayName = displayName .. " (+" .. value .. " Capacidade)"
-						else
+						elseif value then
 							displayName = displayName
 							.. " (+"
 								.. math.floor(math.abs(value) * 100)
@@ -123,9 +130,9 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 						end
 						local value = STKBagUpgrade.getUpgradeValue(upgradeType)
 
-						if value > 0 then
+						if value and value > 0 then
 							displayName = displayName .. " (+" .. value .. " Capacidade)"
-						else
+						elseif value then
 							displayName = displayName .. " (+" .. math.floor(math.abs(value) * 100) .. "% Redução)"
 						end
 
@@ -174,3 +181,5 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 end
 
 Events.OnFillInventoryObjectContextMenu.Add(onFillInventoryContextMenu)
+
+return STKContextMenu
