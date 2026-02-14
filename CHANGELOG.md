@@ -7,6 +7,30 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-02-13
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`: nova funcionalidade que define limites dinâmicos de upgrades baseados no tipo de container
+  - Implementa sistema de hooks para extensibilidade
+  - Define limites específicos para diferentes tipos de mochilas (FannyPack: 1, Satchel: 2, Schoolbag: 3)
+  - Permite sobrescrita de limites padrão para compatibilidade com outros mods
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: adiciona sistema de hooks para extensibilidade
+  - Implementa pontos de extensão (beforeInitBag, afterInitBag, beforeAdd, afterAdd, beforeRemove, afterRemove)
+  - Permite que outras funcionalidades se integrem ao fluxo principal
+  - Atualiza lógica para suportar limites dinâmicos de containers
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: 
+  - Atualiza menu de contexto para usar sistema de tradução
+  - Remove exibição de estatísticas nos nomes dos itens no menu (agora exibidos em tooltips)
+  - Melhora consistência com sistema de tradução existente
+
+### Adicionado
+* Sistema de hooks para extensibilidade do módulo STKBagUpgrade
+  - Pontos de extensão (beforeInitBag, afterInitBag, beforeAdd, afterAdd, beforeRemove, afterRemove)
+  - Nova funcionalidade de limites dinâmicos de containers (STK_ContainerLimits.lua)
+  - Definição de limites específicos por tipo de container
+
 ## [0.3.1] - 2026-02-13
 
 ### Corrigido

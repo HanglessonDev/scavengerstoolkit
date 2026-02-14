@@ -130,40 +130,6 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 			end
 		end
 	end
-
-	-- ========================================================================
-	-- CENÁRIO 2: Jogador clicou em um ITEM DE UPGRADE STK
-	-- ========================================================================
-	-- local itemType = selectedItem:getType():gsub("^STK%.", "")
-	-- if STKBagUpgrade.getUpgradeValue(itemType) then
-	--     local upgradeItem = selectedItem
-
-	--     -- Procurar mochilas válidas no inventário
-	--     local validBags = {}
-	--     local inventory = player:getInventory()
-
-	--     for i = 0, inventory:getItems():size() - 1 do
-	--         local item = inventory:getItems():get(i)
-	--         if STKBagUpgrade.isBagValid(item) then
-	--             STKBagUpgrade.initBag(item)
-	--             if STKBagUpgrade.canAddUpgrade(item) then
-	--                 table.insert(validBags, item)
-	--             end
-	--         end
-	--     end
-
-	--     if #validBags > 0 and STKBagUpgrade.hasRequiredTools(player, "add") then
-	--         local upgradeToSubMenu = context:getNew()
-	--         local upgradeToOption = context:addOption("Instalar em Mochila", nil, nil)
-	--         context:addSubMenu(upgradeToOption, upgradeToSubMenu)
-
-	--         for _, bag in ipairs(validBags) do
-	--             upgradeToSubMenu:addOption(bag:getDisplayName(), nil, function()
-	--                 ISTimedActionQueue.add(ISSTKBagAddUpgradeAction:new(player, bag, upgradeItem))
-	--             end)
-	--         end
-	--     end
-	-- end
 end
 
 Events.OnFillInventoryObjectContextMenu.Add(onFillInventoryContextMenu)

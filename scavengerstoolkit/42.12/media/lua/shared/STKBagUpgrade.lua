@@ -1,11 +1,11 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
 
 --- @class STKBagUpgrade
---- Módulo para gerenciar upgrades de mochilas usando itens STK
+--- MÃ³dulo para gerenciar upgrades de mochilas usando itens STK
 local STKBagUpgrade = {}
 
 -- ============================================================================
--- CONFIGURAÇÃO E LOGGING
+-- CONFIGURAÃ‡ÃƒO E LOGGING
 -- ============================================================================
 local DEBUG_MODE = true
 
@@ -21,38 +21,81 @@ local Logger = {
 	end,
 }
 
-Logger.log("Módulo carregado. DEBUG_MODE está: " .. tostring(DEBUG_MODE))
+Logger.log("Modulo carregado. DEBUG_MODE esta: " .. tostring(DEBUG_MODE))
 
 -- ============================================================================
--- DADOS DO MOD - USANDO ITENS STK! 🎯
+-- HOOK SYSTEM (EXTENSIBILITY)
+-- ============================================================================
+
+--- Hook system for features to plug into core functionality
+STKBagUpgrade.hooks = {
+	beforeInitBag = {}, -- Called before bag initialization
+	afterInitBag = {}, -- Called after bag initialization
+	beforeAdd = {}, -- Called before adding upgrade
+	afterAdd = {}, -- Called after adding upgrade
+	beforeRemove = {}, -- Called before removing upgrade
+	afterRemove = {}, -- Called after removing upgrade
+}
+
+--- Register a hook callback
+--- @param hookType string The type of hook
+--- @param callback function The callback function
+function STKBagUpgrade.registerHook(hookType, callback)
+	if not STKBagUpgrade.hooks[hookType] then
+		Logger.log("ERRO: Tipo de hook invalido: " .. hookType)
+		return false
+	end
+
+	table.insert(STKBagUpgrade.hooks[hookType], callback)
+	Logger.log("Hook registrado: " .. hookType)
+	return true
+end
+
+--- Execute all hooks of a given type
+--- @param hookType string The type of hook to execute
+--- @param ... any Arguments to pass to hook callbacks
+--- @return boolean shouldContinue False if any hook returned false, true otherwise
+local function executeHooks(hookType, ...)
+	for _, hook in ipairs(STKBagUpgrade.hooks[hookType]) do
+		local result = hook(...)
+		if result == false then
+			Logger.log("Hook '" .. hookType .. "' cancelou operacao")
+			return false
+		end
+	end
+	return true
+end
+
+-- ============================================================================
+-- DADOS DO MOD - USANDO ITENS STK!
 -- ============================================================================
 
 --- @type table<string, number>
--- MUDANÇA 1: Tabela com SEUS itens de upgrade STK
+-- MUDANÃ‡A 1: Tabela com SEUS itens de upgrade STK
 local upgradeItemValues = {
-	-- Straps (Alças) - Melhoram distribuição de peso (Weight Reduction)
+	-- Straps (AlÃ§as) - Melhoram distribuiÃ§Ã£o de peso (Weight Reduction)
 	["BackpackStrapsBasic"] = -0.05, -- +5% Weight Reduction
 	["BackpackStrapsReinforced"] = -0.10, -- +10% Weight Reduction
 	["BackpackStrapsTactical"] = -0.15, -- +15% Weight Reduction
 
-	-- Fabric (Tecido) - Aumentam capacidade (mais bolsos/espaço)
+	-- Fabric (Tecido) - Aumentam capacidade (mais bolsos/espaÃ§o)
 	["BackpackFabricBasic"] = 3, -- +3 capacidade
 	["BackpackFabricReinforced"] = 5, -- +5 capacidade
 	["BackpackFabricTactical"] = 8, -- +8 capacidade
 
-	-- Belt Buckle (Fivela) - Reforça estrutura (Weight Reduction também)
+	-- Belt Buckle (Fivela) - ReforÃ§a estrutura (Weight Reduction tambÃ©m)
 	["BeltBuckleReinforced"] = -0.10, -- +10% Weight Reduction
 }
 
 --- @type table<string, string[]>
--- Ferramentas necessárias
+-- Ferramentas necessÃ¡rias
 local requiredTools = {
-	add = { "Base.Needle", "Base.Thread" }, -- MUDANÇA 2: Ferramentas realistas para costura
+	add = { "Base.Needle", "Base.Thread" }, -- MUDANÃ‡A 2: Ferramentas realistas para costura
 	remove = { "Base.Scissors" }, -- Tesoura para remover
 }
 
 -- ============================================================================
--- FUNÇÕES PÚBLICAS DO MÓDULO
+-- FUNÃ‡Ã•ES PÃšBLICAS DO MÃ“DULO
 -- ============================================================================
 
 --- Get the upgrade value for a given item type
@@ -75,22 +118,33 @@ function STKBagUpgrade.initBag(item)
 		return
 	end
 
+	-- HOOK: beforeInitBag
+	if not executeHooks("beforeInitBag", item) then
+		return
+	end
+
 	local imd = item:getModData()
-	if not imd.STKUpgradeInit then
+	local isFirstInit = not imd.STKUpgradeInit
+
+	if isFirstInit then
 		Logger.log("Inicializando ModData para: " .. item:getType())
 		imd.LUpgrades = imd.LUpgrades or {}
 		imd.LCapacity = imd.LCapacity or item:getCapacity()
 		imd.LWeightReduction = imd.LWeightReduction or item:getWeightReduction()
 		imd.STKUpgradeInit = true
-		imd.LMaxUpgrades = 3 -- Limite padrão
+		imd.LMaxUpgrades = 3 -- Limite padrao (pode ser sobrescrito por hooks)
 	end
+
+	-- HOOK: afterInitBag (chamado SEMPRE, nao so na primeira vez)
+	-- Permite features aplicarem limites dinamicos em bags ja existentes
+	executeHooks("afterInitBag", item, isFirstInit)
 end
 
 --- Update bag stats based on applied upgrades
 --- @param bag any The bag to update
 function STKBagUpgrade.updateBag(bag)
 	if not bag then
-		Logger.log("Erro: Tentativa de atualizar mochila inválida.")
+		Logger.log("Erro: Tentativa de atualizar mochila invÃ¡lida.")
 		return
 	end
 
@@ -128,7 +182,12 @@ end
 --- @param player any The player applying the upgrade
 function STKBagUpgrade.applyUpgrade(bag, upgradeItem, player)
 	if not bag or not upgradeItem or not player then
-		Logger.log("Erro: Parâmetros inválidos para applyUpgrade.")
+		Logger.log("Erro: Parametros invalidos para applyUpgrade.")
+		return
+	end
+
+	-- HOOK: beforeAdd
+	if not executeHooks("beforeAdd", bag, upgradeItem, player) then
 		return
 	end
 
@@ -141,6 +200,9 @@ function STKBagUpgrade.applyUpgrade(bag, upgradeItem, player)
 	upgradeItem:getContainer():Remove(upgradeItem)
 	STKBagUpgrade.updateBag(bag)
 	player:Say("Upgrade instalado com sucesso!")
+
+	-- HOOK: afterAdd
+	executeHooks("afterAdd", bag, upgradeItem, player)
 end
 
 --- Remove an upgrade from a bag
@@ -149,7 +211,12 @@ end
 --- @param player any The player removing the upgrade
 function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 	if not bag or not upgradeTypeToRemove or not player then
-		Logger.log("Erro: Parâmetros inválidos para removeUpgrade.")
+		Logger.log("Erro: Parametros invalidos para removeUpgrade.")
+		return
+	end
+
+	-- HOOK: beforeRemove
+	if not executeHooks("beforeRemove", bag, upgradeTypeToRemove, player) then
 		return
 	end
 
@@ -159,23 +226,26 @@ function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 			Logger.log("Removendo upgrade '" .. upgradeTypeToRemove .. "'")
 			table.remove(imd.LUpgrades, i)
 
-			-- MUDANÇA 3: Retorna o item STK específico
+			-- MUDANCA 3: Retorna o item STK especifico
 			local newItem = player:getInventory():AddItem("STK." .. upgradeTypeToRemove)
 			if not newItem then
-				Logger.log("ERRO: Não foi possível criar STK." .. upgradeTypeToRemove)
+				Logger.log("ERRO: Nao foi possivel criar STK." .. upgradeTypeToRemove)
 				player:Say("Erro ao remover upgrade.")
 			else
 				player:Say("Upgrade removido!")
 			end
 
 			STKBagUpgrade.updateBag(bag)
+
+			-- HOOK: afterRemove
+			executeHooks("afterRemove", bag, upgradeTypeToRemove, player)
 			return
 		end
 	end
 end
 
 -- ============================================================================
--- FUNÇÕES DE VALIDAÇÃO
+-- FUNÃ‡Ã•ES DE VALIDAÃ‡ÃƒO
 -- ============================================================================
 
 --- Check if an item is a valid bag for upgrades
@@ -188,7 +258,7 @@ function STKBagUpgrade.isBagValid(item)
 
 	local itemType = item:getFullType()
 
-	-- Lista de mochilas válidas (Base game + suas mochilas STK se tiver)
+	-- Lista de mochilas vÃ¡lidas (Base game + suas mochilas STK se tiver)
 	local validBags = {
 		-- Base game bags
 		"Base.Bag_Schoolbag",
@@ -205,7 +275,7 @@ function STKBagUpgrade.isBagValid(item)
 		"Base.Bag_Satchel_Fishing",
 		"Base.Bag_FannyPackFront",
 		"Base.Bag_FannyPackBack",
-		-- Adicione aqui se você criar mochilas STK customizadas:
+		-- Adicione aqui se vocÃª criar mochilas STK customizadas:
 		-- "STK.Bag_CustomBackpack",
 	}
 
@@ -230,7 +300,7 @@ function STKBagUpgrade.getUpgradeItems(container)
 	for i = 0, container:getItems():size() - 1 do
 		local item = container:getItems():get(i)
 		if item and item:getType() then
-			-- MUDANÇA 5: Procura por itens STK de upgrade
+			-- MUDANÃ‡A 5: Procura por itens STK de upgrade
 			local itemType = item:getType():gsub("^STK%.", "")
 			if STKBagUpgrade.getUpgradeValue(itemType) then
 				table.insert(upgradeItems, item)
