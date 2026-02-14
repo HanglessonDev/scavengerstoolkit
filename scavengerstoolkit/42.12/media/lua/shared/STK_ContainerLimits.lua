@@ -1,4 +1,5 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\features\STK_ContainerLimits.lua
+
 --- Feature: Dynamic upgrade limits based on container type
 --- Uses hook system to modify bag behavior without touching core
 
@@ -72,10 +73,16 @@ local function setContainerLimit(bag, isFirstInit)
 	end
 end
 
--- Register the hook
-STKBagUpgrade.registerHook("afterInitBag", setContainerLimit)
+-- Register the hook with VERY_HIGH priority
+-- Container limits should run FIRST to set base limits
+-- Other features can then modify these limits (e.g., VIP bonus)
+STKBagUpgrade.registerHook(
+	"afterInitBag",
+	setContainerLimit,
+	STKBagUpgrade.PRIORITY.VERY_HIGH -- Runs first!
+)
 
-Logger.log("Hook 'afterInitBag' registrado com sucesso!")
+Logger.log("Hook 'afterInitBag' registrado com prioridade VERY_HIGH!")
 
 -- ============================================================================
 -- PUBLIC API (optional, for other features to use)

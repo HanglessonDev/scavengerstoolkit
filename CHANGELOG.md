@@ -7,6 +7,23 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-02-13
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: sistema de prioridades para hooks com níveis (VERY_HIGH, HIGH, NORMAL, LOW)
+  - Registro de hooks com prioridade específica para controle de ordem de execução
+  - Validação aprimorada para operações de adição/remoção de upgrades
+  - Melhorias no sistema de logging com informações detalhadas de prioridade
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: 
+  - Implementação do sistema de hooks para suportar prioridades de execução
+  - Atualização do sistema de registro de hooks para aceitar parâmetro de prioridade
+  - Melhoria na ordenação e execução de hooks baseada em prioridades
+  - Atualização da lógica de validação para considerar prioridades de hooks
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`:
+  - Registro de hook com prioridade VERY_HIGH para execução em primeiro lugar
+
 ## [0.4.0] - 2026-02-13
 
 ### Adicionado
