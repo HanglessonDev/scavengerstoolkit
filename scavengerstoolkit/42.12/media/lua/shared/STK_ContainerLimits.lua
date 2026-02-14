@@ -65,6 +65,8 @@ local function setContainerLimit(bag, isFirstInit)
 	if isFirstInit then
 		Logger.log("Limite definido para " .. bagType .. ": " .. limit .. " upgrades (primeira vez)")
 	else
+		-- Recalcula stats se não for primeira vez
+		STKBagUpgrade.updateBag(bag)
 		Logger.log("Limite atualizado para " .. bagType .. ": " .. limit .. " upgrades")
 	end
 end
