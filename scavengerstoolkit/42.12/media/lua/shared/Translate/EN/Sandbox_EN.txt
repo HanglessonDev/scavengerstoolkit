@@ -23,10 +23,10 @@ Sandbox_EN = {
     Sandbox_STK_FabricTacticalBonus = "Bonus - Tactical Fabric",
     
     -- Belt Buckle
-    Sandbox_STK_BeltBuckleBonus = "Bonus - Belt Buckle",
+    Sandbox_STK_BeltBuckleBonus = "Bonus - Belt Buckle (%)",
     
     -- Tooltips
-    Sandbox_STK_WeightReductionTooltip = "Weight reduction bonus (0.05 = 5% weight reduction).",
+    Sandbox_STK_WeightReductionTooltip = "Weight reduction bonus.",
     Sandbox_STK_CapacityTooltip = "Capacity bonus (number of slots added).",
     
     -- Tailoring

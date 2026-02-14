@@ -149,7 +149,7 @@ function STKBagUpgrade.getUpgradeValue(itemType)
 	elseif cleanType == "BackpackFabricTactical" then
 		return SandboxVars.STK.FabricTacticalBonus or 8
 	elseif cleanType == "BeltBuckleReinforced" then
-		return -(SandboxVars.STK.BeltBuckleBonus or 0.10)
+		return -((SandboxVars.STK.BeltBuckleBonus or 10) / 100)
 	end
 
 	return nil
