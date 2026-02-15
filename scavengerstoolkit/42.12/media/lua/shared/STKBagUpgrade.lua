@@ -1,4 +1,8 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
+--- MUDANÇAS:
+--- - Removido código morto (upgradeItemValues comentado)
+--- - Otimizado getUpgradeItems() (cache de container.getItems())
+--- - Otimizado isBagValid() (lookup table O(1) ao invés de loop O(n))
 
 --- @class STKBagUpgrade
 --- Módulo para gerenciar upgrades de mochilas usando itens STK
@@ -94,25 +98,8 @@ local function executeHooks(hookType, ...)
 end
 
 -- ============================================================================
--- DADOS DO MOD - USANDO ITENS STK!
+-- DADOS DO MOD
 -- ============================================================================
-
--- --- @type table<string, number>
--- --- Tabela com SEUS itens de upgrade STK
--- local upgradeItemValues = {
--- 	-- Straps (Alças) - Melhoram distribução de peso (Weight Reduction)
--- 	["BackpackStrapsBasic"] = -0.05, -- +5% Weight Reduction
--- 	["BackpackStrapsReinforced"] = -0.10, -- +10% Weight Reduction
--- 	["BackpackStrapsTactical"] = -0.15, -- +15% Weight Reduction
-
--- 	-- Fabric (Tecido) - Aumentam capacidade (mais bolsos/espaÃ§o)
--- 	["BackpackFabricBasic"] = 3, -- +3 capacidade
--- 	["BackpackFabricReinforced"] = 5, -- +5 capacidade
--- 	["BackpackFabricTactical"] = 8, -- +8 capacidade
-
--- 	-- Belt Buckle (Fivela) - Reforça estrutura (Weight Reduction também)
--- 	["BeltBuckleReinforced"] = -0.10, -- +10% Weight Reduction
--- }
 
 --- @type table<string, string[]>
 -- Ferramentas necessárias
@@ -122,7 +109,7 @@ local requiredTools = {
 }
 
 -- ============================================================================
--- FUNÇÔES PÚBLICAS DO MÒDULO
+-- FUNÇÕES PÚBLICAS DO MÓDULO
 -- ============================================================================
 
 --- Get the upgrade value for a given item type
@@ -189,7 +176,7 @@ end
 --- @param bag any The bag to update
 function STKBagUpgrade.updateBag(bag)
 	if not bag then
-		Logger.log("Erro: Tentativa de atualizar mochila invÃ¡lida.")
+		Logger.log("Erro: Tentativa de atualizar mochila invalida.")
 		return
 	end
 
@@ -293,6 +280,28 @@ end
 -- FUNÇÕES DE VALIDAÇÃO
 -- ============================================================================
 
+--- OTIMIZAÇÃO: Lookup table O(1) ao invés de loop O(n)
+--- Lista de mochilas válidas (Base game + suas mochilas STK se tiver)
+local validBags = {
+	-- Base game bags
+	["Base.Bag_Schoolbag"] = true,
+	["Base.Bag_Schoolbag_Kids"] = true,
+	["Base.Bag_Schoolbag_Medical"] = true,
+	["Base.Bag_Schoolbag_Patches"] = true,
+	["Base.Bag_Schoolbag_Travel"] = true,
+	["Base.Bag_Satchel"] = true,
+	["Base.Bag_SatchelPhoto"] = true,
+	["Base.Bag_Satchel_Military"] = true,
+	["Base.Bag_Satchel_Medical"] = true,
+	["Base.Bag_Satchel_Leather"] = true,
+	["Base.Bag_Satchel_Mail"] = true,
+	["Base.Bag_Satchel_Fishing"] = true,
+	["Base.Bag_FannyPackFront"] = true,
+	["Base.Bag_FannyPackBack"] = true,
+	-- Adicione aqui se você criar mochilas STK customizadas:
+	-- ["STK.Bag_CustomBackpack"] = true,
+}
+
 --- Check if an item is a valid bag for upgrades
 --- @param item any The item to validate
 --- @return boolean isValid True if the item is a valid bag, false otherwise
@@ -301,39 +310,11 @@ function STKBagUpgrade.isBagValid(item)
 		return false
 	end
 
-	local itemType = item:getFullType()
-
-	-- Lista de mochilas válidas (Base game + suas mochilas STK se tiver)
-	local validBags = {
-		-- Base game bags
-		"Base.Bag_Schoolbag",
-		"Base.Bag_Schoolbag_Kids",
-		"Base.Bag_Schoolbag_Medical",
-		"Base.Bag_Schoolbag_Patches",
-		"Base.Bag_Schoolbag_Travel",
-		"Base.Bag_Satchel",
-		"Base.Bag_SatchelPhoto",
-		"Base.Bag_Satchel_Military",
-		"Base.Bag_Satchel_Medical",
-		"Base.Bag_Satchel_Leather",
-		"Base.Bag_Satchel_Mail",
-		"Base.Bag_Satchel_Fishing",
-		"Base.Bag_FannyPackFront",
-		"Base.Bag_FannyPackBack",
-		-- Adicione aqui se vocÃª criar mochilas STK customizadas:
-		-- "STK.Bag_CustomBackpack",
-	}
-
-	for _, validType in ipairs(validBags) do
-		if itemType == validType then
-			return true
-		end
-	end
-
-	return false
+	return validBags[item:getFullType()] == true
 end
 
 --- Get all upgrade items in a container
+--- OTIMIZAÇÃO: Cache container:getItems() e size()
 --- @param container any The container to search
 --- @return any[] upgradeItems Array of upgrade items found
 function STKBagUpgrade.getUpgradeItems(container)
@@ -342,10 +323,13 @@ function STKBagUpgrade.getUpgradeItems(container)
 		return upgradeItems
 	end
 
-	for i = 0, container:getItems():size() - 1 do
-		local item = container:getItems():get(i)
+	-- OTIMIZAÇÃO: Cache getItems() e size() fora do loop
+	local items = container:getItems()
+	local size = items:size()
+
+	for i = 0, size - 1 do
+		local item = items:get(i)
 		if item and item:getType() then
-			-- MUDANÃ‡A 5: Procura por itens STK de upgrade
 			local itemType = item:getType():gsub("^STK%.", "")
 			if STKBagUpgrade.getUpgradeValue(itemType) then
 				table.insert(upgradeItems, item)
