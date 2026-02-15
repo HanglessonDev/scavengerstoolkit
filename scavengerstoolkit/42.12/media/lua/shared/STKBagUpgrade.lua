@@ -1,11 +1,11 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
 
 --- @class STKBagUpgrade
---- MÃ³dulo para gerenciar upgrades de mochilas usando itens STK
+--- Módulo para gerenciar upgrades de mochilas usando itens STK
 local STKBagUpgrade = {}
 
 -- ============================================================================
--- CONFIGURAÃ‡ÃƒO E LOGGING
+-- CONFIGURAÇÃO E LOGGING
 -- ============================================================================
 local DEBUG_MODE = true
 
@@ -36,6 +36,7 @@ STKBagUpgrade.hooks = {
 	afterAdd = {}, -- Called after adding upgrade
 	beforeRemove = {}, -- Called before removing upgrade
 	afterRemove = {}, -- Called after removing upgrade
+	checkRemoveTools = {},
 }
 
 --- Priority levels for hook execution
@@ -96,32 +97,32 @@ end
 -- DADOS DO MOD - USANDO ITENS STK!
 -- ============================================================================
 
---- @type table<string, number>
--- MUDANÃ‡A 1: Tabela com SEUS itens de upgrade STK
-local upgradeItemValues = {
-	-- Straps (AlÃ§as) - Melhoram distribuiÃ§Ã£o de peso (Weight Reduction)
-	["BackpackStrapsBasic"] = -0.05, -- +5% Weight Reduction
-	["BackpackStrapsReinforced"] = -0.10, -- +10% Weight Reduction
-	["BackpackStrapsTactical"] = -0.15, -- +15% Weight Reduction
+-- --- @type table<string, number>
+-- --- Tabela com SEUS itens de upgrade STK
+-- local upgradeItemValues = {
+-- 	-- Straps (Alças) - Melhoram distribução de peso (Weight Reduction)
+-- 	["BackpackStrapsBasic"] = -0.05, -- +5% Weight Reduction
+-- 	["BackpackStrapsReinforced"] = -0.10, -- +10% Weight Reduction
+-- 	["BackpackStrapsTactical"] = -0.15, -- +15% Weight Reduction
 
-	-- Fabric (Tecido) - Aumentam capacidade (mais bolsos/espaÃ§o)
-	["BackpackFabricBasic"] = 3, -- +3 capacidade
-	["BackpackFabricReinforced"] = 5, -- +5 capacidade
-	["BackpackFabricTactical"] = 8, -- +8 capacidade
+-- 	-- Fabric (Tecido) - Aumentam capacidade (mais bolsos/espaÃ§o)
+-- 	["BackpackFabricBasic"] = 3, -- +3 capacidade
+-- 	["BackpackFabricReinforced"] = 5, -- +5 capacidade
+-- 	["BackpackFabricTactical"] = 8, -- +8 capacidade
 
-	-- Belt Buckle (Fivela) - ReforÃ§a estrutura (Weight Reduction tambÃ©m)
-	["BeltBuckleReinforced"] = -0.10, -- +10% Weight Reduction
-}
+-- 	-- Belt Buckle (Fivela) - Reforça estrutura (Weight Reduction também)
+-- 	["BeltBuckleReinforced"] = -0.10, -- +10% Weight Reduction
+-- }
 
 --- @type table<string, string[]>
--- Ferramentas necessÃ¡rias
+-- Ferramentas necessárias
 local requiredTools = {
-	add = { "Base.Needle", "Base.Thread" }, -- MUDANÃ‡A 2: Ferramentas realistas para costura
+	add = { "Base.Needle", "Base.Thread" }, -- Ferramentas realistas para costura
 	remove = { "Base.Scissors" }, -- Tesoura para remover
 }
 
 -- ============================================================================
--- FUNÃ‡Ã•ES PÃšBLICAS DO MÃ“DULO
+-- FUNÇÔES PÚBLICAS DO MÒDULO
 -- ============================================================================
 
 --- Get the upgrade value for a given item type
@@ -270,7 +271,7 @@ function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 			Logger.log("Removendo upgrade '" .. upgradeTypeToRemove .. "'")
 			table.remove(imd.LUpgrades, i)
 
-			-- MUDANCA 3: Retorna o item STK especifico
+			-- Retorna o item STK especifico
 			local newItem = player:getInventory():AddItem("STK." .. upgradeTypeToRemove)
 			if not newItem then
 				Logger.log("ERRO: Nao foi possivel criar STK." .. upgradeTypeToRemove)
@@ -289,7 +290,7 @@ function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 end
 
 -- ============================================================================
--- FUNÃ‡Ã•ES DE VALIDAÃ‡ÃƒO
+-- FUNÇÕES DE VALIDAÇÃO
 -- ============================================================================
 
 --- Check if an item is a valid bag for upgrades
@@ -302,7 +303,7 @@ function STKBagUpgrade.isBagValid(item)
 
 	local itemType = item:getFullType()
 
-	-- Lista de mochilas vÃ¡lidas (Base game + suas mochilas STK se tiver)
+	-- Lista de mochilas válidas (Base game + suas mochilas STK se tiver)
 	local validBags = {
 		-- Base game bags
 		"Base.Bag_Schoolbag",
@@ -372,12 +373,40 @@ function STKBagUpgrade.hasRequiredTools(player, actionType)
 		return false
 	end
 
-	for _, toolType in ipairs(tools) do
-		if not player:getInventory():contains(toolType) then
-			return false
+	-- Para "add", checa normalmente
+	if actionType == "add" then
+		for _, toolType in ipairs(tools) do
+			if not player:getInventory():contains(toolType) then
+				return false
+			end
 		end
+		return true
 	end
-	return true
+
+	-- Para "remove", permite hooks modificarem (Knife Alternative)
+	if actionType == "remove" then
+		-- Verifica se tem tesoura
+		local hasScissors = player:getInventory():contains("Base.Scissors")
+
+		-- Se não tem Sandbox option habilitado, exige tesoura
+		if not SandboxVars.STK.KnifeAlternative then
+			return hasScissors
+		end
+
+		-- Se tem tesoura, ok
+		if hasScissors then
+			return true
+		end
+
+		-- Não tem tesoura, mas Sandbox permite faca
+		-- Hook vai verificar se tem faca viável
+		local toolCheck = { hasAlternative = false }
+		executeHooks("checkRemoveTools", player, toolCheck)
+
+		return toolCheck.hasAlternative
+	end
+
+	return false
 end
 
 return STKBagUpgrade

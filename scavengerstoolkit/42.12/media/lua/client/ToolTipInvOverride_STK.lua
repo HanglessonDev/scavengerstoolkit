@@ -1,9 +1,26 @@
+--- @file scavengerstoolkit\42.12\media\lua\client\ToolTipInvOverride_STK.lua
+--- @brief Extensão do sistema de tooltips para mostrar informações do STK
+--- 
+--- Este script estende a funcionalidade de tooltips do jogo para exibir
+--- informações sobre os upgrades de mochilas do Scavenger's Toolkit.
+--- Ele mostra slots disponíveis/utilizados, bônus de capacidade e redução de peso
+--- para mochilas, e valores de upgrade para itens de melhoria.
+--- 
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
+
 require("ISUI/ISToolTipInv")
 
 local STKBagUpgrade = require("STKBagUpgrade")
 local Old_Render = ISToolTipInv.render
 
----@diagnostic disable-next-line: duplicate-set-field
+--- @type ISToolTipInv
+--- @field item InventoryItem Item sendo exibido no tooltip
+--- @field tooltip ISToolTip Referência ao tooltip sendo renderizado
+--- @field setHeight function Função para definir a altura do tooltip
+--- @field drawRectBorder function Função para desenhar a borda do tooltip
 function ISToolTipInv:render()
 	local item = self.item
 	if not item then
@@ -14,7 +31,7 @@ function ISToolTipInv:render()
 	local isBag = item:IsInventoryContainer() and STKBagUpgrade.isBagValid(item)
 	local isUpgrade = STKBagUpgrade.getUpgradeValue(item:getType():gsub("^STK%.", "")) ~= nil
 
-	-- Conta linhas extras
+	-- Conta linhas extras que serão adicionadas ao tooltip
 	if isBag then
 		STKBagUpgrade.initBag(item)
 		local imd = item:getModData()
@@ -32,7 +49,7 @@ function ISToolTipInv:render()
 		return Old_Render(self)
 	end
 
-	-- Ajusta altura
+	-- Ajusta altura do tooltip para acomodar as informações adicionais
 	local stage = 1
 	local old_y = 0
 	local lineSpacing = self.tooltip:getLineSpacing()
@@ -47,7 +64,7 @@ function ISToolTipInv:render()
 		return old_setHeight(self, num, ...)
 	end
 
-	-- Desenha info extra
+	-- Desenha informações adicionais no tooltip
 	local old_drawRectBorder = self.drawRectBorder
 	self.drawRectBorder = function(self, ...)
 		if stage == 2 then
@@ -60,7 +77,7 @@ function ISToolTipInv:render()
 				local maxSlots = imd.LMaxUpgrades
 				local usedSlots = #imd.LUpgrades
 
-				-- Slots disponíveis
+				-- Mostra slots disponíveis/utilizados
 				self.tooltip:DrawText(
 					font,
 					getText("UI_STK_Slots") .. ": " .. (maxSlots - usedSlots) .. "/" .. maxSlots,
@@ -73,7 +90,7 @@ function ISToolTipInv:render()
 				)
 				i = i + 1
 
-				-- Bônus de capacidade
+				-- Mostra bônus de capacidade
 				if usedSlots > 0 then
 					local bonusCap = item:getCapacity() - imd.LCapacity
 					if bonusCap > 0 then
@@ -90,7 +107,7 @@ function ISToolTipInv:render()
 						i = i + 1
 					end
 
-					-- Bônus de weight reduction
+					-- Mostra bônus de redução de peso
 					local bonusWR = item:getWeightReduction() - imd.LWeightReduction
 					if bonusWR > 0 then
 						self.tooltip:DrawText(
@@ -112,10 +129,10 @@ function ISToolTipInv:render()
 
 				if value > 0 then
 					-- Capacidade (lê do Sandbox!)
-					text = "+" .. value .. " Capacidade"
+					text = "+" .. value .. " " .. getText("UI_STK_Capacity")
 				else
 					-- Weight Reduction (lê do Sandbox!)
-					text = "+" .. math.floor(math.abs(value) * 100) .. "% Reducao de Peso"
+					text = "+" .. math.floor(math.abs(value) * 100) .. "% " .. getText("UI_STK_WeightReduction")
 				end
 
 				self.tooltip:DrawText(font, text, 5, old_y, color[1], color[2], color[3], 1)

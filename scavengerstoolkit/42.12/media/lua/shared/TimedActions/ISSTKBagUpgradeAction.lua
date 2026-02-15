@@ -28,28 +28,28 @@ end
 --- Update the action progress
 function ISSTKBagUpgradeAction:update()
 	self.character:setMetabolicTarget(Metabolics.UsingTools)
-	-- FIX: Atualiza barra de progresso no item
+	-- Atualiza barra de progresso no item
 	self.bag:setJobDelta(self:getJobDelta())
 end
 
 --- Start the action
 function ISSTKBagUpgradeAction:start()
 	self:setActionAnim(CharacterActionAnims.Craft)
-	-- FIX: Mostra barra de progresso no item
+	-- Mostra barra de progresso no item
 	self.bag:setJobType(self.jobType)
 	self.bag:setJobDelta(0.0)
 end
 
 --- Stop the action
 function ISSTKBagUpgradeAction:stop()
-	-- FIX: Remove barra de progresso
+	-- Remove barra de progresso
 	self.bag:setJobDelta(0.0)
 	ISBaseTimedAction.stop(self)
 end
 
 --- Perform the action
 function ISSTKBagUpgradeAction:perform()
-	-- FIX: Remove barra de progresso
+	-- Remove barra de progresso
 	self.bag:setJobDelta(0.0)
 
 	if self.onComplete then
@@ -100,7 +100,7 @@ function ISSTKBagAddUpgradeAction:isValid()
 		return false
 	end
 
-	-- FIX: Verifica se ainda tem as ferramentas necessárias
+	-- Verifica se ainda tem as ferramentas necessárias
 	local hasNeedle = self.character:getInventory():contains("Base.Needle")
 	local hasThread = self.character:getInventory():contains("Base.Thread")
 
@@ -113,7 +113,7 @@ function ISSTKBagAddUpgradeAction:isValid()
 		return false
 	end
 
-	-- FIX: Verifica se ainda tem espaço para upgrades
+	-- Verifica se ainda tem espaço para upgrades
 	local imd = self.bag:getModData()
 	return #imd.LUpgrades < imd.LMaxUpgrades
 end
@@ -176,13 +176,13 @@ function ISSTKBagRemoveUpgradeAction:isValid()
 		return false
 	end
 
-	-- FIX: Verifica se ainda tem tesoura
-	local hasScissors = self.character:getInventory():contains("Base.Scissors")
-	if not hasScissors then
+	-- Verifica se ainda tem as ferramentas necessarias
+	local hasTools = STKBagUpgrade.hasRequiredTools(self.character, "remove")
+	if not hasTools then
 		return false
 	end
 
-	-- FIX: Verifica se o upgrade ainda existe na mochila
+	-- Verifica se o upgrade ainda existe na mochila
 	local imd = self.bag:getModData()
 	for _, upgrade in ipairs(imd.LUpgrades) do
 		if upgrade == self.itemInfo then
