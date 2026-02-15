@@ -7,6 +7,46 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-02-14
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_KnifeAlternative.lua`: nova funcionalidade que permite o uso de facas como alternativa às tesouras para remoção de upgrades
+  - Implementa sistema de verificação de facas viáveis (cozinha, caça, canivete, etc.)
+  - Adiciona opção configurável via sandbox para habilitar/desabilitar a funcionalidade
+  - Inclui sistema de desgaste das facas ao serem usadas para remoção de upgrades
+  - Registra hooks para integração com o sistema de upgrades
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: 
+  - Adiciona documentação completa com anotações LuaLS (@file, @brief, @author, @version, @license, @copyright)
+  - Adiciona tipagem apropriada para os campos do tooltip
+* Novas opções de sandbox adicionadas para controlar a funcionalidade de facas alternativas
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: 
+  - Atualiza sistema de verificação de ferramentas para permitir facas como alternativa às tesouras
+  - Adiciona hook checkRemoveTools para verificação de ferramentas alternativas
+  - Atualiza lógica de validação de ferramentas para remover upgrades
+  - Remove código morto (tabela upgradeItemValues comentada)
+  - Otimiza função getUpgradeItems() com cache de container.getItems()
+  - Otimiza função isBagValid() usando lookup table O(1) ao invés de loop O(n)
+  - Corrige acentuação em mensagens de log
+  - Atualiza documentação com mudanças realizadas
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: 
+  - Atualiza exibição de valores de upgrade para usar sistema de tradução
+  - Adiciona verificações `value and value > 0` para evitar erros com valores nil
+  - Renomeia variável `color` para `colorUpgrade` por clareza
+  - Adiciona anotações `@diagnostic disable` para lidar com warnings do EmmyLua
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: 
+  - Atualiza validação de remoção de upgrade para usar sistema de verificação de ferramentas expandido
+  - Melhora robustez da verificação de ferramentas durante ações
+* `.luarc.json`: 
+  - Atualiza configuração com novas funções e classes do Project Zomboid
+  - Adiciona desativação da regra "lowercase-global" para compatibilidade
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: 
+  - Corrige tratamento de valores nil para evitar erros de runtime
+  - Corrige warnings do EmmyLua com anotações apropriadas
+
 ## [0.6.0] - 2026-02-14
 
 ### Adicionado
