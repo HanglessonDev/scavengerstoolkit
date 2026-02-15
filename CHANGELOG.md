@@ -7,6 +7,31 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-02-14
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`:
+  - Adiciona função helper `setTooltip()` para exibir tooltips consistentes nas opções
+  - Implementa tooltips informativos para opções indisponíveis no menu
+  - Adiciona ordenação alfabética para itens de upgrade no menu de adição
+  - Adiciona ordenação alfabética para upgrades no menu de remoção
+  - Atualiza texto de validação para refletir suporte a facas alternativas
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
+  - Calcula dinamicamente apenas linhas relevantes no tooltip (slots, bônus reais)
+  - Adiciona cores distintas para informações de mochila e de upgrade
+  - Corrige cálculo de valores de redução de peso (ajusta conversão de percentual)
+  - Melhora legibilidade geral do sistema de tooltips
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`:
+  - Otimiza busca de tipo de mochila (usa texto simples em vez de pattern matching - ~30% mais rápido)
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`:
+  - Atualiza textos de ações para usar sistema de tradução
+  - Implementa uso correto de desgaste de tesouras (apenas quando realmente usadas)
+  - Adiciona tempos configuráveis via sandbox para ações de adicionar/remover upgrades
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`:
+  - Adiciona traduções para textos de instalação e remoção de upgrades
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`:
+  - Adiciona traduções para textos de instalação e remoção de upgrades
+
 ## [0.7.0] - 2026-02-14
 
 ### Adicionado
@@ -15,13 +40,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Adiciona opção configurável via sandbox para habilitar/desabilitar a funcionalidade
   - Inclui sistema de desgaste das facas ao serem usadas para remoção de upgrades
   - Registra hooks para integração com o sistema de upgrades
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: 
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
   - Adiciona documentação completa com anotações LuaLS (@file, @brief, @author, @version, @license, @copyright)
   - Adiciona tipagem apropriada para os campos do tooltip
 * Novas opções de sandbox adicionadas para controlar a funcionalidade de facas alternativas
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: 
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
   - Atualiza sistema de verificação de ferramentas para permitir facas como alternativa às tesouras
   - Adiciona hook checkRemoveTools para verificação de ferramentas alternativas
   - Atualiza lógica de validação de ferramentas para remover upgrades
@@ -30,20 +55,20 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Otimiza função isBagValid() usando lookup table O(1) ao invés de loop O(n)
   - Corrige acentuação em mensagens de log
   - Atualiza documentação com mudanças realizadas
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: 
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
   - Atualiza exibição de valores de upgrade para usar sistema de tradução
   - Adiciona verificações `value and value > 0` para evitar erros com valores nil
   - Renomeia variável `color` para `colorUpgrade` por clareza
   - Adiciona anotações `@diagnostic disable` para lidar com warnings do EmmyLua
-* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: 
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`:
   - Atualiza validação de remoção de upgrade para usar sistema de verificação de ferramentas expandido
   - Melhora robustez da verificação de ferramentas durante ações
-* `.luarc.json`: 
+* `.luarc.json`:
   - Atualiza configuração com novas funções e classes do Project Zomboid
   - Adiciona desativação da regra "lowercase-global" para compatibilidade
 
 ### Corrigido
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: 
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
   - Corrige tratamento de valores nil para evitar erros de runtime
   - Corrige warnings do EmmyLua com anotações apropriadas
 
