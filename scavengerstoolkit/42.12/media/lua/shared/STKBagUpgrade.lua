@@ -1,8 +1,7 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
---- MUDANÇAS:
---- - Removido código morto (upgradeItemValues comentado)
---- - Otimizado getUpgradeItems() (cache de container.getItems())
---- - Otimizado isBagValid() (lookup table O(1) ao invés de loop O(n))
+--- MUDANÇAS v2.0:
+--- - Adicionados hooks: onAddFailed, onRemoveFailed
+--- - Chamadas aos novos hooks em operações canceladas
 
 --- @class STKBagUpgrade
 --- Módulo para gerenciar upgrades de mochilas usando itens STK
@@ -38,8 +37,10 @@ STKBagUpgrade.hooks = {
 	afterInitBag = {}, -- Called after bag initialization
 	beforeAdd = {}, -- Called before adding upgrade
 	afterAdd = {}, -- Called after adding upgrade
+	onAddFailed = {}, -- Called when add operation fails (NEW!)
 	beforeRemove = {}, -- Called before removing upgrade
 	afterRemove = {}, -- Called after removing upgrade
+	onRemoveFailed = {}, -- Called when remove operation fails (NEW!)
 	checkRemoveTools = {},
 }
 
@@ -215,11 +216,15 @@ end
 function STKBagUpgrade.applyUpgrade(bag, upgradeItem, player)
 	if not bag or not upgradeItem or not player then
 		Logger.log("Erro: Parametros invalidos para applyUpgrade.")
+		-- HOOK: onAddFailed
+		executeHooks("onAddFailed", bag, upgradeItem, player, "invalid_params")
 		return
 	end
 
 	-- HOOK: beforeAdd
 	if not executeHooks("beforeAdd", bag, upgradeItem, player) then
+		-- HOOK: onAddFailed 
+		executeHooks("onAddFailed", bag, upgradeItem, player, "hook_cancelled")
 		return
 	end
 
@@ -244,36 +249,57 @@ end
 function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 	if not bag or not upgradeTypeToRemove or not player then
 		Logger.log("Erro: Parametros invalidos para removeUpgrade.")
+		executeHooks("onRemoveFailed", bag, upgradeTypeToRemove, player, "invalid_params")
 		return
 	end
 
-	-- HOOK: beforeRemove
-	if not executeHooks("beforeRemove", bag, upgradeTypeToRemove, player) then
-		return
-	end
+	-- 1. Determina o resultado ANTES de modificar qualquer coisa.
+	-- O hook 'beforeRemove' retorna 'false' se a remoção falhar (material destruído).
+	local wasSuccessful = executeHooks("beforeRemove", bag, upgradeTypeToRemove, player)
 
+	-- 2. Encontra e remove o upgrade da lista. Esta ação é comum a ambos os cenários.
 	local imd = bag:getModData()
+	local indexToRemove
 	for i, appliedType in ipairs(imd.LUpgrades) do
 		if appliedType == upgradeTypeToRemove then
-			Logger.log("Removendo upgrade '" .. upgradeTypeToRemove .. "'")
-			table.remove(imd.LUpgrades, i)
-
-			-- Retorna o item STK especifico
-			local newItem = player:getInventory():AddItem("STK." .. upgradeTypeToRemove)
-			if not newItem then
-				Logger.log("ERRO: Nao foi possivel criar STK." .. upgradeTypeToRemove)
-				player:Say("Erro ao remover upgrade.")
-			else
-				player:Say("Upgrade removido!")
-			end
-
-			STKBagUpgrade.updateBag(bag)
-
-			-- HOOK: afterRemove
-			executeHooks("afterRemove", bag, upgradeTypeToRemove, player)
-			return
+			indexToRemove = i
+			break
 		end
 	end
+
+	-- Se o upgrade não foi encontrado na mochila, nada a fazer.
+	if not indexToRemove then
+		Logger.log("ERRO: Tentativa de remover um upgrade que nao existe na mochila: " .. upgradeTypeToRemove)
+		executeHooks("onRemoveFailed", bag, upgradeTypeToRemove, player, "not_found")
+		return
+	end
+
+	-- Efetivamente remove o upgrade da lista
+	Logger.log("Removendo upgrade '" .. upgradeTypeToRemove .. "' do índice " .. indexToRemove)
+	table.remove(imd.LUpgrades, indexToRemove)
+
+	-- 3. Executa as consequências com base no resultado.
+	if not wasSuccessful then
+		-- CENÁRIO DE FALHA: O material é destruído.
+		Logger.log("A remoção falhou. O material foi destruído.")
+		-- Apenas chama o hook de falha para o feedback. O item NÃO é devolvido.
+		executeHooks("onRemoveFailed", bag, upgradeTypeToRemove, player, "material_destroyed")
+	else
+		-- CENÁRIO DE SUCESSO: O material é recuperado.
+		Logger.log("A remoção foi bem-sucedida. Devolvendo o item.")
+		local newItem = player:getInventory():AddItem("STK." .. upgradeTypeToRemove)
+		if not newItem then
+			Logger.log("ERRO CRÍTICO: Falha ao devolver o item " .. "STK." .. upgradeTypeToRemove)
+			-- Mesmo com erro, o hook de sucesso é chamado, pois o upgrade foi removido.
+		else
+			player:Say("Upgrade removido!")
+		end
+		-- Chama o hook de sucesso.
+		executeHooks("afterRemove", bag, upgradeTypeToRemove, player)
+	end
+
+	-- 4. Atualiza os status da mochila. Esta ação é comum e acontece no final.
+	STKBagUpgrade.updateBag(bag)
 end
 
 -- ============================================================================
@@ -298,8 +324,6 @@ local validBags = {
 	["Base.Bag_Satchel_Fishing"] = true,
 	["Base.Bag_FannyPackFront"] = true,
 	["Base.Bag_FannyPackBack"] = true,
-	-- Adicione aqui se você criar mochilas STK customizadas:
-	-- ["STK.Bag_CustomBackpack"] = true,
 }
 
 --- Check if an item is a valid bag for upgrades
