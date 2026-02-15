@@ -7,6 +7,18 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-02-15
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_FeedbackSystem.lua`, `scavengerstoolkit/42.12/media/lua/shared/STK_SilentSpeaker.lua`: Novo sistema de Feedback Humanizado, que centraliza as mensagens de feedback do jogador com falas coloridas e não intrusivas.
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`, `scavengerstoolkit/42.12/media/lua/shared/STK_TailoringXP.lua`: Corrigida a integração do sistema de remoção de upgrades, onde a falha na remoção não destruía o material. Agora, em caso de falha, o upgrade é removido da mochila (destruído), o item não é devolvido e o feedback de falha é acionado corretamente.
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: Refatoração da função `removeUpgrade` para centralizar a lógica de sucesso/falha e eliminar duplicação de código.
+* `scavengerstoolkit/42.12/media/lua/shared/STK_TailoringXP.lua`: Ajustes no fluxo de chance de falha para se integrar corretamente com o novo sistema de feedback.
+
 ## [0.8.1] - 2026-02-15
 
 ### Modificado
