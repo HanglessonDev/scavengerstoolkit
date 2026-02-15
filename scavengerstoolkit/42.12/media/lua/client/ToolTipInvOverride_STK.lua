@@ -32,12 +32,26 @@ function ISToolTipInv:render()
 	if isBag then
 		STKBagUpgrade.initBag(item)
 		local imd = item:getModData()
+
+		-- Linha de slots
 		if imd.LMaxUpgrades > 0 then
 			numRows = numRows + 1
 		end
+
+		-- Linhas de bônus (verifica quais realmente existem)
 		if #imd.LUpgrades > 0 then
-			numRows = numRows + 2
-		end -- Cap + WR
+			---@diagnostic disable-next-line: undefined-field
+			local bonusCap = item:getCapacity() - imd.LCapacity
+			---@diagnostic disable-next-line: undefined-field
+			local bonusWR = item:getWeightReduction() - imd.LWeightReduction
+
+			if bonusCap > 0 then
+				numRows = numRows + 1
+			end
+			if bonusWR > 0 then
+				numRows = numRows + 1
+			end
+		end
 	elseif isUpgrade then
 		numRows = 1
 	end
@@ -66,10 +80,10 @@ function ISToolTipInv:render()
 	self.drawRectBorder = function(self, ...)
 		if stage == 2 then
 			local font = UIFont[getCore():getOptionTooltipFont()]
-			local color = { 0.68, 0.64, 0.96 }
 			local i = 0
 
 			if isBag then
+				local bagColor = { 0.68, 0.64, 0.96 }
 				local imd = item:getModData()
 				local maxSlots = imd.LMaxUpgrades
 				local usedSlots = #imd.LUpgrades
@@ -80,9 +94,9 @@ function ISToolTipInv:render()
 					getText("UI_STK_Slots") .. ": " .. (maxSlots - usedSlots) .. "/" .. maxSlots,
 					5,
 					old_y + lineSpacing * i,
-					color[1],
-					color[2],
-					color[3],
+					bagColor[1],
+					bagColor[2],
+					bagColor[3],
 					1
 				)
 				i = i + 1
@@ -97,9 +111,9 @@ function ISToolTipInv:render()
 							"+" .. bonusCap .. " " .. getText("UI_STK_Capacity"),
 							5,
 							old_y + lineSpacing * i,
-							color[1],
-							color[2],
-							color[3],
+							bagColor[1],
+							bagColor[2],
+							bagColor[3],
 							1
 						)
 						i = i + 1
@@ -114,16 +128,16 @@ function ISToolTipInv:render()
 							"+" .. bonusWR .. "% " .. getText("UI_STK_WeightReduction"),
 							5,
 							old_y + lineSpacing * i,
-							color[1],
-							color[2],
-							color[3],
+							bagColor[1],
+							bagColor[2],
+							bagColor[3],
 							1
 						)
 					end
 				end
 			elseif isUpgrade then
+				local upgradeColor = { 0.95, 0.95, 0.2 }
 				local value = STKBagUpgrade.getUpgradeValue(item:getType():gsub("^STK%.", ""))
-				local colorUpgrade = { 0.95, 0.95, 0.2 }
 				local text = ""
 
 				if value and value > 0 then
@@ -131,11 +145,12 @@ function ISToolTipInv:render()
 					text = "+" .. value .. " " .. getText("UI_STK_Capacity")
 				elseif value then
 					-- Weight Reduction (lê do Sandbox!)
-					---@diagnostic disable-next-line: param-type-mismatch
-					text = "+" .. math.floor(math.abs(value) * 100) .. "% " .. getText("UI_STK_WeightReduction")
+					-- Valor já vem como percentual após conversão (ex: 0.05 * 100 = 5)
+					local percent = math.abs(value) * 100
+					text = "+" .. percent .. "% " .. getText("UI_STK_WeightReduction")
 				end
 
-				self.tooltip:DrawText(font, text, 5, old_y, colorUpgrade[1], colorUpgrade[2], colorUpgrade[3], 1)
+				self.tooltip:DrawText(font, text, 5, old_y, upgradeColor[1], upgradeColor[2], upgradeColor[3], 1)
 			end
 
 			stage = 3

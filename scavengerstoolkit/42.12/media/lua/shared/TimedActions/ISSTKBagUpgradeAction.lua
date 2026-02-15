@@ -108,7 +108,7 @@ function ISSTKBagAddUpgradeAction:isValid()
 		return false
 	end
 
-	-- FIX: Verifica se o item de upgrade ainda existe
+	-- Verifica se o item de upgrade ainda existe
 	if not self.itemInfo or not self.character:getInventory():contains(self.itemInfo) then
 		return false
 	end
@@ -120,7 +120,7 @@ end
 
 --- Perform the add upgrade action
 function ISSTKBagAddUpgradeAction:perform()
-	-- Consumir linha (já estava funcionando)
+	-- Consumir linha
 	local thread = self.character:getInventory():getFirstType("Base.Thread")
 	if thread then
 		thread:UseAndSync()
@@ -143,8 +143,8 @@ function ISSTKBagAddUpgradeAction:new(character, bag, upgradeItem)
 	o.onComplete = STKBagUpgrade.applyUpgrade
 	o.bag = bag
 	o.itemInfo = upgradeItem
-	o.jobType = "Instalando upgrade STK..."
-	o.maxTime = 100
+	o.jobType = getText("UI_STK_InstallingUpgrade")
+	o.maxTime = SandboxVars.STK.AddUpgradeTime or 100
 	o.stopOnWalk = true
 	o.stopOnRun = true
 	o.forceProgressBar = true
@@ -176,7 +176,7 @@ function ISSTKBagRemoveUpgradeAction:isValid()
 		return false
 	end
 
-	-- Verifica se ainda tem as ferramentas necessarias
+	-- Verifica se ainda tem as ferramentas necessarias (tesoura OU faca)
 	local hasTools = STKBagUpgrade.hasRequiredTools(self.character, "remove")
 	if not hasTools then
 		return false
@@ -195,16 +195,24 @@ end
 
 --- Perform the remove upgrade action
 function ISSTKBagRemoveUpgradeAction:perform()
-	local scissors = self.character:getInventory():getFirstType("Base.Scissors")
-	if scissors then
-		-- Desgasta 1 ponto de condição da tesoura
-		scissors:setCondition(scissors:getCondition() - 1)
+	-- FIX: Só desgasta tesoura se player realmente usou tesoura
+	-- Se usou faca, o hook STK_KnifeAlternative já desgastou a faca
+	local hasScissors = self.character:getInventory():contains("Base.Scissors")
 
-		-- Se a tesoura quebrou completamente, remove ela
-		if scissors:getCondition() <= 0 then
-			scissors:getContainer():Remove(scissors)
+	if hasScissors then
+		-- Player usou tesoura (não faca)
+		local scissors = self.character:getInventory():getFirstType("Base.Scissors")
+		if scissors then
+			-- Desgasta 1 ponto de condição da tesoura
+			scissors:setCondition(scissors:getCondition() - 1)
+
+			-- Se a tesoura quebrou completamente, remove ela
+			if scissors:getCondition() <= 0 then
+				scissors:getContainer():Remove(scissors)
+			end
 		end
 	end
+	-- Se não tem tesoura, player usou faca (hook já lidou com isso)
 
 	-- Chama a função pai
 	ISSTKBagUpgradeAction.perform(self)
@@ -223,8 +231,8 @@ function ISSTKBagRemoveUpgradeAction:new(character, bag, upgradeTypeToRemove)
 	o.onComplete = STKBagUpgrade.removeUpgrade
 	o.bag = bag
 	o.itemInfo = upgradeTypeToRemove
-	o.jobType = "Removendo upgrade STK..."
-	o.maxTime = 80
+	o.jobType = getText("UI_STK_RemovingUpgrade")
+	o.maxTime = SandboxVars.STK.RemoveUpgradeTime or 80
 	o.stopOnWalk = true
 	o.stopOnRun = true
 	o.forceProgressBar = true

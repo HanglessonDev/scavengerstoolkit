@@ -26,6 +26,19 @@ local Logger = {
 
 Logger.log("Context Menu carregado.")
 
+-- ============================================================================
+-- HELPER FUNCTIONS
+-- ============================================================================
+
+--- Set tooltip for a context menu option
+--- @param option any The menu option
+--- @param textKey string Translation key for the tooltip text
+local function setTooltip(option, textKey)
+	local tooltip = ISInventoryPaneContextMenu.addToolTip()
+	option.toolTip = tooltip
+	tooltip.description = getText(textKey)
+end
+
 --- Handler for filling inventory context menu
 --- @param playerNum number Player number
 --- @param context any Context object
@@ -56,16 +69,12 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 			if not STKBagUpgrade.canAddUpgrade(bag) then
 				Logger.log("Validacao ADICAO FALHOU: Mochila ja tem maximo de upgrades")
 				addUpgradeOption.notAvailable = true
-				local tooltip = ISInventoryPaneContextMenu.addToolTip()
-				addUpgradeOption.toolTip = tooltip
-				tooltip.description = getText("ContextMenu_STK_MaxUpgrades")
+				setTooltip(addUpgradeOption, "ContextMenu_STK_MaxUpgrades")
 			-- Validacao 2: Jogador tem as ferramentas (agulha + linha)?
 			elseif not STKBagUpgrade.hasRequiredTools(player, "add") then
 				Logger.log("Validacao ADICAO FALHOU: Falta Agulha ou Linha")
 				addUpgradeOption.notAvailable = true
-				local tooltip = ISInventoryPaneContextMenu.addToolTip()
-				addUpgradeOption.toolTip = tooltip
-				tooltip.description = getText("ContextMenu_STK_NeedTools")
+				setTooltip(addUpgradeOption, "ContextMenu_STK_NeedTools")
 			else
 				-- Validacao 3: Jogador tem itens de upgrade STK?
 				local availableUpgrades = STKBagUpgrade.getUpgradeItems(player:getInventory())
@@ -74,10 +83,13 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 				if #availableUpgrades == 0 then
 					Logger.log("Validacao ADICAO FALHOU: Nenhum item de upgrade no inventario")
 					addUpgradeOption.notAvailable = true
-					local tooltip = ISInventoryPaneContextMenu.addToolTip()
-					addUpgradeOption.toolTip = tooltip
-					tooltip.description = getText("ContextMenu_STK_NoItems")
+					setTooltip(addUpgradeOption, "ContextMenu_STK_NoItems")
 				else
+					-- Ordena alfabeticamente por nome de exibição
+					table.sort(availableUpgrades, function(a, b)
+						return a:getDisplayName() < b:getDisplayName()
+					end)
+
 					-- Tudo OK! Mostrar opcoes de upgrade
 					-- MUDANCA: Agora mostra APENAS o nome do item, sem stats
 					-- Os stats estao nos tooltips dos itens quando passa o mouse
@@ -103,16 +115,14 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 				local removeUpgradeOption = context:addOption(getText("ContextMenu_STK_RemoveUpgrade"))
 				context:addSubMenu(removeUpgradeOption, removeUpgradeSubMenu)
 
-				-- Validacao: Jogador tem tesoura?
+				-- Validacao: Jogador tem tesoura ou faca?
 				if not STKBagUpgrade.hasRequiredTools(player, "remove") then
-					Logger.log("Validacao REMOCAO FALHOU: Falta tesoura para remover")
+					Logger.log("Validacao REMOCAO FALHOU: Falta tesoura/faca para remover")
 					removeUpgradeOption.notAvailable = true
-					local tooltip = ISInventoryPaneContextMenu.addToolTip()
-					removeUpgradeOption.toolTip = tooltip
-					tooltip.description = getText("ContextMenu_STK_NeedScissors")
+					setTooltip(removeUpgradeOption, "ContextMenu_STK_NeedScissors")
 				else
-					-- Listar todos os upgrades aplicados
-					-- MUDANCA: Agora mostra APENAS o nome do item, sem stats
+					-- Cria lista ordenada de upgrades para exibição
+					local upgradeList = {}
 					for _, upgradeType in ipairs(imd.LUpgrades) do
 						local itemScript = getScriptManager():getItem("STK." .. upgradeType)
 						local displayName
@@ -121,9 +131,18 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 						else
 							displayName = upgradeType -- Fallback
 						end
+						table.insert(upgradeList, { type = upgradeType, name = displayName })
+					end
 
-						removeUpgradeSubMenu:addOption(displayName, nil, function()
-							ISTimedActionQueue.add(ISSTKBagRemoveUpgradeAction:new(player, bag, upgradeType))
+					-- Ordena alfabeticamente
+					table.sort(upgradeList, function(a, b)
+						return a.name < b.name
+					end)
+
+					-- Listar todos os upgrades aplicados em ordem alfabética
+					for _, upgrade in ipairs(upgradeList) do
+						removeUpgradeSubMenu:addOption(upgrade.name, nil, function()
+							ISTimedActionQueue.add(ISSTKBagRemoveUpgradeAction:new(player, bag, upgrade.type))
 						end)
 					end
 				end

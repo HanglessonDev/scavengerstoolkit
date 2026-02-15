@@ -3,4 +3,6 @@ UI_EN = {
     UI_STK_Slots = "Slots",
     UI_STK_Capacity = "Capacity",
     UI_STK_WeightReduction = "Weight Reduction",
+    UI_STK_InstallingUpgrade = "Installing STK upgrade...",
+    UI_STK_RemovingUpgrade = "Removing STK upgrade...",
 }

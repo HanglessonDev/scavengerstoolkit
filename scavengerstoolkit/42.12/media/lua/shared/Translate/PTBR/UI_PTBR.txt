@@ -3,4 +3,6 @@ UI_PTBR = {
     UI_STK_Slots = "Slots",
     UI_STK_Capacity = "Capacidade",
     UI_STK_WeightReduction = "Reducao de Peso",
+    UI_STK_InstallingUpgrade = "Instalando upgrade STK...",
+    UI_STK_RemovingUpgrade = "Removendo upgrade STK...",
 }
