@@ -5,4 +5,14 @@ UI_PTBR = {
     UI_STK_WeightReduction = "Reducao de Peso",
     UI_STK_InstallingUpgrade = "Instalando upgrade STK...",
     UI_STK_RemovingUpgrade = "Removendo upgrade STK...",
+    
+    /* Tailoring XP - Mensagens de Falha */
+    UI_STK_FailureMessage1 = "Droga! Rasguei tudo...",
+    UI_STK_FailureMessage2 = "Merda, estraguei o material!",
+    UI_STK_FailureMessage3 = "Deveria ter mais cuidado...",
+    UI_STK_FailureMessage4 = "Talvez eu precise praticar mais...",
+    
+    /* Tailoring XP - Mensagens de Expert */
+    UI_STK_ExpertMessage1 = "Facil demais para mim.",
+    UI_STK_ExpertMessage2 = "Anos de pratica fazem diferenca.",
 }

@@ -184,3 +184,84 @@ option STK.RemoveUpgradeTime
     translation = STK_RemoveUpgradeTime,
     tooltip = STK_CraftTimeTooltip,
 }
+
+/* ============================================================================
+TAILORING XP SYSTEM
+============================================================================ */
+
+option STK.TailoringXPEnabled
+{
+    type = boolean,
+    default = true,
+    page = STK,
+    translation = STK_TailoringXPEnabled,
+    tooltip = STK_TailoringXPEnabledTooltip,
+}
+
+option STK.AddUpgradeXP
+{
+    type = double,
+    default = 2.0,
+    min = 0.0,
+    max = 10.0,
+    page = STK,
+    translation = STK_AddUpgradeXP,
+    tooltip = STK_AddUpgradeXPTooltip,
+}
+
+option STK.XPReductionPerLevel
+{
+    type = double,
+    default = 0.2,
+    min = 0.0,
+    max = 1.0,
+    page = STK,
+    translation = STK_XPReductionPerLevel,
+    tooltip = STK_XPReductionPerLevelTooltip,
+}
+
+option STK.MinimumXP
+{
+    type = double,
+    default = 0.2,
+    min = 0.0,
+    max = 2.0,
+    page = STK,
+    translation = STK_MinimumXP,
+    tooltip = STK_MinimumXPTooltip,
+}
+
+/* ============================================================================
+REMOVAL FAILURE SYSTEM
+============================================================================ */
+
+option STK.RemovalFailureEnabled
+{
+    type = boolean,
+    default = true,
+    page = STK,
+    translation = STK_RemovalFailureEnabled,
+    tooltip = STK_RemovalFailureEnabledTooltip,
+}
+
+option STK.BaseFailureChance
+{
+    type = integer,
+    default = 50,
+    min = 0,
+    max = 100,
+    page = STK,
+    translation = STK_BaseFailureChance,
+    tooltip = STK_BaseFailureChanceTooltip,
+}
+
+option STK.FailureReductionPerLevel
+{
+    type = integer,
+    default = 5,
+    min = 0,
+    max = 10,
+    page = STK,
+    translation = STK_FailureReductionPerLevel,
+    tooltip = STK_FailureReductionPerLevelTooltip,
+}
