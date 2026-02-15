@@ -7,6 +7,59 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-02-15
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_TailoringXP.lua`:
+  - Atualiza sistema de cores para o formato RGB inteiro (0-255)
+  - Converte valores de XP de decimal para percentual inteiro
+  - Adiciona feedback visual com HaloTextHelper para ganho de XP e falhas
+  - Simplifica uso de player:Say() sem parâmetros de cor
+  - Adiciona novas mensagens de sucesso e falha para o jogador
+  - Implementa sistema de cores definidas para diferentes tipos de feedback
+  - Adiciona função de teste para cores do HaloTextHelper
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Sandbox_EN.txt`:
+  - Atualiza tooltips para refletir valores inteiros em vez de decimais
+  - Adiciona explicações sobre conversão de porcentagens
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`:
+  - Adiciona novas mensagens de sucesso para adição de upgrades
+  - Adiciona mensagem de destruição de material para popups visuais
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Sandbox_PTBR.txt`:
+  - Atualiza tooltips para refletir valores inteiros em vez de decimais
+  - Adiciona explicações sobre conversão de porcentagens
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`:
+  - Adiciona novas mensagens de sucesso para adição de upgrades
+  - Adiciona mensagem de destruição de material para popups visuais
+* `scavengerstoolkit/42.12/media/sandbox-options.txt`:
+  - Altera tipos de opções de XP de double para integer
+  - Atualiza valores padrão e limites para refletir sistema de porcentagens inteiras
+
+## [0.8.0] - 2026-02-15
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_TailoringXP.lua`: nova funcionalidade que adiciona sistema de XP e falha na remoção de upgrades de costura
+  - Implementa ganho de XP ao adicionar upgrades com redução progressiva baseada no nível de habilidade
+  - Adiciona chance de falha ao remover upgrades que destrói o material, com redução baseada na habilidade
+  - Inclui sistema de mensagens para feedback ao jogador sobre sucesso/falha
+  - Adiciona opções configuráveis via sandbox para controle do sistema
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Sandbox_EN.txt`:
+  - Adiciona traduções para novas opções de sandbox relacionadas ao sistema de XP de costura
+  - Adiciona opções para configurar XP base, redução por nível e chance de falha
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`:
+  - Adiciona mensagens de falha e sucesso para o sistema de costura
+  - Inclui mensagens para jogadores inexperientes e experientes
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Sandbox_PTBR.txt`:
+  - Adiciona traduções para novas opções de sandbox relacionadas ao sistema de XP de costura
+  - Adiciona opções para configurar XP base, redução por nível e chance de falha
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`:
+  - Adiciona mensagens de falha e sucesso para o sistema de costura
+  - Inclui mensagens para jogadores inexperientes e experientes
+* `scavengerstoolkit/42.12/media/sandbox-options.txt`:
+  - Adiciona novas opções de configuração para o sistema de XP de costura
+  - Inclui opções para habilitar/desabilitar o sistema e ajustar parâmetros
+
 ## [0.7.1] - 2026-02-14
 
 ### Modificado
