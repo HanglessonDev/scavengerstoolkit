@@ -1,6 +1,7 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STK_TailoringXP.lua
 --- Feature: Tailoring XP progression + Removal failure chance
 --- Rewards skilled tailors while preventing exploit loops
+--- VERSION 3.0 - RGB INT (0-255) + Simplified Say()
 
 local STKBagUpgrade = require("STKBagUpgrade")
 
@@ -19,7 +20,25 @@ local Logger = {
 	end,
 }
 
-Logger.log("Feature carregada: Tailoring XP + Removal Failure")
+Logger.log("Feature carregada: Tailoring XP + Removal Failure v3.0")
+
+-- ============================================================================
+-- COLOR DEFINITIONS (RGB INT 0-255)
+-- ============================================================================
+
+local COLORS = {
+	-- XP Gain (Light Green)
+	XP_GAIN = { r = 102, g = 204, b = 102 }, -- (0.4, 0.8, 0.4)
+
+	-- Failure (Red)
+	FAILURE = { r = 255, g = 51, b = 51 }, -- (1.0, 0.2, 0.2)
+
+	-- Success (Bright Green)
+	SUCCESS = { r = 51, g = 255, b = 51 }, -- (0.2, 1.0, 0.2)
+
+	-- Expert (Cyan)
+	EXPERT = { r = 51, g = 204, b = 255 }, -- (0.2, 0.8, 1.0)
+}
 
 -- ============================================================================
 -- XP WHEN ADDING UPGRADES
@@ -38,14 +57,38 @@ local function grantAddXP(bag, upgradeItem, player)
 
 	local level = player:getPerkLevel(Perks.Tailoring)
 	local baseXP = SandboxVars.STK.AddUpgradeXP or 2.0
-	local reduction = SandboxVars.STK.XPReductionPerLevel or 0.2
+
+	-- Sandbox stores as integer percentage (20 = 0.20 XP)
+	local reductionPercent = SandboxVars.STK.XPReductionPerLevel or 20
+	local reduction = (reductionPercent / 100.0) -- Convert 20 -> 0.20
+
+	-- Minimum XP also stored as integer percentage (20 = 0.20 XP)
+	local minXPPercent = SandboxVars.STK.MinimumXP or 20
+	local minXP = minXPPercent / 100.0 -- Convert 20 -> 0.20
 
 	-- Calculate regressive XP (never goes below minimum)
-	local minXP = SandboxVars.STK.MinimumXP or 0.2
 	local xp = math.max(minXP, baseXP - (level * reduction))
 
-	-- Grant XP
+	-- Grant XP (this adds to skill but doesn't show popup)
 	player:getXp():AddXP(Perks.Tailoring, xp)
+
+	-- VISUAL FEEDBACK: Floating text popup (like vanilla XP gain)
+	-- HaloTextHelper.addTextWithArrow(player, text, arrowUp, r, g, b)
+	-- RGB must be INT (0-255), not float!
+	local xpText = string.format("+%.1f Tailoring", xp)
+	local color = COLORS.XP_GAIN
+	HaloTextHelper.addTextWithArrow(player, xpText, true, color.r, color.g, color.b)
+
+	-- AUDIO FEEDBACK: Player says something (simplified, no color params)
+	-- Only 30% chance to avoid spam
+	if ZombRand(100) < 30 then
+		local successMessages = {
+			getText("UI_STK_AddSuccessMessage1") or "Ficou bom!",
+			getText("UI_STK_AddSuccessMessage2") or "Estou melhorando nisso.",
+		}
+		-- Simple Say() without color parameters (uses default white)
+		player:Say(successMessages[ZombRand(2) + 1])
+	end
 
 	Logger.log(
 		string.format(
@@ -92,7 +135,12 @@ local function checkRemovalFailure(bag, upgradeType, player)
 		-- FAILURE! Material destroyed
 		Logger.log(string.format("FALHA! Roll: %d < FailChance: %.0f%% (Level: %d)", roll, failChance, level))
 
-		-- Player feedback messages
+		-- VISUAL FEEDBACK: Red arrow down
+		local failText = getText("UI_STK_MaterialDestroyed") or "Material Destruido!"
+		local color = COLORS.FAILURE
+		HaloTextHelper.addTextWithArrow(player, failText, false, color.r, color.g, color.b)
+
+		-- AUDIO FEEDBACK: Player feedback (simplified Say)
 		local failureMessages = {
 			getText("UI_STK_FailureMessage1") or "Droga! Rasguei tudo...",
 			getText("UI_STK_FailureMessage2") or "Merda, estraguei o material!",
@@ -100,9 +148,8 @@ local function checkRemovalFailure(bag, upgradeType, player)
 			getText("UI_STK_FailureMessage4") or "Talvez eu precise praticar mais...",
 		}
 
-		-- Use ZombRand(4) to get 0-3, then add 1 for 1-4
+		-- Simple Say() without color parameters
 		player:Say(failureMessages[ZombRand(4) + 1])
-		-- player:Say(failureMessages[ZombRand(4) + 1], 1, 1, 1, UIFont.Small, 0)
 
 		-- Return false to CANCEL the operation (no item created)
 		return false
@@ -111,13 +158,12 @@ local function checkRemovalFailure(bag, upgradeType, player)
 	-- SUCCESS! Material recovered safely
 	Logger.log(string.format("Sucesso! Roll: %d >= FailChance: %.0f%% (Level: %d)", roll, failChance, level))
 
-	-- Expert feedback (level 8+)
-	if level >= 8 then
-		local expertMessages = {
-			getText("UI_STK_ExpertMessage1") or "Fácil demais para mim.",
-			getText("UI_STK_ExpertMessage2") or "Anos de prática fazem diferença.",
-		}
-		player:Say(expertMessages[ZombRand(2) + 1])
+	-- Expert feedback (level 8+, 50% chance to avoid spam)
+	if level >= 8 and ZombRand(100) < 50 then
+		local expertMessage = getText("UI_STK_ExpertMessage1") or "Facil demais para mim."
+
+		-- Simple Say() without color parameters
+		player:Say(expertMessage)
 	end
 
 	-- Return true to CONTINUE with normal removal
@@ -141,8 +187,10 @@ local STK_TailoringXP = {}
 function STK_TailoringXP.calculateXP(player)
 	local level = player:getPerkLevel(Perks.Tailoring)
 	local baseXP = SandboxVars.STK.AddUpgradeXP or 2.0
-	local reduction = SandboxVars.STK.XPReductionPerLevel or 0.2
-	local minXP = SandboxVars.STK.MinimumXP or 0.2
+	local reductionPercent = SandboxVars.STK.XPReductionPerLevel or 20
+	local reduction = reductionPercent / 100.0
+	local minXPPercent = SandboxVars.STK.MinimumXP or 20
+	local minXP = minXPPercent / 100.0
 	return math.max(minXP, baseXP - (level * reduction))
 end
 
@@ -154,6 +202,47 @@ function STK_TailoringXP.calculateFailureChance(player)
 	local baseChance = SandboxVars.STK.BaseFailureChance or 50
 	local reductionPerLevel = SandboxVars.STK.FailureReductionPerLevel or 5
 	return math.max(0, baseChance - (level * reductionPerLevel))
+end
+
+--- Test colors in-game (debug function)
+--- @param player any The player
+function STK_TailoringXP.testColors(player)
+	Logger.log("Testando cores do HaloTextHelper...")
+
+	-- Test XP color
+	HaloTextHelper.addTextWithArrow(
+		player,
+		"+2.0 XP (Verde)",
+		true,
+		COLORS.XP_GAIN.r,
+		COLORS.XP_GAIN.g,
+		COLORS.XP_GAIN.b
+	)
+
+	-- Test failure color
+	HaloTextHelper.addTextWithArrow(
+		player,
+		"Falha! (Vermelho)",
+		false,
+		COLORS.FAILURE.r,
+		COLORS.FAILURE.g,
+		COLORS.FAILURE.b
+	)
+
+	-- Test success color
+	HaloTextHelper.addTextWithArrow(
+		player,
+		"Sucesso! (Verde claro)",
+		true,
+		COLORS.SUCCESS.r,
+		COLORS.SUCCESS.g,
+		COLORS.SUCCESS.b
+	)
+
+	-- Test expert color
+	HaloTextHelper.addTextWithArrow(player, "Expert (Ciano)", true, COLORS.EXPERT.r, COLORS.EXPERT.g, COLORS.EXPERT.b)
+
+	Logger.log("Teste de cores concluido!")
 end
 
 return STK_TailoringXP

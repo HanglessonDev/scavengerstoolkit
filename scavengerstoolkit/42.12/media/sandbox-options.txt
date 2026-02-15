@@ -186,7 +186,7 @@ option STK.RemoveUpgradeTime
 }
 
 /* ============================================================================
-TAILORING XP SYSTEM
+TAILORING XP SYSTEM (NEW!)
 ============================================================================ */
 
 option STK.TailoringXPEnabled
@@ -211,10 +211,10 @@ option STK.AddUpgradeXP
 
 option STK.XPReductionPerLevel
 {
-    type = double,
-    default = 0.2,
-    min = 0.0,
-    max = 1.0,
+    type = integer,
+    default = 20,
+    min = 0,
+    max = 100,
     page = STK,
     translation = STK_XPReductionPerLevel,
     tooltip = STK_XPReductionPerLevelTooltip,
@@ -222,17 +222,17 @@ option STK.XPReductionPerLevel
 
 option STK.MinimumXP
 {
-    type = double,
-    default = 0.2,
-    min = 0.0,
-    max = 2.0,
+    type = integer,
+    default = 20,
+    min = 0,
+    max = 200,
     page = STK,
     translation = STK_MinimumXP,
     tooltip = STK_MinimumXPTooltip,
 }
 
 /* ============================================================================
-REMOVAL FAILURE SYSTEM
+REMOVAL FAILURE SYSTEM (NEW!)
 ============================================================================ */
 
 option STK.RemovalFailureEnabled

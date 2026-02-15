@@ -52,19 +52,19 @@ Sandbox_EN = {
     Sandbox_STK_AddUpgradeXP = "Base XP for Adding Upgrade",
     Sandbox_STK_AddUpgradeXPTooltip = "Base Tailoring XP granted when adding an upgrade.<br>Actual XP decreases with skill level.",
     
-    Sandbox_STK_XPReductionPerLevel = "XP Reduction per Level",
-    Sandbox_STK_XPReductionPerLevelTooltip = "How much XP decreases per Tailoring level.<br>Example: 0.2 means -0.2 XP per level.",
+    Sandbox_STK_XPReductionPerLevel = "XP Reduction per Level (%)",
+    Sandbox_STK_XPReductionPerLevelTooltip = "How much XP decreases per Tailoring level.<br>Example: 20 = 0.20 XP reduction per level.<br>(Stored as percentage: 20% = 0.20)",
     
-    Sandbox_STK_MinimumXP = "Minimum XP Reward",
-    Sandbox_STK_MinimumXPTooltip = "Minimum XP that can be granted, even at high skill levels.<br>Prevents XP from going to zero.",
+    Sandbox_STK_MinimumXP = "Minimum XP Reward (%)",
+    Sandbox_STK_MinimumXPTooltip = "Minimum XP that can be granted, even at high skill levels.<br>Example: 20 = 0.20 XP minimum.<br>(Stored as percentage: 20% = 0.20)",
     
     /* Removal Failure System */
     Sandbox_STK_RemovalFailureEnabled = "Enable Removal Failure Chance",
     Sandbox_STK_RemovalFailureEnabledTooltip = "If enabled, removing upgrades has a chance to fail and destroy the material.<br>Chance decreases with Tailoring skill.",
     
     Sandbox_STK_BaseFailureChance = "Base Failure Chance (%)",
-    Sandbox_STK_BaseFailureChanceTooltip = "Chance to destroy material when removing at skill level 0.<br>Example: 50 means 50% chance to fail.",
+    Sandbox_STK_BaseFailureChanceTooltip = "Chance to destroy material when removing at skill level 0.<br>Example: 50 = 50% chance to fail.",
     
     Sandbox_STK_FailureReductionPerLevel = "Failure Reduction per Level (%)",
-    Sandbox_STK_FailureReductionPerLevelTooltip = "How much failure chance decreases per Tailoring level.<br>Example: 5 means -5% per level.",
+    Sandbox_STK_FailureReductionPerLevelTooltip = "How much failure chance decreases per Tailoring level.<br>Example: 5 = -5% per level.",
 }

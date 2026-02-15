@@ -5,8 +5,12 @@ UI_EN = {
     UI_STK_WeightReduction = "Weight Reduction",
     UI_STK_InstallingUpgrade = "Installing STK upgrade...",
     UI_STK_RemovingUpgrade = "Removing STK upgrade...",
-
-    /* Tailoring XP - Failure Messages */
+    
+    /* Tailoring XP - Success Messages (Adding) */
+    UI_STK_AddSuccessMessage1 = "Turned out well!",
+    UI_STK_AddSuccessMessage2 = "I'm getting better at this.",
+    
+    /* Tailoring XP - Failure Messages (Removing) */
     UI_STK_FailureMessage1 = "Damn! I tore it all...",
     UI_STK_FailureMessage2 = "Shit, I ruined the material!",
     UI_STK_FailureMessage3 = "I should have been more careful...",
@@ -14,5 +18,7 @@ UI_EN = {
     
     /* Tailoring XP - Expert Messages */
     UI_STK_ExpertMessage1 = "Too easy for me.",
-    UI_STK_ExpertMessage2 = "Years of practice make a difference.",
+    
+    /* Tailoring XP - Visual Popups */
+    UI_STK_MaterialDestroyed = "Material Destroyed!",
 }

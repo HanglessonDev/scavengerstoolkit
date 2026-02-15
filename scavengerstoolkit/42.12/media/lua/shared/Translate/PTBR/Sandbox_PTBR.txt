@@ -45,26 +45,26 @@ Sandbox_PTBR = {
     Sandbox_STK_RemoveUpgradeTime = "Tempo para Remover Upgrade",
     Sandbox_STK_CraftTimeTooltip = "Tempo em ticks (100 ticks = ~3 segundos).",
     
-    /* Tailoring XP System (NOVO!) */
+    /* Tailoring XP System */
     Sandbox_STK_TailoringXPEnabled = "Habilitar XP de Costura",
     Sandbox_STK_TailoringXPEnabledTooltip = "Se ativado, adicionar upgrades concede XP de Costura.<br>XP diminui conforme habilidade aumenta para evitar exploits.",
     
     Sandbox_STK_AddUpgradeXP = "XP Base ao Adicionar Upgrade",
     Sandbox_STK_AddUpgradeXPTooltip = "XP base de Costura concedido ao adicionar upgrade.<br>XP real diminui com nivel de habilidade.",
     
-    Sandbox_STK_XPReductionPerLevel = "Reducao de XP por Nivel",
-    Sandbox_STK_XPReductionPerLevelTooltip = "Quanto o XP diminui por nivel de Costura.<br>Exemplo: 0.2 significa -0.2 XP por nivel.",
+    Sandbox_STK_XPReductionPerLevel = "Reducao de XP por Nivel (%)",
+    Sandbox_STK_XPReductionPerLevelTooltip = "Quanto o XP diminui por nivel de Costura.<br>Exemplo: 20 = 0.20 XP de reducao por nivel.<br>(Armazenado como porcentagem: 20% = 0.20)",
     
-    Sandbox_STK_MinimumXP = "XP Minimo de Recompensa",
-    Sandbox_STK_MinimumXPTooltip = "XP minimo que pode ser concedido, mesmo em niveis altos.<br>Evita que XP chegue a zero.",
+    Sandbox_STK_MinimumXP = "XP Minimo de Recompensa (%)",
+    Sandbox_STK_MinimumXPTooltip = "XP minimo que pode ser concedido, mesmo em niveis altos.<br>Exemplo: 20 = 0.20 XP minimo.<br>(Armazenado como porcentagem: 20% = 0.20)",
     
-    /* Removal Failure System (NOVO!) */
+    /* Removal Failure System */
     Sandbox_STK_RemovalFailureEnabled = "Habilitar Chance de Falha ao Remover",
     Sandbox_STK_RemovalFailureEnabledTooltip = "Se ativado, remover upgrades tem chance de falhar e destruir o material.<br>Chance diminui com habilidade de Costura.",
     
     Sandbox_STK_BaseFailureChance = "Chance Base de Falha (%)",
-    Sandbox_STK_BaseFailureChanceTooltip = "Chance de destruir material ao remover no nivel 0.<br>Exemplo: 50 significa 50% de chance de falhar.",
+    Sandbox_STK_BaseFailureChanceTooltip = "Chance de destruir material ao remover no nivel 0.<br>Exemplo: 50 = 50% de chance de falhar.",
     
     Sandbox_STK_FailureReductionPerLevel = "Reducao de Falha por Nivel (%)",
-    Sandbox_STK_FailureReductionPerLevelTooltip = "Quanto a chance de falha diminui por nivel de Costura.<br>Exemplo: 5 significa -5% por nivel.",
+    Sandbox_STK_FailureReductionPerLevelTooltip = "Quanto a chance de falha diminui por nivel de Costura.<br>Exemplo: 5 = -5% por nivel.",
 }
