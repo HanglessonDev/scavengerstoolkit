@@ -1,11 +1,11 @@
 --- @file scavengerstoolkit\42.12\media\lua\client\ToolTipInvOverride_STK.lua
 --- @brief Extensão do sistema de tooltips para mostrar informações do STK
---- 
+---
 --- Este script estende a funcionalidade de tooltips do jogo para exibir
 --- informações sobre os upgrades de mochilas do Scavenger's Toolkit.
 --- Ele mostra slots disponíveis/utilizados, bônus de capacidade e redução de peso
 --- para mochilas, e valores de upgrade para itens de melhoria.
---- 
+---
 --- @author Scavenger's Toolkit Development Team
 --- @version 1.0.0
 --- @license MIT
@@ -16,11 +16,8 @@ require("ISUI/ISToolTipInv")
 local STKBagUpgrade = require("STKBagUpgrade")
 local Old_Render = ISToolTipInv.render
 
---- @type ISToolTipInv
---- @field item InventoryItem Item sendo exibido no tooltip
---- @field tooltip ISToolTip Referência ao tooltip sendo renderizado
---- @field setHeight function Função para definir a altura do tooltip
---- @field drawRectBorder function Função para desenhar a borda do tooltip
+--- Override do método render para adicionar informações STK
+---@diagnostic disable-next-line: duplicate-set-field
 function ISToolTipInv:render()
 	local item = self.item
 	if not item then
@@ -92,6 +89,7 @@ function ISToolTipInv:render()
 
 				-- Mostra bônus de capacidade
 				if usedSlots > 0 then
+					---@diagnostic disable-next-line: undefined-field
 					local bonusCap = item:getCapacity() - imd.LCapacity
 					if bonusCap > 0 then
 						self.tooltip:DrawText(
@@ -108,6 +106,7 @@ function ISToolTipInv:render()
 					end
 
 					-- Mostra bônus de redução de peso
+					---@diagnostic disable-next-line: undefined-field
 					local bonusWR = item:getWeightReduction() - imd.LWeightReduction
 					if bonusWR > 0 then
 						self.tooltip:DrawText(
@@ -124,18 +123,19 @@ function ISToolTipInv:render()
 				end
 			elseif isUpgrade then
 				local value = STKBagUpgrade.getUpgradeValue(item:getType():gsub("^STK%.", ""))
-				local color = { 0.95, 0.95, 0.2 }
+				local colorUpgrade = { 0.95, 0.95, 0.2 }
 				local text = ""
 
-				if value > 0 then
+				if value and value > 0 then
 					-- Capacidade (lê do Sandbox!)
 					text = "+" .. value .. " " .. getText("UI_STK_Capacity")
-				else
+				elseif value then
 					-- Weight Reduction (lê do Sandbox!)
+					---@diagnostic disable-next-line: param-type-mismatch
 					text = "+" .. math.floor(math.abs(value) * 100) .. "% " .. getText("UI_STK_WeightReduction")
 				end
 
-				self.tooltip:DrawText(font, text, 5, old_y, color[1], color[2], color[3], 1)
+				self.tooltip:DrawText(font, text, 5, old_y, colorUpgrade[1], colorUpgrade[2], colorUpgrade[3], 1)
 			end
 
 			stage = 3
