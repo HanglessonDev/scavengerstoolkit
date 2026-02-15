@@ -236,7 +236,6 @@ function STKBagUpgrade.applyUpgrade(bag, upgradeItem, player)
 
 	upgradeItem:getContainer():Remove(upgradeItem)
 	STKBagUpgrade.updateBag(bag)
-	player:Say("Upgrade instalado com sucesso!")
 
 	-- HOOK: afterAdd
 	executeHooks("afterAdd", bag, upgradeItem, player)
@@ -291,8 +290,6 @@ function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 		if not newItem then
 			Logger.log("ERRO CRÍTICO: Falha ao devolver o item " .. "STK." .. upgradeTypeToRemove)
 			-- Mesmo com erro, o hook de sucesso é chamado, pois o upgrade foi removido.
-		else
-			player:Say("Upgrade removido!")
 		end
 		-- Chama o hook de sucesso.
 		executeHooks("afterRemove", bag, upgradeTypeToRemove, player)

@@ -6,19 +6,30 @@ UI_PTBR = {
     UI_STK_InstallingUpgrade = "Instalando upgrade STK...",
     UI_STK_RemovingUpgrade = "Removendo upgrade STK...",
     
-    /* Tailoring XP - Mensagens de Sucesso (Adicionar) */
-    UI_STK_AddSuccessMessage1 = "Ficou bom!",
-    UI_STK_AddSuccessMessage2 = "Estou melhorando nisso.",
-    
-    /* Tailoring XP - Mensagens de Falha (Remover) */
-    UI_STK_FailureMessage1 = "Droga! Rasguei tudo...",
-    UI_STK_FailureMessage2 = "Merda, estraguei o material!",
-    UI_STK_FailureMessage3 = "Deveria ter mais cuidado...",
-    UI_STK_FailureMessage4 = "Talvez eu precise praticar mais...",
-    
-    /* Tailoring XP - Mensagens de Expert */
-    UI_STK_ExpertMessage1 = "Facil demais para mim.",
-    
     /* Tailoring XP - Popups Visuais */
     UI_STK_MaterialDestroyed = "Material Destruido!",
+
+    /* STK Feedback System - Mensagens Humanizadas de Sucesso (Adicionar) */
+    UI_STK_FB_AddSuccess1 = "Ficou bom!",
+    UI_STK_FB_AddSuccess2 = "Estou melhorando nisso.",
+    UI_STK_FB_AddSuccess3 = "Perfeito.",
+    UI_STK_FB_AddSuccess4 = "Consegui!",
+
+    /* STK Feedback System - Mensagens Humanizadas de Falha (Remover) */
+    UI_STK_FB_RemoveFailed1 = "Droga! Rasguei tudo...",
+    UI_STK_FB_RemoveFailed2 = "Merda, estraguei o material!",
+    UI_STK_FB_RemoveFailed3 = "Deveria ter mais cuidado...",
+    UI_STK_FB_RemoveFailed4 = "Talvez eu precise praticar mais...",
+    UI_STK_FB_RemoveFailed5 = "Que desastre...",
+    UI_STK_FB_RemoveFailed6 = "Bom, pelo menos não pode piorar.",
+
+    /* STK Feedback System - Mensagens Humanizadas de Expert (Remover) */
+    UI_STK_FB_RemoveExpert1 = "Fácil demais para mim.",
+    UI_STK_FB_RemoveExpert2 = "Anos de prática fazem diferença.",
+    UI_STK_FB_RemoveExpert3 = "Sem esforço.",
+
+    /* STK Feedback System - Mensagens Humanizadas de Falha (Adicionar) */
+    UI_STK_FB_AddFailed1 = "Preciso de ferramentas...",
+    UI_STK_FB_AddFailed2 = "Não tenho o que preciso.",
+    UI_STK_FB_AddFailed3 = "Impossível sem agulha e linha.",
 }

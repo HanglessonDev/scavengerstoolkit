@@ -6,19 +6,30 @@ UI_EN = {
     UI_STK_InstallingUpgrade = "Installing STK upgrade...",
     UI_STK_RemovingUpgrade = "Removing STK upgrade...",
     
-    /* Tailoring XP - Success Messages (Adding) */
-    UI_STK_AddSuccessMessage1 = "Turned out well!",
-    UI_STK_AddSuccessMessage2 = "I'm getting better at this.",
-    
-    /* Tailoring XP - Failure Messages (Removing) */
-    UI_STK_FailureMessage1 = "Damn! I tore it all...",
-    UI_STK_FailureMessage2 = "Shit, I ruined the material!",
-    UI_STK_FailureMessage3 = "I should have been more careful...",
-    UI_STK_FailureMessage4 = "Maybe I need more practice...",
-    
-    /* Tailoring XP - Expert Messages */
-    UI_STK_ExpertMessage1 = "Too easy for me.",
-    
     /* Tailoring XP - Visual Popups */
     UI_STK_MaterialDestroyed = "Material Destroyed!",
+
+    /* STK Feedback System - Humanized Add Success Messages */
+    UI_STK_FB_AddSuccess1 = "Turned out well!",
+    UI_STK_FB_AddSuccess2 = "I'm getting better at this.",
+    UI_STK_FB_AddSuccess3 = "Perfect.",
+    UI_STK_FB_AddSuccess4 = "Got it!",
+
+    /* STK Feedback System - Humanized Remove Failed Messages */
+    UI_STK_FB_RemoveFailed1 = "Damn! I tore it all...",
+    UI_STK_FB_RemoveFailed2 = "Shit, I ruined the material!",
+    UI_STK_FB_RemoveFailed3 = "I should have been more careful...",
+    UI_STK_FB_RemoveFailed4 = "Maybe I need more practice...",
+    UI_STK_FB_RemoveFailed5 = "What a disaster...",
+    UI_STK_FB_RemoveFailed6 = "Well, at least it can't get any worse.",
+
+    /* STK Feedback System - Humanized Remove Expert Messages */
+    UI_STK_FB_RemoveExpert1 = "Too easy for me.",
+    UI_STK_FB_RemoveExpert2 = "Years of practice make a difference.",
+    UI_STK_FB_RemoveExpert3 = "Effortless.",
+
+    /* STK Feedback System - Humanized Add Failed Messages */
+    UI_STK_FB_AddFailed1 = "I need tools...",
+    UI_STK_FB_AddFailed2 = "I don't have what I need.",
+    UI_STK_FB_AddFailed3 = "Impossible without needle and thread.",
 }
