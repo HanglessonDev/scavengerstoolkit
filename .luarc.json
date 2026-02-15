@@ -26,7 +26,7 @@
             "ISSTKBagAddUpgradeAction",
             "ISSTKBagRemoveUpgradeAction",
             "ISSTKBagUpgradeAction",
-            // Project Zomboid
+            // Project Zomboid - Core
             "STK",
             "Events",
             "getCore",
@@ -34,6 +34,9 @@
             "getPlayer",
             "getSpecificPlayer",
             "getWorld",
+            "getText",
+            "ZombRand",
+            // Project Zomboid - Classes
             "IsoPlayer",
             "ISTooltipUI",
             "ISInventoryPane",
@@ -41,6 +44,8 @@
             "BodyDamage",
             "SandboxVars",
             "ModData",
+            "UIFont",
+            "Perks",
             // Timed Actions
             "ISTimedActionQueue",
             "ISBaseTimedAction",
@@ -50,6 +55,9 @@
             // Metabolic
             "Metabolics",
             "CharacterActionAnims"
+        ],
+        "disable": [
+            "lowercase-global"
         ]
     },
     "hint": {
