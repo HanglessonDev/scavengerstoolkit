@@ -7,6 +7,14 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-02-16
+
+### Adicionado
+* `docs/API-PZ/INVENTORY-API-REFERENCE.md`: nova documentação de referência completa da API de inventário do Project Zomboid com todos os métodos de InventoryItem e ItemContainer, incluindo parâmetros, tipos de retorno e exemplos de uso prático
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`: otimiza sistema para evitar spam de logs através de tracking de bags processadas com weak table (GC automático), adiciona funções utilitárias `clearCache()` e `isProcessed()`, e mantém logs apenas na primeira inicialização de cada bag
+
 ## [0.10.0] - 2026-02-16
 
 ### Adicionado
