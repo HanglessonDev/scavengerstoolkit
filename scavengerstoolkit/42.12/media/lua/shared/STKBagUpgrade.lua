@@ -1,7 +1,5 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
---- MUDANÇAS v2.0:
---- - Adicionados hooks: onAddFailed, onRemoveFailed
---- - Chamadas aos novos hooks em operações canceladas
+
 
 --- @class STKBagUpgrade
 --- Módulo para gerenciar upgrades de mochilas usando itens STK
@@ -24,7 +22,7 @@ local Logger = {
 	end,
 }
 
-Logger.log("Modulo carregado. DEBUG_MODE esta: " .. tostring(DEBUG_MODE))
+Logger.log("Modulo carregado v2.0 - Com hooks onAddFailed e onRemoveFailed")
 
 -- ============================================================================
 -- HOOK SYSTEM (EXTENSIBILITY)
@@ -223,7 +221,7 @@ function STKBagUpgrade.applyUpgrade(bag, upgradeItem, player)
 
 	-- HOOK: beforeAdd
 	if not executeHooks("beforeAdd", bag, upgradeItem, player) then
-		-- HOOK: onAddFailed 
+		-- HOOK: onAddFailed
 		executeHooks("onAddFailed", bag, upgradeItem, player, "hook_cancelled")
 		return
 	end
@@ -248,6 +246,7 @@ end
 function STKBagUpgrade.removeUpgrade(bag, upgradeTypeToRemove, player)
 	if not bag or not upgradeTypeToRemove or not player then
 		Logger.log("Erro: Parametros invalidos para removeUpgrade.")
+		-- HOOK: onRemoveFailed
 		executeHooks("onRemoveFailed", bag, upgradeTypeToRemove, player, "invalid_params")
 		return
 	end
@@ -304,14 +303,16 @@ end
 -- ============================================================================
 
 --- OTIMIZAÇÃO: Lookup table O(1) ao invés de loop O(n)
---- Lista de mochilas válidas (Base game + suas mochilas STK se tiver)
+--- Lista de mochilas válidas (Base game)
 local validBags = {
-	-- Base game bags
+	-- Schoolbags (5)
 	["Base.Bag_Schoolbag"] = true,
 	["Base.Bag_Schoolbag_Kids"] = true,
 	["Base.Bag_Schoolbag_Medical"] = true,
 	["Base.Bag_Schoolbag_Patches"] = true,
 	["Base.Bag_Schoolbag_Travel"] = true,
+	
+	-- Satchels (7)
 	["Base.Bag_Satchel"] = true,
 	["Base.Bag_SatchelPhoto"] = true,
 	["Base.Bag_Satchel_Military"] = true,
@@ -319,8 +320,25 @@ local validBags = {
 	["Base.Bag_Satchel_Leather"] = true,
 	["Base.Bag_Satchel_Mail"] = true,
 	["Base.Bag_Satchel_Fishing"] = true,
+	
+	-- FannyPacks (2)
 	["Base.Bag_FannyPackFront"] = true,
 	["Base.Bag_FannyPackBack"] = true,
+	
+	-- Hiking Bags (4) - v2.0
+	["Base.Bag_NormalHikingBag"] = true,
+	["Base.Bag_HikingBag_Travel"] = true,
+	["Base.Bag_BigHikingBag"] = true,
+	["Base.Bag_BigHikingBag_Travel"] = true,
+	
+	-- Duffel Bags (7) - v2.0
+	["Base.Bag_DuffelBag"] = true,
+	["Base.Bag_DuffelBagTINT"] = true,
+	["Base.Bag_Military"] = true,
+	["Base.Bag_Police"] = true,
+	["Base.Bag_SWAT"] = true,
+	["Base.Bag_Sheriff"] = true,
+	["Base.Bag_MedicalBag"] = true,
 }
 
 --- Check if an item is a valid bag for upgrades

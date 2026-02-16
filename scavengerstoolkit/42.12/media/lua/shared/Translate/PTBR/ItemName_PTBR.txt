@@ -3,8 +3,10 @@ ItemName_PTBR = {
     ItemName_STK.BackpackStrapsBasic = "Alças Básicas de Mochila"
     ItemName_STK.BackpackStrapsReinforced = "Alças Reforçadas de Mochila"
     ItemName_STK.BackpackStrapsTactical = "Alças Táticas de Mochila"
+
     ItemName_STK.BackpackFabricBasic = "Tecido Básico de Mochila"
     ItemName_STK.BackpackFabricReinforced = "Tecido Reforçado de Mochila"
     ItemName_STK.BackpackFabricTactical = "Tecido Tático de Mochila"
+    
     ItemName_STK.BeltBuckleReinforced = "Fivela de Cinto Reforçada"
 }

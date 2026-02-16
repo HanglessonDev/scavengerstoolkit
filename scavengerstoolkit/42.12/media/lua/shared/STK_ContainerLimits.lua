@@ -1,6 +1,6 @@
---- @file scavengerstoolkit\42.12\media\lua\shared\features\STK_ContainerLimits.lua
---- Feature: Dynamic upgrade limits based on container type
---- Uses hook system to modify bag behavior without touching core
+--- @file scavengerstoolkit\42.12\media\lua\shared\STK_ContainerLimits.lua
+--- Feature: Container-specific upgrade limits
+--- Limita número de upgrades baseado no tipo de mochila
 
 local STKBagUpgrade = require("STKBagUpgrade")
 
@@ -22,78 +22,89 @@ local Logger = {
 Logger.log("Feature carregada: Container Limits")
 
 -- ============================================================================
--- CONTAINER LIMITS TABLE
+-- LIMITES POR TIPO DE BAG
 -- ============================================================================
 
---- Get limit from Sandbox or use default
---- @param bagType string Full type of bag
---- @return number limit Maximum upgrades
-local function getLimitForBagType(bagType)
-	-- FannyPacks
-	if bagType == "Base.Bag_FannyPackFront" or bagType == "Base.Bag_FannyPackBack" then
-		return SandboxVars.STK.FannyPackLimit or 1
-	end
-
-	-- Satchels (all variants)
-	-- OPTIMIZATION: Using plain text search (true) is ~30% faster than pattern matching
-	if bagType:find("Satchel", 1, true) then
-		return SandboxVars.STK.SatchelLimit or 2
-	end
-
-	-- Schoolbags (all variants)
-	if bagType:find("Schoolbag", 1, true) then
-		return SandboxVars.STK.SchoolbagLimit or 3
-	end
-
-	-- Default for unknown bags
-	return SandboxVars.STK.SchoolbagLimit or 3
-end
+local CONTAINER_LIMITS = {
+	-- FannyPack: Muito pequena, só 1 upgrade
+	FannyPack = 1,
+	
+	-- Satchel: Média, 2 upgrades
+	Satchel = 2,
+	
+	-- Schoolbag: Média, 2 upgrades
+	Schoolbag = 2,
+	
+	-- Hiking: Média-Grande, 2 upgrades
+	HikingBag = 2,
+	BigHikingBag = 2,
+	
+	-- Duffel: Grande, 2 upgrades
+	DuffelBag = 2,
+	Military = 2,
+	Police = 2,
+	SWAT = 2,
+	Sheriff = 2,
+	MedicalBag = 2,
+}
 
 -- ============================================================================
--- HOOK: Modify bag limits on initialization
+-- HOOK HANDLER
 -- ============================================================================
 
---- Hook into afterInitBag to set container-specific limits
+--- Set container-specific upgrade limit
 --- @param bag any The bag being initialized
---- @param isFirstInit boolean Whether this is the first time initializing this bag
+--- @param isFirstInit boolean Whether this is first initialization
 local function setContainerLimit(bag, isFirstInit)
 	local bagType = bag:getFullType()
-	local limit = getLimitForBagType(bagType)
-
 	local imd = bag:getModData()
-	imd.LMaxUpgrades = limit
-
-	if isFirstInit then
-		Logger.log("Limite definido para " .. bagType .. ": " .. limit .. " upgrades (primeira vez)")
-	else
-		-- Recalcula stats se não for primeira vez
-		STKBagUpgrade.updateBag(bag)
-		Logger.log("Limite atualizado para " .. bagType .. ": " .. limit .. " upgrades")
+	
+	-- Default: 3 upgrades (se não encontrar regra específica)
+	local limit = 3
+	
+	-- Check each pattern
+	for pattern, configuredLimit in pairs(CONTAINER_LIMITS) do
+		if bagType:find(pattern) then
+			limit = configuredLimit
+			break
+		end
 	end
+	
+	-- Apply limit
+	imd.LMaxUpgrades = limit
+	
+	Logger.log(
+		string.format(
+			"Limite definido para %s: %d upgrades (isFirstInit: %s)",
+			bagType,
+			limit,
+			tostring(isFirstInit)
+		)
+	)
 end
 
--- Register the hook with VERY_HIGH priority
--- Container limits should run FIRST to set base limits
--- Other features can then modify these limits (e.g., VIP bonus)
-STKBagUpgrade.registerHook(
-	"afterInitBag",
-	setContainerLimit,
-	STKBagUpgrade.PRIORITY.VERY_HIGH -- Runs first!
-)
+-- Register hook with VERY_HIGH priority (must run BEFORE other features)
+STKBagUpgrade.registerHook("afterInitBag", setContainerLimit, STKBagUpgrade.PRIORITY.VERY_HIGH)
 
-Logger.log("Hook 'afterInitBag' registrado com prioridade VERY_HIGH!")
+Logger.log("Hook registrado: afterInitBag (VERY_HIGH priority)")
 
 -- ============================================================================
--- PUBLIC API (optional, for other features to use)
+-- PUBLIC API (optional, for debugging)
 -- ============================================================================
 
 local STK_ContainerLimits = {}
 
---- Get the limit for a specific bag type
---- @param bagType string Full type of the bag (e.g., "Base.Bag_Schoolbag")
---- @return number limit The maximum number of upgrades
-function STK_ContainerLimits.getLimit(bagType)
-	return getLimitForBagType(bagType)
+--- Get configured limit for a bag type pattern
+--- @param pattern string The bag type pattern (e.g., "FannyPack")
+--- @return number|nil limit The configured limit or nil if not found
+function STK_ContainerLimits.getLimit(pattern)
+	return CONTAINER_LIMITS[pattern]
+end
+
+--- Get all configured limits
+--- @return table limits All configured limits
+function STK_ContainerLimits.getAllLimits()
+	return CONTAINER_LIMITS
 end
 
 return STK_ContainerLimits

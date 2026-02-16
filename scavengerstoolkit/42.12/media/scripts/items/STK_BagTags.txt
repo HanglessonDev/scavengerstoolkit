@@ -1,6 +1,6 @@
 module Base
 {
-    /* Fanny Pack */
+    /* FANNY PACKS */
     item Bag_FannyPackFront
     {
         tags = FannyPack,
@@ -10,7 +10,8 @@ module Base
     {
         tags = FannyPack,
     }
-    /* Satchel Bags */
+    
+    /* SATCHEL BAGS */
     item Bag_Satchel
     {
         tags = SatchelBag,
@@ -46,7 +47,7 @@ module Base
         tags = SatchelBag,
     }
     
-    /* Schoolbags */
+    /* SCHOOLBAGS */
     item Bag_Schoolbag
     {
         tags = Schoolbag,
@@ -70,5 +71,62 @@ module Base
     item Bag_Schoolbag_Travel
     {
         tags = Schoolbag,
+    }
+    
+    /* HIKING BAGS */
+    item Bag_NormalHikingBag
+    {
+        tags = HikingBag,
+    }
+    
+    item Bag_HikingBag_Travel
+    {
+        tags = HikingBag,
+    }
+    
+    item Bag_BigHikingBag
+    {
+        tags = HikingBag,
+    }
+    
+    item Bag_BigHikingBag_Travel
+    {
+        tags = HikingBag,
+    }
+    
+    /* DUFFEL BAGS */
+    item Bag_DuffelBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_DuffelBagTINT
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_Military
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_Police
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_SWAT
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_Sheriff
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_MedicalBag
+    {
+        tags = DuffelBag,
     }
 }

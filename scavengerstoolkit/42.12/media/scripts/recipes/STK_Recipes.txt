@@ -1,35 +1,35 @@
 module STK
 {
-    
-    /* R001 */
+    /* DISASSEMBLE RECIPES */
+    /* R001 - Schoolbag (Large) → 2x Basic Straps + 1x Basic Fabric */
     craftRecipe DisassembleSchoolBag
     {
         allowbatchcraft = true,
         category        = Tailoring,
         tags            = AnySurfaceCraft,
         time            = 100,
-        xpaward         = Tailoring:5,
+        xpaward         = Tailoring:2,
         timedaction     = Making,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 [Base.Bag_Schoolbag;Base.Bag_Schoolbag_Kids;Base.Bag_Schoolbag_Medical;Base.Bag_Schoolbag_Patches;Base.Bag_Schoolbag_Travel],
+            item 1 tags[Schoolbag],
         }
         outputs
         {
             item 2 STK.BackpackStrapsBasic,
-            item 2 Base.Buckle,
             item 1 STK.BackpackFabricBasic,
         }
     }
-    /* R002 - Outputs temporarios pois ainda não tem item para adicionar slot de Quick-Access */
+    
+    /* R002 - FannyPack (Small) → 1x Basic Straps + 1x Basic Fabric */
     craftRecipe DisassembleFannyPack
     {
         allowbatchcraft = true,
         category        = Tailoring,
         tags            = AnySurfaceCraft,
-        time            = 100,
-        xpaward         = Tailoring:5,
+        time            = 80,
+        xpaward         = Tailoring:2,
         timedaction     = Making,
         inputs
         {
@@ -39,18 +39,18 @@ module STK
         outputs
         {
             item 1 STK.BackpackStrapsBasic,
-            item 1 Base.Buckle,
             item 1 STK.BackpackFabricBasic,
         }
     }
-    /* R004 */
+    
+    /* R003 - Satchel (Medium) → 1x Basic Straps + 1x Basic Fabric */
     craftRecipe DisassembleSatchelBag
     {
         allowbatchcraft = true,
         category        = Tailoring,
         tags            = AnySurfaceCraft,
         time            = 100,
-        xpaward         = Tailoring:5,
+        xpaward         = Tailoring:2,
         timedaction     = Making,
         inputs
         {
@@ -60,8 +60,94 @@ module STK
         outputs
         {
             item 1 STK.BackpackStrapsBasic,
-            item 1 Base.Buckle,
             item 1 STK.BackpackFabricBasic,
+        }
+    }
+    
+    /* R004 - Hiking Bag (Large+) → 2x Reinforced Straps + 1x Reinforced Fabric */
+    craftRecipe DisassembleHikingBag
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 150,
+        xpaward         = Tailoring:5,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[HikingBag],
+        }
+        outputs
+        {
+            item 2 STK.BackpackStrapsReinforced,
+            item 1 STK.BackpackFabricReinforced,
+        }
+    }
+    
+    /* R005 - Duffel Bag (Large+) → 2x Reinforced Straps + 1x Reinforced Fabric */
+    craftRecipe DisassembleDuffelBag
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 150,
+        xpaward         = Tailoring:5,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[DuffelBag],
+        }
+        outputs
+        {
+            item 2 STK.BackpackStrapsReinforced,
+            item 1 STK.BackpackFabricReinforced,
+        }
+    }
+    
+    /* UPGRADE RECIPES (Basic → Reinforced → Tactical) */
+    /* R006 - Upgrade Straps: Reinforced → Tactical */
+    craftRecipe UpgradeStrapsToTactical
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 200,
+        xpaward         = Tailoring:8,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 [Base.Needle] mode:keep,
+            item 1 [Base.Thread],
+            item 1 [Base.LeatherStrips],
+            item 2 [STK.BackpackStrapsReinforced],
+        }
+        outputs
+        {
+            item 1 STK.BackpackStrapsTactical,
+        }
+    }
+    
+    /* R007 - Upgrade Fabric: Reinforced → Tactical */
+    craftRecipe UpgradeFabricToTactical
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 200,
+        xpaward         = Tailoring:8,
+        timedaction     = Making,
+        inputs
+        {
+            item 1 [Base.Needle] mode:keep,
+            item 1 [Base.Thread],
+            item 1 [Base.DenimStrips],
+            item 2 [STK.BackpackFabricReinforced],
+        }
+        outputs
+        {
+            item 1 STK.BackpackFabricTactical,
         }
     }
 }

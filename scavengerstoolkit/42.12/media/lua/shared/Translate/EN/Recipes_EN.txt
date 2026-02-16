@@ -3,4 +3,9 @@ Recipes_EN = {
     Recipe_DisassembleSchoolBag = "Disassemble School Bag"
     Recipe_DisassembleFannyPack = "Disassemble Fanny Pack"
     Recipe_DisassembleSatchelBag = "Disassemble Satchel"
+    Recipe_DisassembleHikingBag = "Disassemble Hiking Bag",
+    Recipe_DisassembleDuffelBag = "Disassemble Duffel Bag",
+
+    Recipe_UpgradeStrapsToTactical = "Upgrade Straps to Tactical",
+    Recipe_UpgradeFabricToTactical = "Upgrade Fabric to Tactical",
 }
