@@ -7,6 +7,24 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-02-16
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: adiciona suporte para novos tipos de mochilas (Hiking Bags e Duffel Bags)
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`: expande sistema de limites para novos tipos de mochilas
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Recipes_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Recipes_PTBR.txt`: adiciona traduções para novas receitas de desmontagem e upgrade
+* `scavengerstoolkit/42.12/media/scripts/items/STK_BagTags.txt`: adiciona tags para novos tipos de mochilas (HikingBag, DuffelBag)
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: cria novas receitas de desmontagem para diferentes tipos de mochilas e receitas de upgrade de itens
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: refatora sistema de validação de mochilas para incluir novos tipos
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`: atualiza sistema de limites para funcionar com novos tipos de mochilas
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/ItemName_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/ItemName_PTBR.txt`: formatação e organização dos arquivos de tradução
+
+### Removido
+* `scavengerstoolkit/42.12/media/scripts/items/STK_ItemsBags.txt`: remove arquivos obsoletos de receitas antigas
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_RecripesBags.txt`: remove arquivos obsoletos de receitas antigas
+
 ## [0.9.1] - 2026-02-15
 
 ### Modificado
