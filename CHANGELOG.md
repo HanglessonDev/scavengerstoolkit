@@ -7,6 +7,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.9.1] - 2026-02-15
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: Removido o uso de `player:Say()` legado para feedback do jogador.
+* `scavengerstoolkit/42.12/media/lua/shared/STK_FeedbackSystem.lua`: Centralizado o sistema de feedback, substituindo todas as mensagens hardcoded por chaves de tradução e removendo o fallback genérico para usar apenas mensagens "humanizadas".
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`: Adicionadas chaves de tradução para as mensagens de feedback humanizadas e removidas as chaves genéricas não utilizadas.
+
 ## [0.9.0] - 2026-02-15
 
 ### Adicionado
