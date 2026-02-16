@@ -1,7 +1,14 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STK_ContainerLimits.lua
---- Feature: Container-specific upgrade limits
---- Limita número de upgrades baseado no tipo de mochila
---- VERSÃO OTIMIZADA: Sistema de tracking para evitar spam de logs
+--- @brief Container-specific upgrade limits with anti-spam tracking system
+---
+--- This feature defines maximum number of upgrades allowed per container type.
+--- It uses a weak table tracking system to avoid re-processing and log spam.
+--- Optimized for performance in multiplayer servers with many players.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 2.0.0 (Optimized)
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 local STKBagUpgrade = require("STKBagUpgrade")
 

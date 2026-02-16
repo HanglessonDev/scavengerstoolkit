@@ -1,7 +1,17 @@
 --- @file scavengerstoolkit\42.12\media\lua\client\OnInventoryContextMenu_STK.lua
+--- @brief Context menu integration for STK backpack upgrades
+---
+--- This module adds context menu options for adding and removing upgrades
+--- from containers. Features progressive validation (tools → materials → skill),
+--- alphabetical sorting, and informative tooltips for unavailable options.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 --- @class STKContextMenu
---- Context Menu para Upgrades de Mochilas STK
+--- Context menu for STK backpack upgrades
 local STKContextMenu = {}
 
 local STKBagUpgrade = require("STKBagUpgrade")

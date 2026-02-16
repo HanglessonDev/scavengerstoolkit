@@ -1,6 +1,14 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STK_KnifeAlternative.lua
---- Feature: Allow knives as alternative to scissors for removing upgrades
---- Uses Sandbox option to enable/disable
+--- @brief Alternative tool system allowing knives for upgrade removal
+---
+--- This feature enables players to use 9 different knife types as an
+--- alternative to scissors when removing upgrades. Includes tool wear
+--- system and is fully configurable via Sandbox options.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 local STKBagUpgrade = require("STKBagUpgrade")
 

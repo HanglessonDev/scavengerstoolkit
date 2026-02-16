@@ -1,8 +1,17 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STKBagUpgrade.lua
-
+--- @brief Core system for backpack upgrades with extensible hook architecture
+---
+--- This module provides the main functionality for adding and removing upgrades
+--- from containers. It features a priority-based hook system that allows other
+--- features to extend functionality without modifying core code.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 --- @class STKBagUpgrade
---- Módulo para gerenciar upgrades de mochilas usando itens STK
+--- Core module for managing backpack upgrades using STK items
 local STKBagUpgrade = {}
 
 -- ============================================================================

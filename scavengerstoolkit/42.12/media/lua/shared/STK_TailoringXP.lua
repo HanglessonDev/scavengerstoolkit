@@ -1,8 +1,14 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STK_TailoringXP.lua
---- Feature: Tailoring XP progression + Removal failure chance
---- VERSION 4.0 - Integration with FeedbackSystem
---- XP popups remain here (feature-specific)
---- Speech feedback moved to STK_FeedbackSystem (optional)
+--- @brief Regressive XP system and removal failure chance based on Tailoring skill
+---
+--- This feature grants decreasing XP as player skill increases, and implements
+--- a failure chance system for upgrade removal that destroys materials on failure.
+--- Fully configurable via Sandbox options.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 4.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 local STKBagUpgrade = require("STKBagUpgrade")
 

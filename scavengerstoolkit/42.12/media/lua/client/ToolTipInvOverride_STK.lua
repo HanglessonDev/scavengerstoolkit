@@ -1,10 +1,10 @@
 --- @file scavengerstoolkit\42.12\media\lua\client\ToolTipInvOverride_STK.lua
---- @brief Extensão do sistema de tooltips para mostrar informações do STK
+--- @brief Tooltip extension for displaying STK upgrade information
 ---
---- Este script estende a funcionalidade de tooltips do jogo para exibir
---- informações sobre os upgrades de mochilas do Scavenger's Toolkit.
---- Ele mostra slots disponíveis/utilizados, bônus de capacidade e redução de peso
---- para mochilas, e valores de upgrade para itens de melhoria.
+--- This script extends the game's tooltip functionality to display
+--- information about Scavenger's Toolkit backpack upgrades.
+--- It shows available/used slots, capacity and weight reduction bonuses
+--- for backpacks, and upgrade values for improvement items.
 ---
 --- @author Scavenger's Toolkit Development Team
 --- @version 1.0.0

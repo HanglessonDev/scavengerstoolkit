@@ -1,6 +1,14 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STK_SilentSpeaker.lua
---- Utility: Silent speech with custom colors
---- Allows characters to speak without attracting zombies
+--- @brief Silent speech utility with custom RGB colors
+---
+--- This utility allows characters to display speech bubbles without attracting
+--- zombies. Supports custom colors for different message types (positive,
+--- negative, neutral) and integrates with the Feedback System.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 local STK_SilentSpeaker = {}
 

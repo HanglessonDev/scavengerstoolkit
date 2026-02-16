@@ -1,5 +1,15 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\TimedActions\ISSTKBagUpgradeAction.lua
---- Timed Actions para Upgrades de Mochilas STK - VERSÃO 100% FUNCIONAL
+--- @brief Timed action classes for STK upgrade add/remove operations
+---
+--- Implements ISBaseTimedAction subclasses for adding and removing upgrades
+--- from containers. Handles tool consumption, animation events, sound effects,
+--- and server synchronization. Fully integrated with STK hook system.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
+
 require("TimedActions/ISBaseTimedAction")
 local STKBagUpgrade = require("STKBagUpgrade")
 

@@ -1,7 +1,14 @@
 --- @file scavengerstoolkit\42.12\media\lua\shared\STK_FeedbackSystem.lua
---- Feature: Humanized Feedback System (OPTIONAL)
---- Gives "life" and "humanity" to the character with colored speech
---- This feature is OPTIONAL and can be disabled without affecting other features
+--- @brief Humanized contextual feedback system with anti-spam protection
+---
+--- This optional feature provides immersive, humanized speech feedback for
+--- player actions. Features 17+ contextual messages in PT-BR + EN, silent
+--- speech (zombies don't hear), and intelligent spam control.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 1.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
 
 local STKBagUpgrade = require("STKBagUpgrade")
 local SilentSpeaker = require("STK_SilentSpeaker")
