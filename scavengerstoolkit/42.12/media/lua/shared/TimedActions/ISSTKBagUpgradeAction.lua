@@ -89,7 +89,7 @@ end
 --- Server (STK_Commands) handles the rest.
 function ISSTKBagAddUpgradeAction:perform()
 	self.bag:setJobDelta(0.0)
-	Events.OnSTKActionAddComplete.trigger(self.bag, self.upgradeItem, self.character)
+	triggerEvent("OnSTKActionAddComplete", self.bag, self.upgradeItem, self.character)
 	ISBaseTimedAction.perform(self)
 end
 
@@ -148,7 +148,7 @@ end
 --- Server (STK_Commands) handles the rest.
 function ISSTKBagRemoveUpgradeAction:perform()
 	self.bag:setJobDelta(0.0)
-	Events.OnSTKActionRemoveComplete.trigger(self.bag, self.upgradeType, self.character)
+	triggerEvent("OnSTKActionRemoveComplete", self.bag, self.upgradeType, self.character)
 	ISBaseTimedAction.perform(self)
 end
 

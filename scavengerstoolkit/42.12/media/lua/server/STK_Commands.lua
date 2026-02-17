@@ -70,7 +70,7 @@ local function handleActionAddComplete(bag, upgradeItem, player)
 	local isValid, reason = STK_Validation.canApplyUpgrade(player, bag, upgradeItem)
 	if not isValid then
 		Logger.log("Validacao falhou: " .. (reason or "unknown"))
-		Events.OnSTKUpgradeAddFailed.trigger(bag, upgradeItem, player, reason)
+		triggerEvent("OnSTKUpgradeAddFailed", bag, upgradeItem, player, reason)
 		return
 	end
 
@@ -96,7 +96,7 @@ local function handleActionRemoveComplete(bag, upgradeType, player)
 	local isValid, reason = STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	if not isValid then
 		Logger.log("Validacao falhou: " .. (reason or "unknown"))
-		Events.OnSTKUpgradeRemoveFailed.trigger(bag, upgradeType, player, reason)
+		triggerEvent("OnSTKUpgradeRemoveFailed", bag, upgradeType, player, reason)
 		return
 	end
 

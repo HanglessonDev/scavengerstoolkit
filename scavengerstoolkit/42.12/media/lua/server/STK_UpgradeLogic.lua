@@ -78,7 +78,7 @@ local STK_UpgradeLogic = {}
 --- @return boolean isFirstInit True if this was the first initialisation
 function STK_UpgradeLogic.initBag(bag)
 	local isFirstInit = STK_Core.initBagData(bag)
-	Events.OnSTKBagInit.trigger(bag, isFirstInit)
+	triggerEvent("OnSTKBagInit", bag, isFirstInit)
 
 	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
 
@@ -94,7 +94,7 @@ end
 function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player, xpGained)
 	if not bag or not upgradeItem or not player then
 		Logger.log("ERRO: applyUpgrade chamado com parametros invalidos")
-		Events.OnSTKUpgradeAddFailed.trigger(bag, upgradeItem, player, "invalid_params")
+		triggerEvent("OnSTKUpgradeAddFailed", bag, upgradeItem, player, "invalid_params")
 		return
 	end
 
@@ -140,7 +140,7 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player, xpGained)
 		)
 	)
 
-	Events.OnSTKUpgradeAdded.trigger(bag, upgradeItem, player, xpGained or 0)
+	triggerEvent("OnSTKUpgradeAdded", bag, upgradeItem, player, xpGained or 0)
 end
 
 --- Removes an upgrade from the bag.
@@ -155,7 +155,7 @@ end
 function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 	if not bag or not upgradeType or not player then
 		Logger.log("ERRO: removeUpgrade chamado com parametros invalidos")
-		Events.OnSTKUpgradeRemoveFailed.trigger(bag, upgradeType, player, "invalid_params")
+		triggerEvent("OnSTKUpgradeRemoveFailed", bag, upgradeType, player, "invalid_params")
 		return
 	end
 
@@ -209,7 +209,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 				tailoringLevel
 			)
 		)
-		Events.OnSTKUpgradeRemoveFailed.trigger(bag, upgradeType, player, "material_destroyed")
+		triggerEvent("OnSTKUpgradeRemoveFailed", bag, upgradeType, player, "material_destroyed")
 		return
 	end
 
@@ -221,7 +221,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 
 	Logger.log(string.format("removeUpgrade OK: %s de %s por %s", upgradeType, bag:getType(), player:getUsername()))
 
-	Events.OnSTKUpgradeRemoved.trigger(bag, upgradeType, player)
+	triggerEvent("OnSTKUpgradeRemoved", bag, upgradeType, player)
 end
 
 -- ============================================================================

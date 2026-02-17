@@ -36,7 +36,9 @@ local DEBUG_MODE = true
 local Logger = {
 	--- @param message string
 	log = function(message)
-		if not DEBUG_MODE then return end
+		if not DEBUG_MODE then
+			return
+		end
 		print("[STKBagUpgrade] " .. tostring(message))
 	end,
 }
@@ -101,8 +103,11 @@ end
 -- BAG INIT
 -- ============================================================================
 
---- Client-side initialiser. Only ensures ModData table exists.
---- Does NOT trigger server-side events. Safe to call from UI code.
+--- Initialises a bag's ModData and triggers OnSTKBagInit.
+--- Safe to call multiple times — no-op if already initialised.
+--- Client-safe initialiser -- only writes ModData, never triggers server events.
+--- Use from UI code (tooltips, context menu) to avoid firing OnSTKBagInit
+--- in a render/hover context where server listeners may not be safe to run.
 --- @param bag any InventoryItem bag
 function STKBagUpgrade.initBag_Client(bag)
 	if not bag or not instanceof(bag, "InventoryItem") then
@@ -114,15 +119,17 @@ end
 --- Full initialiser for server/shared contexts. Triggers OnSTKBagInit.
 --- @param bag any InventoryItem bag
 function STKBagUpgrade.initBag(bag)
-	if not bag or not instanceof(bag, "InventoryItem") then
+	if not bag then
 		return
 	end
 
 	local isFirstInit = STK_Core.initBagData(bag)
 
-	Events.OnSTKBagInit.trigger(bag, isFirstInit)
+	-- Trigger event so STK_ContainerLimits (server) can set LMaxUpgrades.
+	-- In SP, server/ files run in the same process, so the listener fires immediately.
+	triggerEvent("OnSTKBagInit", bag, isFirstInit)
 
-	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getFullType(), tostring(isFirstInit)))
+	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
 end
 
 -- ============================================================================

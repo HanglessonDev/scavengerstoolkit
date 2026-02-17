@@ -141,6 +141,21 @@ end
 --- @param player any IsoPlayer
 --- @param actionType string "add" or "remove"
 --- @return boolean
+--- Viable knives for the KnifeAlternative feature.
+--- Duplicated here so STK_Core remains self-contained (no require of server/).
+--- Must be kept in sync with STK_KnifeAlternative.VIABLE_KNIVES.
+local VIABLE_KNIVES_REMOVE = {
+	"Base.KitchenKnife",
+	"Base.HuntingKnife",
+	"Base.ButterKnife",
+	"Base.Multitool",
+	"Base.KnifePocket",
+	"Base.KnifeFillet",
+	"Base.KnifeButterfly",
+	"Base.HandiKnife",
+	"Base.StraightRazor",
+}
+
 function STK_Core.hasRequiredTools(player, actionType)
 	if not player then
 		return false
@@ -151,9 +166,20 @@ function STK_Core.hasRequiredTools(player, actionType)
 	if actionType == "add" then
 		return inv:contains("Base.Needle") and inv:contains("Base.Thread")
 	elseif actionType == "remove" then
-		return inv:contains("Base.Scissors")
-		-- NOTE: Knife alternative check is intentionally absent here.
-		-- It will be handled by STK_Validation.lua (server-side) in Fase 2, Dia 6.
+		if inv:contains("Base.Scissors") then
+			return true
+		end
+
+		-- Knife alternative: only if enabled in SandboxVars
+		if SandboxVars.STK and SandboxVars.STK.KnifeAlternative then
+			for _, knifeType in ipairs(VIABLE_KNIVES_REMOVE) do
+				if inv:contains(knifeType) then
+					return true
+				end
+			end
+		end
+
+		return false
 	end
 
 	return false
