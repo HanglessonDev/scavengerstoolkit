@@ -30,6 +30,13 @@ local STK_Core = require("STK_Core")
 -- ============================================================================
 
 --- @class ISSTKBagUpgradeAction : ISBaseTimedAction
+--- @field character any IsoPlayer
+--- @field bag any InventoryItem bag being upgraded
+--- @field jobType string Progress bar text
+--- @field maxTime number Action duration in ticks
+--- @field stopOnWalk boolean
+--- @field stopOnRun boolean
+--- @field forceProgressBar boolean
 ISSTKBagUpgradeAction = ISBaseTimedAction:derive("ISSTKBagUpgradeAction")
 
 --- Returns false if the character or bag are no longer valid.
@@ -62,6 +69,7 @@ end
 -- ============================================================================
 
 --- @class ISSTKBagAddUpgradeAction : ISSTKBagUpgradeAction
+--- @field upgradeItem any InventoryItem upgrade to add
 ISSTKBagAddUpgradeAction = ISSTKBagUpgradeAction:derive("ISSTKBagAddUpgradeAction")
 
 --- Returns false if tools or upgrade item are gone mid-action.
@@ -119,6 +127,7 @@ end
 -- ============================================================================
 
 --- @class ISSTKBagRemoveUpgradeAction : ISSTKBagUpgradeAction
+--- @field upgradeType string Upgrade type without "STK." prefix
 ISSTKBagRemoveUpgradeAction = ISSTKBagUpgradeAction:derive("ISSTKBagRemoveUpgradeAction")
 
 --- Returns false if tools or the upgrade are gone mid-action.

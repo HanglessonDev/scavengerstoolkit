@@ -110,8 +110,9 @@ end
 --- @param player any IsoPlayer
 --- @param bag any InventoryItem bag
 --- @param upgradeType string Upgrade type without "STK." prefix
---- @return boolean isValid
---- @return string|nil reason
+--- @return boolean success
+--- @return string|nil reason "no_tools", "upgrade_not_found", etc.
+--- @return string|nil toolUsed "scissors" or knife type if successful
 function STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	if not player or not bag or not upgradeType then
 		Logger.log("canRemoveUpgrade: parametros invalidos")

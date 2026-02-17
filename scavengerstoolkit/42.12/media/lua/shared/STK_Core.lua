@@ -138,9 +138,6 @@ end
 ---          (knife alternative is handled separately by STK_Validation on
 ---           the server side — see STK_Validation.lua, Fase 2 Dia 6)
 ---
---- @param player any IsoPlayer
---- @param actionType string "add" or "remove"
---- @return boolean
 --- Viable knives for the KnifeAlternative feature.
 --- Duplicated here so STK_Core remains self-contained (no require of server/).
 --- Must be kept in sync with STK_KnifeAlternative.VIABLE_KNIVES.
@@ -156,6 +153,10 @@ local VIABLE_KNIVES_REMOVE = {
 	"Base.StraightRazor",
 }
 
+--- Checks if the player has the required tools for an upgrade operation.
+--- @param player any IsoPlayer
+--- @param actionType string "add" or "remove"
+--- @return boolean
 function STK_Core.hasRequiredTools(player, actionType)
 	if not player then
 		return false
