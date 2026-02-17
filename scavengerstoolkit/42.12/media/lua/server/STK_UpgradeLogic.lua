@@ -1,0 +1,229 @@
+--- @file scavengerstoolkit\42.12\media\lua\server\STK_UpgradeLogic.lua
+--- @brief Authoritative upgrade logic — the only place bag state is modified
+---
+--- This module is the single source of truth for bag state. It applies and
+--- removes upgrades, updates stats, and triggers result events. No other
+--- module may write to bag ModData directly.
+---
+--- All public functions assume validation has already passed (STK_Validation).
+--- They do not re-validate — callers are responsible for that.
+---
+--- @author Scavenger's Toolkit Development Team
+--- @version 3.0.0
+--- @license MIT
+--- @copyright 2026 Scavenger's Toolkit
+
+local STK_Core = require("STK_Core")
+local STK_Utils = require("STK_Utils")
+
+-- ============================================================================
+-- LOGGING
+-- ============================================================================
+
+local DEBUG_MODE = true
+
+local Logger = {
+	--- @param message string
+	log = function(message)
+		if not DEBUG_MODE then
+			return
+		end
+		print("[STK-UpgradeLogic] " .. tostring(message))
+	end,
+}
+
+Logger.log("Modulo carregado.")
+
+-- ============================================================================
+-- INTERNAL HELPERS
+-- ============================================================================
+
+--- Recalculates and applies bag stats from scratch based on current upgrades.
+--- Always reads from stored base values (LCapacity, LWeightReduction) to
+--- avoid floating-point drift from cumulative additions/subtractions.
+--- @param bag any InventoryItem bag
+local function updateBagStats(bag)
+	local imd = bag:getModData()
+	if not imd.LUpgrades then
+		return
+	end
+
+	local finalCapacity = STK_Utils.calculateFinalCapacity(imd.LCapacity, imd.LUpgrades)
+	local finalWR = STK_Utils.calculateFinalWeightReduction(imd.LWeightReduction, imd.LUpgrades)
+
+	bag:setCapacity(finalCapacity)
+	bag:setWeightReduction(finalWR)
+
+	Logger.log(
+		string.format(
+			"Stats atualizados — Capacidade: %d (base %d), WeightReduction: %.0f%% (base %.0f%%)",
+			finalCapacity,
+			imd.LCapacity,
+			finalWR,
+			imd.LWeightReduction
+		)
+	)
+end
+
+-- ============================================================================
+-- PUBLIC API
+-- ============================================================================
+
+--- @class STKUpgradeLogic
+local STK_UpgradeLogic = {}
+
+--- Initialises a bag's ModData if not already done and triggers OnSTKBagInit.
+--- Called the first time a valid bag is seen by the server (e.g. on open).
+--- @param bag any InventoryItem bag
+--- @return boolean isFirstInit True if this was the first initialisation
+function STK_UpgradeLogic.initBag(bag)
+	local isFirstInit = STK_Core.initBagData(bag)
+	Events.OnSTKBagInit.trigger(bag, isFirstInit)
+
+	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
+
+	return isFirstInit
+end
+
+--- Applies an upgrade to the bag, consumes the item and tool uses, updates
+--- stats, and triggers OnSTKUpgradeAdded. Assumes validation already passed.
+--- @param bag any InventoryItem bag
+--- @param upgradeItem any InventoryItem upgrade to consume
+--- @param player any IsoPlayer performing the action
+--- @param xpGained number XP already granted by STK_TailoringXP (passed through for event)
+function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player, xpGained)
+	if not bag or not upgradeItem or not player then
+		Logger.log("ERRO: applyUpgrade chamado com parametros invalidos")
+		Events.OnSTKUpgradeAddFailed.trigger(bag, upgradeItem, player, "invalid_params")
+		return
+	end
+
+	local imd = bag:getModData()
+	local upgradeType = upgradeItem:getType():gsub("^STK%.", "")
+
+	-- Add to upgrade list
+	table.insert(imd.LUpgrades, upgradeType)
+
+	-- Consume upgrade item
+	upgradeItem:getContainer():Remove(upgradeItem)
+
+	-- Degrade needle (-1 condition, remove if broken)
+	local needle = player:getInventory():getFirstType("Base.Needle")
+	if needle then
+		needle:setCondition(needle:getCondition() - 1)
+		if needle:getCondition() <= 0 then
+			needle:getContainer():Remove(needle)
+			Logger.log("Agulha quebrou e foi removida")
+		end
+	end
+
+	-- Consume one thread use (remove if depleted)
+	local thread = player:getInventory():getFirstType("Base.Thread")
+	if thread then
+		thread:setUses(thread:getUses() - 1)
+		if thread:getUses() <= 0 then
+			thread:getContainer():Remove(thread)
+			Logger.log("Linha esgotada e removida")
+		end
+	end
+
+	-- Recalculate stats from base values
+	updateBagStats(bag)
+
+	Logger.log(
+		string.format(
+			"applyUpgrade OK: %s em %s por %s (xp=%.1f)",
+			upgradeType,
+			bag:getType(),
+			player:getUsername(),
+			xpGained or 0
+		)
+	)
+
+	Events.OnSTKUpgradeAdded.trigger(bag, upgradeItem, player, xpGained or 0)
+end
+
+--- Removes an upgrade from the bag.
+--- If failure chance triggers, the item is not returned and
+--- OnSTKUpgradeRemoveFailed is fired. Otherwise the item is returned to
+--- inventory and OnSTKUpgradeRemoved is fired.
+--- Assumes validation has already passed.
+--- @param bag any InventoryItem bag
+--- @param upgradeType string Upgrade type without "STK." prefix
+--- @param player any IsoPlayer performing the action
+--- @param toolUsed string|nil "scissors" or a knife type string, for degradation
+function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
+	if not bag or not upgradeType or not player then
+		Logger.log("ERRO: removeUpgrade chamado com parametros invalidos")
+		Events.OnSTKUpgradeRemoveFailed.trigger(bag, upgradeType, player, "invalid_params")
+		return
+	end
+
+	local imd = bag:getModData()
+
+	-- Failure chance check
+	local tailoringLevel = player:getPerkLevel(Perks.Tailoring)
+	local failChance = STK_Utils.calculateFailureChance(tailoringLevel)
+	local roll = ZombRand(101)
+	local failed = SandboxVars.STK.RemovalFailureEnabled and (roll < failChance)
+
+	-- Degrade tool regardless of outcome
+	if toolUsed == "scissors" then
+		local scissors = player:getInventory():getFirstType("Base.Scissors")
+		if scissors then
+			scissors:setCondition(scissors:getCondition() - 1)
+			if scissors:getCondition() <= 0 then
+				scissors:getContainer():Remove(scissors)
+				Logger.log("Tesoura quebrou e foi removida")
+			end
+		end
+	elseif toolUsed then
+		local knife = player:getInventory():getFirstType(toolUsed)
+		if knife then
+			knife:setCondition(knife:getCondition() - 1)
+			if knife:getCondition() <= 0 then
+				knife:getContainer():Remove(knife)
+				Logger.log("Faca quebrou e foi removida: " .. toolUsed)
+			end
+		end
+	end
+
+	-- Remove from upgrade list
+	for i, upgrade in ipairs(imd.LUpgrades) do
+		if upgrade == upgradeType then
+			table.remove(imd.LUpgrades, i)
+			break
+		end
+	end
+
+	-- Recalculate stats from base values
+	updateBagStats(bag)
+
+	if failed then
+		Logger.log(
+			string.format(
+				"removeUpgrade FALHOU: %s (roll=%d < failChance=%.0f%%, level=%d)",
+				upgradeType,
+				roll,
+				failChance,
+				tailoringLevel
+			)
+		)
+		Events.OnSTKUpgradeRemoveFailed.trigger(bag, upgradeType, player, "material_destroyed")
+		return
+	end
+
+	-- Return item to inventory
+	local newItem = player:getInventory():AddItem("STK." .. upgradeType)
+	if not newItem then
+		Logger.log("ERRO CRITICO: falha ao devolver item STK." .. upgradeType)
+	end
+
+	Logger.log(string.format("removeUpgrade OK: %s de %s por %s", upgradeType, bag:getType(), player:getUsername()))
+
+	Events.OnSTKUpgradeRemoved.trigger(bag, upgradeType, player)
+end
+
+-- ============================================================================
+
+return STK_UpgradeLogic

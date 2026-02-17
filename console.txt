@@ -1,121 +1,59 @@
-LOG  : Lua          f:2533, t:1771017393531> :	[STKBagUpgrade-Menu] Mochila v?lida detectada: Bag_Schoolbag
-LOG  : Lua          f:2533, t:1771017393532> :	[STKBagUpgrade] Inicializando ModData para: Bag_Schoolbag
-LOG  : General      f:2533, t:1771017393533> -------------------------------------------------------------
-attempted index: player of non-table: null
-
-LOG  : General      f:2533, t:1771017393553> -----------------------------------------
+LOG  : Lua          f:945, t:1771320966988> :	[STK-ContextMenu] Mochila valida detectada: Bag_Schoolbag
+LOG  : Lua          f:945, t:1771320966989> :	[STK-ContextMenu] Upgrades disponiveis: 5
+LOG  : Lua          f:945, t:1771320966990> :	[STK-ContextMenu] Validacoes ADD passaram, populando submenu
+LOG  : Lua          f:945, t:1771320966990> :	[STK-ContextMenu]   + BackpackFabricBasic
+LOG  : Lua          f:945, t:1771320966991> :	[STK-ContextMenu]   + BackpackFabricBasic
+LOG  : Lua          f:945, t:1771320966992> :	[STK-ContextMenu]   + BackpackFabricBasic
+LOG  : Lua          f:945, t:1771320966993> :	[STK-ContextMenu]   + BackpackFabricBasic
+LOG  : Lua          f:945, t:1771320966993> :	[STK-ContextMenu]   + BackpackFabricBasic
+LOG  : General      f:1235, t:1771320971952> -----------------------------------------
 STACK TRACE
 -----------------------------------------
-function: getNew -- file: ISContextMenu.lua line # 1264 | Vanilla
-function: onFillInventoryContextMenu -- file: OnInventoryContextMenu_STK.lua line # 39 | MOD: Scavenger's Toolkit
-Callframe at: se.krka.kahlua.integration.expose.MultiLuaJavaInvoker@f9ee22e9
-function: createMenu -- file: ISInventoryPaneContextMenu.lua line # 1149 | Vanilla
-function: onRightMouseUp -- file: ISInventoryPane.lua line # 1578 | Vanilla
+function: perform -- file: ISSTKBagUpgradeAction.lua line # 92 | MOD: Scavenger's Toolkit
 
-ERROR: General      f:2533, t:1771017393577> ExceptionLogger.logException> Exception thrown
-	java.lang.RuntimeException: attempted index: player of non-table: null at KahluaThread.tableget(KahluaThread.java:1462).
+LOG  : General      f:1235, t:1771320971952> Object tried to call nil in perform
+ERROR: General      f:1235, t:1771320992719> ExceptionLogger.logException> Exception thrown
+	java.lang.RuntimeException: Object tried to call nil in perform at KahluaUtil.fail(KahluaUtil.java:97).
 	Stack trace:
-		se.krka.kahlua.vm.KahluaThread.tableget(KahluaThread.java:1462)
-		se.krka.kahlua.vm.KahluaThread.luaMainloop(KahluaThread.java:366)
+		se.krka.kahlua.vm.KahluaUtil.fail(KahluaUtil.java:97)
+		se.krka.kahlua.vm.KahluaThread.luaMainloop(KahluaThread.java:769)
 		se.krka.kahlua.vm.KahluaThread.call(KahluaThread.java:166)
 		se.krka.kahlua.vm.KahluaThread.pcall(KahluaThread.java:1754)
-		se.krka.kahlua.vm.KahluaThread.pcallvoid(KahluaThread.java:1582)
-		se.krka.kahlua.integration.LuaCaller.pcallvoid(LuaCaller.java:60)
-		se.krka.kahlua.integration.LuaCaller.protectedCallVoid(LuaCaller.java:131)
-		zombie.Lua.Event.trigger(Event.java:62)
-		zombie.Lua.LuaEventManager.triggerEvent(LuaEventManager.java:354)
-		zombie.Lua.LuaEventManager.triggerEventGarbage(LuaEventManager.java:365)
-		zombie.Lua.LuaManager$GlobalObject.triggerEvent(LuaManager.java:3687)
-		java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-		java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-		java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-		java.base/java.lang.reflect.Method.invoke(Unknown Source)
-		se.krka.kahlua.integration.expose.caller.MethodCaller.call(MethodCaller.java:60)
-		se.krka.kahlua.integration.expose.LuaJavaInvoker.call(LuaJavaInvoker.java:206)
-		se.krka.kahlua.integration.expose.MultiLuaJavaInvoker.call(MultiLuaJavaInvoker.java:61)
-		se.krka.kahlua.vm.KahluaThread.callJava(KahluaThread.java:182)
-		se.krka.kahlua.vm.KahluaThread.luaMainloop(KahluaThread.java:803)
-		se.krka.kahlua.vm.KahluaThread.call(KahluaThread.java:166)
-		se.krka.kahlua.vm.KahluaThread.pcall(KahluaThread.java:1754)
-		se.krka.kahlua.vm.KahluaThread.pcallBoolean(KahluaThread.java:1690)
-		se.krka.kahlua.integration.LuaCaller.protectedCallBoolean(LuaCaller.java:96)
-		zombie.ui.UIElement.onRightMouseUp(UIElement.java:1695)
-		zombie.ui.UIElement.onRightMouseUp(UIElement.java:1660)
-		zombie.ui.UIElement.onConsumeMouseButtonUp(UIElement.java:1518)
-		zombie.ui.UIManager.updateMouseButtons(UIManager.java:742)
-		zombie.ui.UIManager.update(UIManager.java:615)
-		zombie.GameWindow.logic(GameWindow.java:298)
+		se.krka.kahlua.vm.KahluaThread.pcall(KahluaThread.java:1554)
+		se.krka.kahlua.integration.LuaCaller.pcall(LuaCaller.java:77)
+		zombie.characters.CharacterTimedActions.LuaTimedActionNew.perform(LuaTimedActionNew.java:141)
+		zombie.characters.IsoGameCharacter.updateInternal(IsoGameCharacter.java:9084)
+		zombie.characters.IsoGameCharacter.update(IsoGameCharacter.java:8794)
+		zombie.characters.IsoPlayer.updateInternal1(IsoPlayer.java:1923)
+		zombie.characters.IsoPlayer.update(IsoPlayer.java:1906)
+		zombie.MovingObjectUpdateSchedulerUpdateBucket.update(MovingObjectUpdateSchedulerUpdateBucket.java:65)
+		zombie.MovingObjectUpdateScheduler.update(MovingObjectUpdateScheduler.java:149)
+		zombie.iso.IsoCell.ProcessObjects(IsoCell.java:2912)
+		zombie.iso.IsoCell.updateInternal(IsoCell.java:5720)
+		zombie.iso.IsoCell.update(IsoCell.java:5660)
+		zombie.iso.IsoWorld.updateWorld(IsoWorld.java:3569)
+		zombie.iso.IsoWorld.updateInternal(IsoWorld.java:3663)
+		zombie.iso.IsoWorld.update(IsoWorld.java:3594)
+		zombie.gameStates.IngameState.updateInternal(IngameState.java:1398)
+		zombie.gameStates.IngameState.update(IngameState.java:1216)
+		zombie.gameStates.GameStateMachine.update(GameStateMachine.java:67)
+		zombie.GameWindow.logic(GameWindow.java:346)
 		zombie.GameWindow.frameStep(GameWindow.java:790)
 		zombie.GameWindow.mainThreadStep(GameWindow.java:552)
 		zombie.MainThread.mainLoop(MainThread.java:68)
 		java.base/java.lang.Thread.run(Unknown Source)
-LOG  : General      f:2533, t:1771017393578> -----------------------------------------
+LOG  : General      f:1235, t:1771320992719> -----------------------------------------
 STACK TRACE
 -----------------------------------------
-function: getNew -- file: ISContextMenu.lua line # 1264 | Vanilla
-function: onFillInventoryContextMenu -- file: OnInventoryContextMenu_STK.lua line # 39 | MOD: Scavenger's Toolkit
-Callframe at: se.krka.kahlua.integration.expose.MultiLuaJavaInvoker@f9ee22e9
-function: createMenu -- file: ISInventoryPaneContextMenu.lua line # 1149 | Vanilla
-function: onRightMouseUp -- file: ISInventoryPane.lua line # 1578 | Vanilla
+function: perform -- file: ISSTKBagUpgradeAction.lua line # 92 | MOD: Scavenger's Toolkit
 
-LOG  : General      f:2533, t:1771017393578> 
-LOG  : Lua          f:4165, t:1771017524292> :	[STKBagUpgrade-Menu] Mochila v?lida detectada: Bag_Schoolbag
-LOG  : General      f:4165, t:1771017524293> -------------------------------------------------------------
-attempted index: player of non-table: null
-
-LOG  : General      f:4165, t:1771017524293> -----------------------------------------
-STACK TRACE
------------------------------------------
-function: getNew -- file: ISContextMenu.lua line # 1264 | Vanilla
-function: onFillInventoryContextMenu -- file: OnInventoryContextMenu_STK.lua line # 39 | MOD: Scavenger's Toolkit
-Callframe at: se.krka.kahlua.integration.expose.MultiLuaJavaInvoker@f9ee22e9
-function: createMenu -- file: ISInventoryPaneContextMenu.lua line # 1149 | Vanilla
-function: onRightMouseUp -- file: ISInventoryPane.lua line # 1578 | Vanilla
-
-ERROR: General      f:4165, t:1771017524294> ExceptionLogger.logException> Exception thrown
-	java.lang.RuntimeException: attempted index: player of non-table: null at KahluaThread.tableget(KahluaThread.java:1462).
-	Stack trace:
-		se.krka.kahlua.vm.KahluaThread.tableget(KahluaThread.java:1462)
-		se.krka.kahlua.vm.KahluaThread.luaMainloop(KahluaThread.java:366)
-		se.krka.kahlua.vm.KahluaThread.call(KahluaThread.java:166)
-		se.krka.kahlua.vm.KahluaThread.pcall(KahluaThread.java:1754)
-		se.krka.kahlua.vm.KahluaThread.pcallvoid(KahluaThread.java:1582)
-		se.krka.kahlua.integration.LuaCaller.pcallvoid(LuaCaller.java:60)
-		se.krka.kahlua.integration.LuaCaller.protectedCallVoid(LuaCaller.java:131)
-		zombie.Lua.Event.trigger(Event.java:62)
-		zombie.Lua.LuaEventManager.triggerEvent(LuaEventManager.java:354)
-		zombie.Lua.LuaEventManager.triggerEventGarbage(LuaEventManager.java:365)
-		zombie.Lua.LuaManager$GlobalObject.triggerEvent(LuaManager.java:3687)
-		java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-		java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-		java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-		java.base/java.lang.reflect.Method.invoke(Unknown Source)
-		se.krka.kahlua.integration.expose.caller.MethodCaller.call(MethodCaller.java:60)
-		se.krka.kahlua.integration.expose.LuaJavaInvoker.call(LuaJavaInvoker.java:206)
-		se.krka.kahlua.integration.expose.MultiLuaJavaInvoker.call(MultiLuaJavaInvoker.java:61)
-		se.krka.kahlua.vm.KahluaThread.callJava(KahluaThread.java:182)
-		se.krka.kahlua.vm.KahluaThread.luaMainloop(KahluaThread.java:803)
-		se.krka.kahlua.vm.KahluaThread.call(KahluaThread.java:166)
-		se.krka.kahlua.vm.KahluaThread.pcall(KahluaThread.java:1754)
-		se.krka.kahlua.vm.KahluaThread.pcallBoolean(KahluaThread.java:1690)
-		se.krka.kahlua.integration.LuaCaller.protectedCallBoolean(LuaCaller.java:96)
-		zombie.ui.UIElement.onRightMouseUp(UIElement.java:1695)
-		zombie.ui.UIElement.onRightMouseUp(UIElement.java:1660)
-		zombie.ui.UIElement.onConsumeMouseButtonUp(UIElement.java:1518)
-		zombie.ui.UIManager.updateMouseButtons(UIManager.java:742)
-		zombie.ui.UIManager.update(UIManager.java:615)
-		zombie.GameWindow.logic(GameWindow.java:298)
-		zombie.GameWindow.frameStep(GameWindow.java:790)
-		zombie.GameWindow.mainThreadStep(GameWindow.java:552)
-		zombie.MainThread.mainLoop(MainThread.java:68)
-		java.base/java.lang.Thread.run(Unknown Source)
-LOG  : General      f:4165, t:1771017524294> -----------------------------------------
-STACK TRACE
------------------------------------------
-function: getNew -- file: ISContextMenu.lua line # 1264 | Vanilla
-function: onFillInventoryContextMenu -- file: OnInventoryContextMenu_STK.lua line # 39 | MOD: Scavenger's Toolkit
-Callframe at: se.krka.kahlua.integration.expose.MultiLuaJavaInvoker@f9ee22e9
-function: createMenu -- file: ISInventoryPaneContextMenu.lua line # 1149 | Vanilla
-function: onRightMouseUp -- file: ISInventoryPane.lua line # 1578 | Vanilla
-
-LOG  : General      f:4165, t:1771017524294> 
+LOG  : General      f:1235, t:1771320992720> 
+LOG  : Lua          f:1235, t:1771320999912> :	ISTimedActionQueue:tick: bugged action, cleared queue 	ISSTKBagAddUpgradeAction
+LOG  : Lua          f:1394, t:1771321002551> :	EXITDEBUG: ToggleEscapeMenu 1
+LOG  : Lua          f:1394, t:1771321002552> :	EXITDEBUG: ToggleEscapeMenu 3
+LOG  : Lua          f:1394, t:1771321002553> :	EXITDEBUG: ToggleEscapeMenu 4
+LOG  : Lua          f:1394, t:1771321002553> :	EXITDEBUG: ToggleEscapeMenu 5
+DEBUG: ExitDebug    f:1394, t:1771321002554> LuaManager$GlobalObject.setGameSpeed> setGameSpeed 1
+DEBUG: ExitDebug    f:1394, t:1771321002554> LuaManager$GlobalObject.setGameSpeed> setGameSpeed 3
+DEBUG: ExitDebug    f:1394, t:1771321002555> LuaManager$GlobalObject.setShowPausedMessage> setShowPausedMessage 1
+DEBUG: ExitDebug    f:1394, t:1771321002555> LuaManager$GlobalObject.setShowPausedMessage> setShowPausedMessage 2
