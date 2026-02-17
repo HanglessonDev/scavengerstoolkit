@@ -15,6 +15,7 @@
 
 local STK_Core = require("STK_Core")
 local STK_Utils = require("STK_Utils")
+local STK_TailoringXP = require("STK_TailoringXP")
 
 -- ============================================================================
 -- LOGGING
@@ -90,8 +91,7 @@ end
 --- @param bag any InventoryItem bag
 --- @param upgradeItem any InventoryItem upgrade to consume
 --- @param player any IsoPlayer performing the action
---- @param xpGained number XP already granted by STK_TailoringXP (passed through for event)
-function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player, xpGained)
+function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 	if not bag or not upgradeItem or not player then
 		Logger.log("ERRO: applyUpgrade chamado com parametros invalidos")
 		triggerEvent("OnSTKUpgradeAddFailed", bag, upgradeItem, player, "invalid_params")
@@ -130,17 +130,10 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player, xpGained)
 	-- Recalculate stats from base values
 	updateBagStats(bag)
 
-	Logger.log(
-		string.format(
-			"applyUpgrade OK: %s em %s por %s (xp=%.1f)",
-			upgradeType,
-			bag:getType(),
-			player:getUsername(),
-			xpGained or 0
-		)
-	)
+	Logger.log(string.format("applyUpgrade OK: %s em %s por %s", upgradeType, bag:getType(), player:getUsername()))
 
-	triggerEvent("OnSTKUpgradeAdded", bag, upgradeItem, player, xpGained or 0)
+	local xp = STK_TailoringXP.grant(player)
+	triggerEvent("OnSTKUpgradeAdded", bag, upgradeItem, player, xp)
 end
 
 --- Removes an upgrade from the bag.

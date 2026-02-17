@@ -143,30 +143,19 @@ function STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 
 	if hasScissors then
 		Logger.log("canRemoveUpgrade: OK (tesoura)")
-		return true, nil
+		return true, nil, "scissors"
 	end
 
 	if SandboxVars.STK.KnifeAlternative then
 		local knifeType = STK_KnifeAlternative.findViableKnife(player)
 		if knifeType then
 			Logger.log("canRemoveUpgrade: OK (faca — " .. knifeType .. ")")
-			return true, nil
+			return true, nil, knifeType
 		end
 	end
 
 	Logger.log("canRemoveUpgrade: sem ferramentas (tesoura/faca)")
 	return false, "no_tools"
-end
-
---- Returns which tool the player will use for removal — "scissors" or a
---- knife type string. Call only after canRemoveUpgrade() returned true.
---- @param player any
---- @return string toolUsed
-function STK_Validation.resolveRemoveTool(player)
-	if player:getInventory():contains("Base.Scissors") then
-		return "scissors"
-	end
-	return STK_KnifeAlternative.findViableKnife(player) or "scissors"
 end
 
 -- ============================================================================

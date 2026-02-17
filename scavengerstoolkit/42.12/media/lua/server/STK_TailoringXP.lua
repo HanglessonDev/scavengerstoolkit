@@ -65,24 +65,5 @@ function STK_TailoringXP.grant(player)
 end
 
 -- ============================================================================
--- EVENT LISTENER
--- ============================================================================
-
---- Fired by STK_UpgradeLogic.applyUpgrade() after a successful addition.
---- xpGained is already embedded in the event by UpgradeLogic — we only
---- grant the XP here; the popup is handled client-side by FeedbackSystem.
---- @param bag any
---- @param upgradeItem any
---- @param player any
---- @param xpGained number (informational — already set by UpgradeLogic)
-local function onUpgradeAdded(bag, upgradeItem, player, xpGained)
-	STK_TailoringXP.grant(player)
-end
-
-Events.OnSTKUpgradeAdded.Add(onUpgradeAdded)
-
-Logger.log("Listener registrado: OnSTKUpgradeAdded")
-
--- ============================================================================
 
 return STK_TailoringXP

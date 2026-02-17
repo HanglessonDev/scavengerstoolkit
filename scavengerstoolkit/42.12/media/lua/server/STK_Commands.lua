@@ -8,12 +8,11 @@
 ---
 ---   Add pipeline:
 ---     1. STK_Validation.canApplyUpgrade()
----     2. STK_TailoringXP.grant()
+---     2. STK_UpgradeLogic calls STK_TailoringXP.grant() internally
 ---     3. STK_UpgradeLogic.applyUpgrade()   → fires OnSTKUpgradeAdded
 ---
 ---   Remove pipeline:
 ---     1. STK_Validation.canRemoveUpgrade()
----     2. STK_Validation.resolveRemoveTool()
 ---     3. STK_UpgradeLogic.removeUpgrade()  → fires OnSTKUpgradeRemoved
 ---                                             or OnSTKUpgradeRemoveFailed
 ---
@@ -28,7 +27,6 @@
 
 local STK_Validation = require("STK_Validation")
 local STK_UpgradeLogic = require("STK_UpgradeLogic")
-local STK_TailoringXP = require("STK_TailoringXP")
 
 -- ============================================================================
 -- LOGGING
@@ -74,8 +72,8 @@ local function handleActionAddComplete(bag, upgradeItem, player)
 		return
 	end
 
-	local xpGained = STK_TailoringXP.grant(player)
-	STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player, xpGained)
+	-- XP is granted inside STK_UpgradeLogic.applyUpgrade() via STK_TailoringXP.
+	STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 end
 
 --- Handles the completion of a remove-upgrade timed action.
@@ -93,14 +91,13 @@ local function handleActionRemoveComplete(bag, upgradeType, player)
 		)
 	)
 
-	local isValid, reason = STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
+	local isValid, reason, toolUsed = STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	if not isValid then
 		Logger.log("Validacao falhou: " .. (reason or "unknown"))
 		triggerEvent("OnSTKUpgradeRemoveFailed", bag, upgradeType, player, reason)
 		return
 	end
 
-	local toolUsed = STK_Validation.resolveRemoveTool(player)
 	STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 end
 
