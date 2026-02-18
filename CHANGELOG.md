@@ -7,6 +7,43 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-02-17
+
+### Adicionado
+* `docs/ARCHITECTURE_PROPOSAL_EVENTS.md`, `docs/STK_AttachmentsTest.lua`: nova documentação de arquitetura baseada em eventos e arquivo de teste
+* `docs/POLISH.md`: backlog de melhorias de polimento (UI/UX, feedback visual, sons, partículas)
+* `scavengerstoolkit/42.12/media/lua/client/STK_ContextMenu.lua`: novo módulo de menu de contexto centralizado
+* `scavengerstoolkit/42.12/media/lua/client/STK_FeedbackSystem.lua`: novo módulo de feedback humanizado com falas coloridas
+* `scavengerstoolkit/42.12/media/lua/client/STK_SilentSpeaker.lua`: novo módulo para mensagens de chat silenciosas (sem audição de zombies)
+* `scavengerstoolkit/42.12/media/lua/client/STK_Tooltips.lua`: novo módulo de tooltips dinâmicos para mochilas e upgrades
+* `scavengerstoolkit/42.12/media/lua/server/STK_Commands.lua`: novo módulo de comandos server (OnNewGame, OnPlayerJoin)
+* `scavengerstoolkit/42.12/media/lua/server/STK_ContainerLimits.lua`: novo módulo de limites de upgrades por tipo de mochila (movido para server)
+* `scavengerstoolkit/42.12/media/lua/server/STK_KnifeAlternative.lua`: novo módulo de facas alternativas para tesouras (movido para server)
+* `scavengerstoolkit/42.12/media/lua/server/STK_TailoringXP.lua`: novo módulo de XP de costura com chance de falha (movido para server)
+* `scavengerstoolkit/42.12/media/lua/server/STK_UpgradeLogic.lua`: novo módulo de lógica de upgrades (movido para server)
+* `scavengerstoolkit/42.12/media/lua/server/STK_Validation.lua`: novo módulo de validação de ferramentas e upgrades (movido para server)
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Core.lua`: novo módulo core do sistema com inicialização centralizada
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Events.lua`: novo módulo de eventos para comunicação client/server
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Utils.lua`: novo módulo de utilitários gerais
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/lua/server/STK_Commands.lua`, `STK_UpgradeLogic.lua`: correção de chamada de eventos e validação de ferramentas alternativas
+* `scavengerstoolkit/42.12/media/lua/server/STK_TailoringXP.lua`, `STK_Validation.lua`: eliminação de duplicação de código client/server de XP e ferramentas
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: refatoração para nova arquitetura com hooks e sistema de prioridades
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: atualização para usar novos módulos server e correção de warnings LuaLS
+* `scavengerstoolkit/42.12/media/lua/client/STK_SilentSpeaker.lua`: alterado de `UIFont.Small` para `UIFont.Dialogue` para melhor consistência visual
+* `docs/COMPONENTES.md`, `docs/CONCEITO.md`: atualização de documentação de arquitetura e conceitos
+* `.aim/memory.jsonl`: atualização de diretrizes de tradução
+* **Cabeçalhos de copyright**: adicionados em todos os arquivos Lua do projeto
+
+### Removido
+* `docs/BALANCEAMENTO.md`, `docs/ITEMS_DATABASE.md`, `docs/PLANO_TESTES_CORE.md`, `docs/RECEITAS.md`: documentação obsoleta ou movida para outros locais
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: menu de contexto legado (substituído por STK_ContextMenu.lua)
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: override de tooltips legado (substituído por STK_Tooltips.lua)
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`, `STK_FeedbackSystem.lua`, `STK_KnifeAlternative.lua`, `STK_SilentSpeaker.lua`, `STK_TailoringXP.lua`: módulos movidos para pasta server na nova arquitetura
+
 ## [0.10.1] - 2026-02-16
 
 ### Adicionado
