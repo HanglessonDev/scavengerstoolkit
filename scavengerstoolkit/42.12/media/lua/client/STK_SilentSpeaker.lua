@@ -58,7 +58,7 @@ function STK_SilentSpeaker.speak(player, text, r, g, b)
 	player:addLineChatElement(
 		tostring(text),
 		r, g, b,
-		UIFont.Small,
+		UIFont.Dialogue,
 		0,          -- Volume 0: zombies do NOT hear this
 		"default",
 		true, true, true, true, true, true
