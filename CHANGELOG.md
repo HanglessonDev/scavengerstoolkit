@@ -7,6 +7,19 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-02-18
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Constants.lua`: novo módulo shared como fonte única de verdade para dados estáticos (VALID_BAGS, BAG_LIMIT_RULES, VIABLE_KNIVES)
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Core.lua`: refatorado para usar `STK_Constants`, moveu lógica de limites para `getLimitForType()`, simplificou `isValidBag()` e `canAddUpgrade()`, adicionou inicialização correta de `LMaxUpgrades` no `initBagData()`
+* `scavengerstoolkit/42.12/media/lua/server/STK_KnifeAlternative.lua`: agora utiliza `STK_Constants.VIABLE_KNIVES` em vez de tabela local duplicada
+* `scavengerstoolkit/42.12/media/lua/client/STK_SilentSpeaker.lua`: alterado de `UIFont.Small` para `UIFont.Dialogue` para melhor consistência visual
+
+### Removido
+* `scavengerstoolkit/42.12/media/lua/server/STK_ContainerLimits.lua`: módulo removido - lógica de limites centralizada em `STK_Core.getLimitForType()` com dados de `STK_Constants`
+
 ## [0.11.0] - 2026-02-17
 
 ### Adicionado
@@ -16,7 +29,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 * `scavengerstoolkit/42.12/media/lua/client/STK_FeedbackSystem.lua`: novo módulo de feedback humanizado com falas coloridas
 * `scavengerstoolkit/42.12/media/lua/client/STK_SilentSpeaker.lua`: novo módulo para mensagens de chat silenciosas (sem audição de zombies)
 * `scavengerstoolkit/42.12/media/lua/client/STK_Tooltips.lua`: novo módulo de tooltips dinâmicos para mochilas e upgrades
-* `scavengerstoolkit/42.12/media/lua/server/STK_Commands.lua`: novo módulo de comandos server (OnNewGame, OnPlayerJoin)
+* `scavengerstoolkit/42.12/media/lua/server/STK_Commands.lua`: novo módulo de comandos server (OnNewGame, OnPlayer Join)
 * `scavengerstoolkit/42.12/media/lua/server/STK_ContainerLimits.lua`: novo módulo de limites de upgrades por tipo de mochila (movido para server)
 * `scavengerstoolkit/42.12/media/lua/server/STK_KnifeAlternative.lua`: novo módulo de facas alternativas para tesouras (movido para server)
 * `scavengerstoolkit/42.12/media/lua/server/STK_TailoringXP.lua`: novo módulo de XP de costura com chance de falha (movido para server)
@@ -373,18 +386,3 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Item_BackpackStrapsBasic.png, Item_BackpackStrapsReinforced.png, Item_BackpackStrapsTactical.png
   - Item_BackpackFabricBasic.png, Item_BackpackFabricReinforced.png, Item_BackpackFabricTactical.png
   - Item_BeltBuckleReinforced.png
-  - WorldItems/BackpackFabricBasic_Piece.png, WorldItems/BackpackFabricReinforced_Piece.png, WorldItems/BackpackFabricTactical_Piece.png
-
-* Documentação do sistema de reciclagem em `docs/`
-
-### Modificado
-* Arquivos de tradução: atualizados nomes de componentes para seguir hierarquia consistente (Basic/Reinforced/Tactical)
-* Documentação: atualizada para refletir nomes atuais dos itens
-* Sistema de nomenclatura padronizado para seguir formato `STK.NomeDoItem`
-
-### Corrigido
-* Erro de ortografia em "Tatical" para "Tactical" em arquivos de tradução
-* Nome de modelo 3D de "BeltBuckletReinforced_Ground" para "BeltBuckleReinforced_Ground"
-
-### Removido
-* `scavengerstoolkit/42.12/media/textures/BagStrap.png` e `Belt.png`: texturas antigas não utilizadas
