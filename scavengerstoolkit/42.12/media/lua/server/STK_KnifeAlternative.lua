@@ -18,6 +18,8 @@
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
+local STK_Constants = require("STK_Constants")
+
 -- ============================================================================
 -- LOGGING
 -- ============================================================================
@@ -37,22 +39,6 @@ local Logger = {
 Logger.log("Modulo carregado.")
 
 -- ============================================================================
--- VIABLE KNIVES
--- ============================================================================
-
-local VIABLE_KNIVES = {
-	"Base.KitchenKnife",
-	"Base.HuntingKnife",
-	"Base.ButterKnife",
-	"Base.Multitool",
-	"Base.KnifePocket",
-	"Base.KnifeFillet",
-	"Base.KnifeButterfly",
-	"Base.HandiKnife",
-	"Base.StraightRazor",
-}
-
--- ============================================================================
 -- PUBLIC API
 -- ============================================================================
 
@@ -65,7 +51,7 @@ local STK_KnifeAlternative = {}
 --- @param player any IsoPlayer
 --- @return string|nil knifeType
 function STK_KnifeAlternative.findViableKnife(player)
-	for _, knifeType in ipairs(VIABLE_KNIVES) do
+	for _, knifeType in ipairs(STK_Constants.VIABLE_KNIVES) do
 		if player:getInventory():contains(knifeType) then
 			Logger.log("Faca viavel encontrada: " .. knifeType)
 			return knifeType
@@ -98,7 +84,7 @@ end
 --- Returns the full list of viable knife type strings.
 --- @return string[]
 function STK_KnifeAlternative.getViableKnives()
-	return VIABLE_KNIVES
+	return STK_Constants.VIABLE_KNIVES
 end
 
 -- ============================================================================

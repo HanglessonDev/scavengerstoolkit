@@ -2,15 +2,17 @@
 --- @brief Core definitions and pure validation functions for the STK system
 ---
 --- This module is the heart of the STK system. It contains ONLY:
----   - Static data (valid bags, upgrade values)
 ---   - Pure read-only validation functions (no state modification)
 ---   - SandboxVars readers
+---   - ModData initialisation (initBagData)
+---
+--- Static data (bag lists, limits, knives) lives in STK_Constants.
 ---
 --- RULES FOR THIS FILE:
 ---   - NO side effects
 ---   - NO state modification (no setCapacity, no ModData writes)
 ---   - NO event triggering
----   - NO require() of other STK modules
+---   - May require() STK_Constants (static data only, no circular risk)
 ---   - Server, client and shared code may all require() this file
 ---
 --- @author Scavenger's Toolkit Development Team
@@ -18,52 +20,36 @@
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
+local STK_Constants = require("STK_Constants")
+
 --- @class STKCore
 local STK_Core = {}
 
 -- ============================================================================
--- VALID BAGS
+-- BAG VALIDATION
 -- ============================================================================
 
---- Lookup table of valid bag full types.
---- O(1) access. Only bags listed here can receive STK upgrades.
---- @type table<string, true>
-local VALID_BAGS = {
-	-- Schoolbags (5)
-	["Base.Bag_Schoolbag"] = true,
-	["Base.Bag_Schoolbag_Kids"] = true,
-	["Base.Bag_Schoolbag_Medical"] = true,
-	["Base.Bag_Schoolbag_Patches"] = true,
-	["Base.Bag_Schoolbag_Travel"] = true,
+--- Returns true if the item is a valid bag for STK upgrades.
+--- @param item any InventoryItem to validate
+--- @return boolean
+function STK_Core.isValidBag(item)
+	if not item or not item:IsInventoryContainer() then
+		return false
+	end
+	return STK_Constants.VALID_BAGS[item:getFullType()] == true
+end
 
-	-- Satchels (7)
-	["Base.Bag_Satchel"] = true,
-	["Base.Bag_SatchelPhoto"] = true,
-	["Base.Bag_Satchel_Military"] = true,
-	["Base.Bag_Satchel_Medical"] = true,
-	["Base.Bag_Satchel_Leather"] = true,
-	["Base.Bag_Satchel_Mail"] = true,
-	["Base.Bag_Satchel_Fishing"] = true,
-
-	-- FannyPacks (2)
-	["Base.Bag_FannyPackFront"] = true,
-	["Base.Bag_FannyPackBack"] = true,
-
-	-- Hiking Bags (4)
-	["Base.Bag_NormalHikingBag"] = true,
-	["Base.Bag_HikingBag_Travel"] = true,
-	["Base.Bag_BigHikingBag"] = true,
-	["Base.Bag_BigHikingBag_Travel"] = true,
-
-	-- Duffel Bags (7)
-	["Base.Bag_DuffelBag"] = true,
-	["Base.Bag_DuffelBagTINT"] = true,
-	["Base.Bag_Military"] = true,
-	["Base.Bag_Police"] = true,
-	["Base.Bag_SWAT"] = true,
-	["Base.Bag_Sheriff"] = true,
-	["Base.Bag_MedicalBag"] = true,
-}
+--- Returns true if the bag can still accept more upgrades.
+--- Requires the bag to have been initialised (has LUpgrades and LMaxUpgrades).
+--- @param bag any InventoryItem bag
+--- @return boolean
+function STK_Core.canAddUpgrade(bag)
+	local imd = bag:getModData()
+	if not imd.LUpgrades or not imd.LMaxUpgrades then
+		return false
+	end
+	return #imd.LUpgrades < imd.LMaxUpgrades
+end
 
 -- ============================================================================
 -- UPGRADE VALUES
@@ -102,58 +88,14 @@ function STK_Core.getUpgradeValue(itemType)
 end
 
 -- ============================================================================
--- BAG VALIDATION
--- ============================================================================
-
---- Returns true if the item is a valid bag for STK upgrades.
---- @param item any InventoryItem to validate
---- @return boolean
-function STK_Core.isValidBag(item)
-	if not item or not item:IsInventoryContainer() then
-		return false
-	end
-	return VALID_BAGS[item:getFullType()] == true
-end
-
---- Returns true if the bag can still accept more upgrades.
---- Requires the bag to have been initialised (has LUpgrades and LMaxUpgrades).
---- @param bag any InventoryItem bag
---- @return boolean
-function STK_Core.canAddUpgrade(bag)
-	local imd = bag:getModData()
-	if not imd.LUpgrades or not imd.LMaxUpgrades then
-		return false
-	end
-	return #imd.LUpgrades < imd.LMaxUpgrades
-end
-
--- ============================================================================
 -- TOOL VALIDATION
 -- ============================================================================
 
 --- Returns true if the player has the required tools for the given action.
 ---
 --- "add"    requires: Needle + Thread
---- "remove" requires: Scissors
----          (knife alternative is handled separately by STK_Validation on
----           the server side — see STK_Validation.lua, Fase 2 Dia 6)
+--- "remove" requires: Scissors, or a viable knife if KnifeAlternative is enabled
 ---
---- Viable knives for the KnifeAlternative feature.
---- Duplicated here so STK_Core remains self-contained (no require of server/).
---- Must be kept in sync with STK_KnifeAlternative.VIABLE_KNIVES.
-local VIABLE_KNIVES_REMOVE = {
-	"Base.KitchenKnife",
-	"Base.HuntingKnife",
-	"Base.ButterKnife",
-	"Base.Multitool",
-	"Base.KnifePocket",
-	"Base.KnifeFillet",
-	"Base.KnifeButterfly",
-	"Base.HandiKnife",
-	"Base.StraightRazor",
-}
-
---- Checks if the player has the required tools for an upgrade operation.
 --- @param player any IsoPlayer
 --- @param actionType string "add" or "remove"
 --- @return boolean
@@ -171,9 +113,8 @@ function STK_Core.hasRequiredTools(player, actionType)
 			return true
 		end
 
-		-- Knife alternative: only if enabled in SandboxVars
 		if SandboxVars.STK and SandboxVars.STK.KnifeAlternative then
-			for _, knifeType in ipairs(VIABLE_KNIVES_REMOVE) do
+			for _, knifeType in ipairs(STK_Constants.VIABLE_KNIVES) do
 				if inv:contains(knifeType) then
 					return true
 				end
@@ -219,9 +160,28 @@ end
 -- MOD DATA INITIALISATION
 -- ============================================================================
 
+--- Returns the correct upgrade limit for a bag type, reading SandboxVars
+--- when a sandboxKey is configured, falling back to the default otherwise.
+--- @param bagType string Full type string e.g. "Base.Bag_FannyPackFront"
+--- @return number
+function STK_Core.getLimitForType(bagType)
+	local stk = SandboxVars.STK
+	for _, rule in ipairs(STK_Constants.BAG_LIMIT_RULES) do
+		if bagType:find(rule.pattern) then
+			if rule.sandboxKey and stk and stk[rule.sandboxKey] then
+				return stk[rule.sandboxKey]
+			end
+			return rule.default
+		end
+	end
+	return STK_Constants.BAG_LIMIT_DEFAULT
+end
+
 --- Initialises the STK ModData fields on a bag if not already present.
---- Sets LUpgrades, LCapacity, LWeightReduction and STKInitialised flag.
---- LMaxUpgrades is intentionally left for STK_ContainerLimits (server) to set.
+--- Sets LUpgrades, LCapacity, LWeightReduction, STKInitialised flag, and
+--- LMaxUpgrades with the correct type-based limit (including SandboxVars).
+--- Safe to call from any context — SandboxVars is available in client,
+--- server and shared in both SP and MP.
 --- @param bag any InventoryItem bag
 --- @return boolean isFirstInit True if this was the first initialisation
 function STK_Core.initBagData(bag)
@@ -236,7 +196,7 @@ function STK_Core.initBagData(bag)
 		imd.LUpgrades = imd.LUpgrades or {}
 		imd.LCapacity = imd.LCapacity or bag:getCapacity()
 		imd.LWeightReduction = imd.LWeightReduction or bag:getWeightReduction()
-		imd.LMaxUpgrades = imd.LMaxUpgrades or 3
+		imd.LMaxUpgrades = STK_Core.getLimitForType(bag:getFullType())
 		imd.STKInitialised = true
 	end
 
