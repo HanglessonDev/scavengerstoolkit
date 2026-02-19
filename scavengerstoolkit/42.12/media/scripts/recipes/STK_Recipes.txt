@@ -10,7 +10,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 100,
         xpaward         = Tailoring:2,
-        timedaction     = Making,
+        timedaction     = RipSheets,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -31,7 +31,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 80,
         xpaward         = Tailoring:2,
-        timedaction     = Making,
+        timedaction     = RipSheets,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -52,7 +52,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 100,
         xpaward         = Tailoring:2,
-        timedaction     = Making,
+        timedaction     = RipSheets,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -73,7 +73,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 150,
         xpaward         = Tailoring:5,
-        timedaction     = Making,
+        timedaction     = RipSheets,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -94,7 +94,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 150,
         xpaward         = Tailoring:5,
-        timedaction     = Making,
+        timedaction     = RipSheets,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -117,7 +117,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 200,
         xpaward         = Tailoring:8,
-        timedaction     = Making,
+        timedaction     = SewingCloth,
         inputs
         {
             item 1 [Base.Needle] mode:keep,
@@ -139,7 +139,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 200,
         xpaward         = Tailoring:8,
-        timedaction     = Making,
+        timedaction     = SewingCloth,
         inputs
         {
             item 1 [Base.Needle] mode:keep,

@@ -2,7 +2,7 @@
 --- @brief Timed actions for STK bag upgrades
 ---
 --- Responsible ONLY for:
----   - Character animation (CharacterActionAnims.Craft)
+---   - Character animation and sounds
 ---   - Progress bar on the bag
 ---   - isValid() checks (read-only, via STK_Core)
 ---   - Firing the appropriate Event on perform() completion
@@ -13,7 +13,11 @@
 ---   - Degrade tools (STK_UpgradeLogic, server)
 ---   - Display feedback (STK_FeedbackSystem, client)
 ---
---- NOTE (Refactor v3.0 â€” Dia 4): self.onComplete removed. perform() now
+--- Sounds (confirmed in B42.12 via console):
+---   - Add upgrade:    "Sewing"         + animation SewingCloth
+---   - Remove upgrade: "ClothesRipping" + animation Craft
+---
+--- NOTE (Refactor v3.0 — Dia 4): self.onComplete removed. perform() now
 --- triggers Events.OnSTKActionAddComplete / OnSTKActionRemoveComplete.
 --- The server (STK_Commands) listens and executes the actual logic.
 ---
@@ -78,6 +82,15 @@ local function characterHasItemInstance(character, item)
 	return false
 end
 
+--- Stops a sound safely. No-op if sound is nil or already stopped.
+--- @param character any IsoPlayer
+--- @param sound any Sound handle returned by playSound
+local function stopSound(character, sound)
+	if sound and character:getEmitter():isPlaying(sound) then
+		character:getEmitter():stopSound(sound)
+	end
+end
+
 -- ============================================================================
 -- BASE CLASS
 -- ============================================================================
@@ -85,6 +98,7 @@ end
 --- @class ISSTKBagUpgradeAction : ISBaseTimedAction
 --- @field character any IsoPlayer
 --- @field bag any InventoryItem bag being upgraded
+--- @field sound any Sound handle (set by subclasses in start())
 --- @field jobType string Progress bar text
 --- @field maxTime number Action duration in ticks
 --- @field stopOnWalk boolean
@@ -104,14 +118,9 @@ function ISSTKBagUpgradeAction:update()
 	self.bag:setJobDelta(self:getJobDelta())
 end
 
---- Starts animation and progress bar.
-function ISSTKBagUpgradeAction:start()
-	self:setActionAnim(CharacterActionAnims.Craft)
-	self.bag:setJobType(self.jobType)
-	self.bag:setJobDelta(0.0)
-end
-
 --- Clears the progress bar when the action is interrupted.
+--- Subclasses override stop() and must call ISBaseTimedAction.stop(self)
+--- after stopping their own sound.
 function ISSTKBagUpgradeAction:stop()
 	self.bag:setJobDelta(0.0)
 	ISBaseTimedAction.stop(self)
@@ -131,7 +140,6 @@ function ISSTKBagAddUpgradeAction:isValid()
 	if not ISSTKBagUpgradeAction.isValid(self) then
 		return false
 	end
-
 	if not characterHasItemType(self.character, "Base.Needle") then
 		return false
 	end
@@ -141,13 +149,28 @@ function ISSTKBagAddUpgradeAction:isValid()
 	if not self.upgradeItem or not characterHasItemInstance(self.character, self.upgradeItem) then
 		return false
 	end
-
 	return STK_Core.canAddUpgrade(self.bag)
 end
 
---- Clears progress bar and fires OnSTKActionAddComplete.
+--- Starts sewing animation and sound.
+function ISSTKBagAddUpgradeAction:start()
+	self:setActionAnim("SewingCloth")
+	self.sound = self.character:getEmitter():playSound("Sewing")
+	self.bag:setJobType(self.jobType)
+	self.bag:setJobDelta(0.0)
+end
+
+--- Stops sound and clears progress bar when interrupted.
+function ISSTKBagAddUpgradeAction:stop()
+	stopSound(self.character, self.sound)
+	self.bag:setJobDelta(0.0)
+	ISBaseTimedAction.stop(self)
+end
+
+--- Stops sound, clears progress bar and fires OnSTKActionAddComplete.
 --- Server (STK_Commands) handles the rest.
 function ISSTKBagAddUpgradeAction:perform()
+	stopSound(self.character, self.sound)
 	self.bag:setJobDelta(0.0)
 	triggerEvent("OnSTKActionAddComplete", self.bag, self.upgradeItem, self.character)
 	ISBaseTimedAction.perform(self)
@@ -165,6 +188,7 @@ function ISSTKBagAddUpgradeAction:new(character, bag, upgradeItem)
 	o.character = character
 	o.bag = bag
 	o.upgradeItem = upgradeItem
+	o.sound = nil
 	o.jobType = getText("UI_STK_InstallingUpgrade")
 	o.maxTime = SandboxVars.STK.AddUpgradeTime or 100
 	o.stopOnWalk = true
@@ -188,26 +212,37 @@ function ISSTKBagRemoveUpgradeAction:isValid()
 	if not ISSTKBagUpgradeAction.isValid(self) then
 		return false
 	end
-
-	-- Check tool: scissors OR knife (if enabled) â€” read-only via STK_Core
 	if not STK_Core.hasRequiredTools(self.character, "remove") then
 		return false
 	end
-
-	-- Check upgrade still exists in bag
 	local imd = self.bag:getModData()
 	for _, upgrade in ipairs(imd.LUpgrades) do
 		if upgrade == self.upgradeType then
 			return true
 		end
 	end
-
 	return false
 end
 
---- Clears progress bar and fires OnSTKActionRemoveComplete.
+--- Starts cutting animation and sound.
+function ISSTKBagRemoveUpgradeAction:start()
+	self:setActionAnim("SewingCloth")
+	self.sound = self.character:getEmitter():playSound("Sewing")
+	self.bag:setJobType(self.jobType)
+	self.bag:setJobDelta(0.0)
+end
+
+--- Stops sound and clears progress bar when interrupted.
+function ISSTKBagRemoveUpgradeAction:stop()
+	stopSound(self.character, self.sound)
+	self.bag:setJobDelta(0.0)
+	ISBaseTimedAction.stop(self)
+end
+
+--- Stops sound, clears progress bar and fires OnSTKActionRemoveComplete.
 --- Server (STK_Commands) handles the rest.
 function ISSTKBagRemoveUpgradeAction:perform()
+	stopSound(self.character, self.sound)
 	self.bag:setJobDelta(0.0)
 	triggerEvent("OnSTKActionRemoveComplete", self.bag, self.upgradeType, self.character)
 	ISBaseTimedAction.perform(self)
@@ -225,6 +260,7 @@ function ISSTKBagRemoveUpgradeAction:new(character, bag, upgradeType)
 	o.character = character
 	o.bag = bag
 	o.upgradeType = upgradeType
+	o.sound = nil
 	o.jobType = getText("UI_STK_RemovingUpgrade")
 	o.maxTime = SandboxVars.STK.RemoveUpgradeTime or 80
 	o.stopOnWalk = true
