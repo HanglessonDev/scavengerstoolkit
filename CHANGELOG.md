@@ -7,6 +7,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-02-18
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: adicionada flag `IsNotWorn` nas receitas de desmontagem para impedir que mochilas equipadas sejam desmontadas acidentalmente
+  - Afeta: Schoolbag, FannyPack, SatchelBag, HikingBag, DuffelBag
+  - Previne perda catastrófica de mochila em uso + todo inventário
+
 ## [0.13.0] - 2026-02-18
 
 ### Adicionado
