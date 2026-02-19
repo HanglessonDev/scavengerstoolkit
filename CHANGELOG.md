@@ -7,6 +7,26 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-02-18
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Logger.lua`: novo módulo de logging centralizado com níveis debug/info/warn/error e função wrap() para proteger event listeners de crashes
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/client/STK_ContextMenu.lua`: substituído logger local por STK_Logger, melhorada formatação e estrutura do código
+* `scavengerstoolkit/42.12/media/lua/client/STK_FeedbackSystem.lua`: substituído logger local por STK_Logger, adicionado log.wrap() nos listeners de eventos
+* `scavengerstoolkit/42.12/media/lua/client/STK_SilentSpeaker.lua`: substituído logger local por STK_Logger, removido código de logging duplicado
+* `scavengerstoolkit/42.12/media/lua/server/STK_Commands.lua`: substituído logger local por STK_Logger, adicionado log.wrap() nos listeners de eventos
+* `scavengerstoolkit/42.12/media/lua/server/STK_KnifeAlternative.lua`: substituído logger local por STK_Logger, melhorada estrutura de logs
+* `scavengerstoolkit/42.12/media/lua/server/STK_TailoringXP.lua`: substituído logger local por STK_Logger, removido código duplicado
+* `scavengerstoolkit/42.12/media/lua/server/STK_UpgradeLogic.lua`: substituído logger local por STK_Logger, adicionado log.error() para validação de parâmetros inválidos
+* `scavengerstoolkit/42.12/media/lua/server/STK_Validation.lua`: substituído logger local por STK_Logger, adicionado log.warn() para validações falhas
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: substituído logger local por STK_Logger, removida documentação obsoleta sobre hooks
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Events.lua`: substituído logger local por STK_Logger
+
+### Removido
+* Código de logging duplicado em todos os módulos (~200 linhas removidas) - centralizado em STK_Logger.lua
+
 ## [0.12.0] - 2026-02-18
 
 ### Adicionado
@@ -362,7 +382,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 * `.aim/memory.jsonl`: diretrizes de tradução para manter consistência linguística
 
-* `.luarc.json`: configuração do Lua Language Server
+* `.luarc.json`: configuração do Lua Language Server para melhor suporte ao desenvolvimento
 
 ### Modificado
 * `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`: adicionado comentário de depreciação
