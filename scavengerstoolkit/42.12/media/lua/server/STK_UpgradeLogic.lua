@@ -90,17 +90,17 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 	-- Consume upgrade item
 	upgradeItem:getContainer():Remove(upgradeItem)
 
-	-- Degrade needle (-1 condition, remove if broken)
+	-- Degrade needle (-1 condition). Stays in inventory when broken — vanilla behavior.
 	local needle = player:getInventory():getFirstType("Base.Needle")
 	if needle then
 		needle:setCondition(needle:getCondition() - 1)
 		if needle:getCondition() <= 0 then
-			needle:getContainer():Remove(needle)
-			log.info("Agulha quebrou e foi removida")
+			log.info("Agulha quebrou")
 		end
 	end
 
-	-- Consume one thread use (remove if depleted)
+	-- Consume one thread use. Thread is a consumable — removed when depleted,
+	-- unlike tools (needle, scissors, knife) which stay as broken items.
 	local thread = player:getInventory():getFirstType("Base.Thread")
 	if thread then
 		thread:setUses(thread:getUses() - 1)
@@ -149,8 +149,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 		if scissors then
 			scissors:setCondition(scissors:getCondition() - 1)
 			if scissors:getCondition() <= 0 then
-				scissors:getContainer():Remove(scissors)
-				log.info("Tesoura quebrou e foi removida")
+				log.info("Tesoura quebrou")
 			end
 		end
 	elseif toolUsed then
@@ -158,8 +157,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 		if knife then
 			knife:setCondition(knife:getCondition() - 1)
 			if knife:getCondition() <= 0 then
-				knife:getContainer():Remove(knife)
-				log.info("Faca quebrou e foi removida: " .. toolUsed)
+				log.info("Faca quebrou: " .. toolUsed)
 			end
 		end
 	end
