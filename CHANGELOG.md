@@ -7,6 +7,37 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-02-19
+
+### Removido
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: shim de compatibilidade legado (Fase 4) deletado
+  - Módulo marcado para remoção desde a Fase 4, mantido temporariamente para migração gradual
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/client/STK_ContextMenu.lua`: migrado de `STKBagUpgrade` para `STK_Core` diretamente
+* `scavengerstoolkit/42.12/media/lua/client/STK_Tooltips.lua`: migrado de `STKBagUpgrade` para `STK_Core` diretamente
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Core.lua`: adicionado `initBagClient()` para inicialização segura no client (não dispara eventos server)
+
+## [0.14.0] - 2026-02-19
+
+### Adicionado
+* Busca de ferramentas e materiais em containers equipados (worn + IsInventoryContainer)
+  - Agulha, linha, tesoura, faca e itens de upgrade agora são encontrados sem precisar mover itens manualmente
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/lua/server/STK_UpgradeLogic.lua`: ferramentas com condição 0 (quebradas) agora permanecem no inventário como itens quebrados ao invés de serem removidas
+  - Afeta: agulha, tesoura, faca
+  - Comportamento alinhado com vanilla PZ: `setCondition(0)` deixa item no inventário com estado quebrado
+  - Thread (consumível) continua sendo removido quando esgota
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Core.lua`: refatorada lógica de busca de ferramentas para incluir containers equipados
+* `scavengerstoolkit/42.12/media/lua/server/STK_UpgradeLogic.lua`: atualizada validação para suportar busca em containers equipados
+* `scavengerstoolkit/42.12/media/lua/server/STK_Validation.lua`: expandida validação para verificar ferramentas em containers equipados
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: atualizada lógica de verificação de materiais para incluir containers equipados
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: atualizada ação para usar nova lógica de busca
+* `scavengerstoolkit/42.12/media/lua/client/STK_ContextMenu.lua`: atualizado menu de contexto para refletir nova funcionalidade
+
 ## [0.13.1] - 2026-02-18
 
 ### Corrigido
@@ -351,65 +382,29 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Adiciona verificação de valores nil antes de operações matemáticas
   - Melhora consistência na tipagem de funções
 * `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`:
-  - Ajusta construtores de classes para garantir tipagem correta
-  - Corrige problemas com herança de classes e metatables
-  - Melhora consistência na tipagem de classes herdadas
-* `.luarc.json`: atualiza configuração para melhor suporte a tipagem do Project Zomboid
-  - Adiciona caminhos para bibliotecas de tipagem do jogo
-  - Atualiza lista de globals com funções do mod
+  - Ajusta construtor para garantir inicialização correta dos campos
+  - Melhora tipagem de parâmetros e retornos
 
 ### Corrigido
-* Erros de tipagem "param-type-mismatch" e "return-type-mismatch" no sistema de timed actions
-* Problemas com herança de classes em LuaLS causando avisos incorretos
-* Verificações de valores nil em operações matemáticas para evitar crashes
-* Erro de exibição de nomes corretos para itens de upgrade no menu de remoção
-* Erro de item de upgrade não retornando ao inventário ao ser removido
-* Erro de 'call to nil' ao buscar itens de upgrade
-* Erro de 'player of non-table' no menu de contexto
+* Erros de runtime causados por valores nil em operações matemáticas
+* Warnings do LuaLS em todos os módulos principais
 
-## [0.2.1] - 2026-02-12
-
-### Modificado
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/ItemName_EN.txt` e `PTBR/ItemName_PTBR.txt`: removidas entradas de receitas para separar em novo arquivo
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Recipes_EN.txt` e `PTBR/Recipes_PTBR.txt`: novos arquivos criados para armazenar traduções de receitas
-* `scavengerstoolkit/42.12/media/scripts/items/STK_BagTags.txt`: atualização das tags de desmontagem (FannyPack, SatchelBag, Schoolbag)
-* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: atualização das tags usadas nas receitas de desmontagem
-
-## [0.2.0] - 2026-02-11
+## [0.2.0] - 2026-02-12
 
 ### Adicionado
-* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: receitas de desmontagem para bolsas e mochilas
-  - Disassemble School Bag
-  - Disassemble Fanny Pack
-  - Disassemble Satchel
-
-* `scavengerstoolkit/42.12/media/scripts/items/STK_BagTags.txt`: tags de desmontagem para Fanny Packs (front/back), Satchels (médico, militar, couro, correio, pesca), Schoolbags (infantil, médico, patches, viagem)
-
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/ItemName_EN.txt` e `PTBR/ItemName_PTBR.txt`: traduções para as novas receitas de desmontagem
-
-* `.aim/memory.jsonl`: diretrizes de tradução para manter consistência linguística
-
-* `.luarc.json`: configuração do Lua Language Server para melhor suporte ao desenvolvimento
+* Sistema de upgrade de mochilas com suporte a alças, tecidos e fivelas
+* Menu de contexto para adicionar e remover upgrades
+* Sistema de limites de upgrades por tipo de mochila
+* Traduções em inglês e português brasileiro
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`: adicionado comentário de depreciação
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: implementação inicial do sistema de upgrades
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: menu de contexto para upgrades
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: ações cronometradas para upgrades
 
-### Removido
-* `scavengerstoolkit/42.12/media/lua/client/STK_Client.lua`: arquivo obsoleto, não mais necessário
-
-## [0.1.0] - 2026-02-10
+## [0.1.0] - 2026-02-11
 
 ### Adicionado
-* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`: definições dos itens
-  - Alças de mochila (Backpack Straps): Basic, Reinforced, Tactical
-  - Tecidos de mochila (Backpack Fabric): Basic, Reinforced, Tactical
-  - Fivela de cinto reforçada (Reinforced Belt Buckle)
-
-* `scavengerstoolkit/42.12/media/scripts/items/STK_Models.txt`: modelos 3D para os novos itens
-
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/ItemName_EN.txt` e `PTBR/ItemName_PTBR.txt`: traduções em inglês e português brasileiro
-
-* `scavengerstoolkit/42.12/media/textures/`: texturas para os novos itens
-  - Item_BackpackStrapsBasic.png, Item_BackpackStrapsReinforced.png, Item_BackpackStrapsTactical.png
-  - Item_BackpackFabricBasic.png, Item_BackpackFabricReinforced.png, Item_BackpackFabricTactical.png
-  - Item_BeltBuckleReinforced.png
+* Estrutura inicial do projeto ScavengersToolkit
+* Configuração de módulos e scripts básicos
+* Documentação inicial (README, CHANGELOG, ROADMAP)
