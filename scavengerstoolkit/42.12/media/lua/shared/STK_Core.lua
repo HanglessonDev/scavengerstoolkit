@@ -245,6 +245,17 @@ function STK_Core.initBagData(bag)
 	return isFirstInit
 end
 
+--- Initialises a bag's ModData on the client side.
+--- Safe to call multiple times — no-op if already initialised.
+--- Does NOT trigger OnSTKBagInit (server-only concern).
+--- @param bag any InventoryItem bag
+function STK_Core.initBagClient(bag)
+	if not bag or not instanceof(bag, "InventoryItem") then
+		return
+	end
+	STK_Core.initBagData(bag)
+end
+
 -- ============================================================================
 
 return STK_Core

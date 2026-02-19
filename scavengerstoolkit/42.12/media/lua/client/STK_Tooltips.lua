@@ -17,7 +17,6 @@
 
 require("ISUI/ISToolTipInv")
 
-local STKBagUpgrade = require("STKBagUpgrade")
 local STK_Core = require("STK_Core")
 
 local Old_Render = ISToolTipInv.render
@@ -30,12 +29,12 @@ function ISToolTipInv:render()
 		return Old_Render(self)
 	end
 
-	local isBag = item:IsInventoryContainer() and STKBagUpgrade.isBagValid(item)
-	local isUpgrade = STKBagUpgrade.getUpgradeValue(item:getType():gsub("^STK%.", "")) ~= nil
+	local isBag = item:IsInventoryContainer() and STK_Core.isValidBag(item)
+	local isUpgrade = STK_Core.getUpgradeValue(item:getType():gsub("^STK%.", "")) ~= nil
 	local numRows = 0
 
 	if isBag then
-		STKBagUpgrade.initBag_Client(item)
+		STK_Core.initBagClient(item)
 		local imd = item:getModData()
 		local maxSlots = STK_Core.getLimitForType(item:getFullType())
 
@@ -141,7 +140,7 @@ function ISToolTipInv:render()
 				end
 			elseif isUpgrade then
 				local upgradeColor = { 0.95, 0.95, 0.2 }
-				local value = STKBagUpgrade.getUpgradeValue(item:getType():gsub("^STK%.", ""))
+				local value = STK_Core.getUpgradeValue(item:getType():gsub("^STK%.", ""))
 				local text = ""
 
 				if value and value > 0 then

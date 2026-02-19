@@ -19,7 +19,7 @@
 --- @class STKContextMenu
 local STKContextMenu = {}
 
-local STKBagUpgrade = require("STKBagUpgrade")
+local STK_Core = require("STK_Core")
 require("TimedActions/ISSTKBagUpgradeAction")
 
 -- ============================================================================
@@ -71,13 +71,13 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		selectedItem = selectedItem.items[1]
 	end
 
-	if not STKBagUpgrade.isBagValid(selectedItem) then
+	if not STK_Core.isValidBag(selectedItem) then
 		return
 	end
 
 	Logger.log("Mochila valida detectada: " .. selectedItem:getType())
 	local bag = selectedItem
-	STKBagUpgrade.initBag_Client(bag)
+	STK_Core.initBagClient(bag)
 
 	-- ========================================================================
 	-- ADD UPGRADE BLOCK
@@ -87,16 +87,16 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		local addOption = context:addOption(getText("ContextMenu_STK_AddUpgrade"))
 		context:addSubMenu(addOption, addSubMenu)
 
-		if not STKBagUpgrade.canAddUpgrade(bag) then
+		if not STK_Core.canAddUpgrade(bag) then
 			Logger.log("Validacao ADD falhou: limite de upgrades atingido")
 			addOption.notAvailable = true
 			setTooltip(addOption, "ContextMenu_STK_MaxUpgrades")
-		elseif not STKBagUpgrade.hasRequiredTools(player, "add") then
+		elseif not STK_Core.hasRequiredTools(player, "add") then
 			Logger.log("Validacao ADD falhou: sem agulha ou linha")
 			addOption.notAvailable = true
 			setTooltip(addOption, "ContextMenu_STK_NeedTools")
 		else
-			local availableUpgrades = STKBagUpgrade.getUpgradeItems(player)
+			local availableUpgrades = STK_Core.getUpgradeItems(player)
 			Logger.log("Upgrades disponiveis: " .. #availableUpgrades)
 
 			if #availableUpgrades == 0 then
@@ -133,7 +133,7 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		local removeOption = context:addOption(getText("ContextMenu_STK_RemoveUpgrade"))
 		context:addSubMenu(removeOption, removeSubMenu)
 
-		if not STKBagUpgrade.hasRequiredTools(player, "remove") then
+		if not STK_Core.hasRequiredTools(player, "remove") then
 			Logger.log("Validacao REMOVE falhou: sem tesoura ou faca")
 			removeOption.notAvailable = true
 			setTooltip(removeOption, "ContextMenu_STK_NeedScissors")
