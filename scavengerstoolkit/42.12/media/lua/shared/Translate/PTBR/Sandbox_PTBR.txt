@@ -12,6 +12,12 @@ Sandbox_PTBR = {
     Sandbox_STK_SchoolbagLimit = "Limite de Upgrades - Mochila Escolar",
     Sandbox_STK_SchoolbagLimit_tooltip = "Numero maximo de upgrades que uma mochila escolar pode ter.",
     
+    Sandbox_STK_HikingBagLimit = "Limite de Upgrades - Mochila de Trilha",
+    Sandbox_STK_HikingBagLimit_tooltip = "Numero maximo de upgrades que uma mochila de trilha pode ter.",
+    
+    Sandbox_STK_DuffelBagLimit = "Limite de Upgrades - Mochila Duffel",
+    Sandbox_STK_DuffelBagLimit_tooltip = "Numero maximo de upgrades que uma mochila duffel pode ter. Aplica-se a todas as variantes de duffel.",
+    
     /* Straps (Alcas) */
     Sandbox_STK_StrapsBasicBonus = "Bonus - Alcas Basicas (%)",
     Sandbox_STK_StrapsReinforcedBonus = "Bonus - Alcas Reforcadas (%)",

@@ -34,6 +34,26 @@ option STK.SchoolbagLimit
     translation = STK_SchoolbagLimit,
 }
 
+option STK.HikingBagLimit
+{
+    type = integer,
+    default = 2,
+    min = 0,
+    max = 6,
+    page = STK,
+    translation = STK_HikingBagLimit,
+}
+
+option STK.DuffelBagLimit
+{
+    type = integer,
+    default = 2,
+    min = 0,
+    max = 6,
+    page = STK,
+    translation = STK_DuffelBagLimit,
+}
+
 /* ============================================================================
 UPGRADE VALUES - STRAPS (Alcas - Weight Reduction)
 ============================================================================ */

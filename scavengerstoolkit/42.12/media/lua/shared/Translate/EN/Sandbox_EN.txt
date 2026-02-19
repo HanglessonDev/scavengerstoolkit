@@ -11,6 +11,12 @@ Sandbox_EN = {
     
     Sandbox_STK_SchoolbagLimit = "Upgrade Limit - Schoolbag",
     Sandbox_STK_SchoolbagLimit_tooltip = "Maximum number of upgrades a schoolbag can have.",
+
+    Sandbox_STK_HikingBagLimit = "Upgrade Limit - Hiking Bag",
+    Sandbox_STK_HikingBagLimit_tooltip = "Maximum number of upgrades a hiking bag can have.",
+
+    Sandbox_STK_DuffelBagLimit = "Upgrade Limit - Duffel Bag",
+    Sandbox_STK_DuffelBagLimit_tooltip = "Maximum number of upgrades a duffel bag can have. Applies to all duffel variants.",
     
     /* Straps */
     Sandbox_STK_StrapsBasicBonus = "Bonus - Basic Straps (%)",
