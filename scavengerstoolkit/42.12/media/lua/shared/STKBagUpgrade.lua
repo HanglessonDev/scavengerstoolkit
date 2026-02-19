@@ -12,10 +12,9 @@
 ---   - hasRequiredTools          (read-only, used by client ContextMenu + TimedActions)
 ---   - getUpgradeValue           (read-only, used by Tooltips + TimedActions)
 ---   - getUpgradeItems           (read-only, used by client ContextMenu)
----   - updateBag                 (kept for TimedActions isValid() — read only)
 ---
---- All functions delegate to STK_Core / STK_Utils. This file exists only
---- to avoid breaking requires() in files not yet migrated.
+--- All functions delegate to STK_Core. This file exists only to avoid
+--- breaking requires() in files not yet migrated to require STK_Core directly.
 ---
 --- NOTE: This file will be deleted in Fase 4 (cleanup) once all callers
 --- have been updated to require STK_Core directly.
@@ -26,24 +25,7 @@
 --- @copyright 2026 Scavenger's Toolkit
 
 local STK_Core = require("STK_Core")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STKBagUpgrade] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado v3.0 (shim — hooks removidos, Events ativos)")
+local log = require("STK_Logger").get("STK-BagUpgrade")
 
 -- ============================================================================
 -- MODULE
@@ -103,9 +85,7 @@ end
 -- BAG INIT
 -- ============================================================================
 
---- Initialises a bag's ModData and triggers OnSTKBagInit.
---- Safe to call multiple times — no-op if already initialised.
---- Client-safe initialiser -- only writes ModData, never triggers server events.
+--- Client-safe initialiser — only writes ModData, never triggers server events.
 --- Use from UI code (tooltips, context menu) to avoid firing OnSTKBagInit
 --- in a render/hover context where server listeners may not be safe to run.
 --- @param bag any InventoryItem bag
@@ -124,18 +104,13 @@ function STKBagUpgrade.initBag(bag)
 	end
 
 	local isFirstInit = STK_Core.initBagData(bag)
-
-	-- Trigger event so STK_ContainerLimits (server) can set LMaxUpgrades.
-	-- In SP, server/ files run in the same process, so the listener fires immediately.
 	triggerEvent("OnSTKBagInit", bag, isFirstInit)
 
-	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
+	log.debug(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
 end
 
 -- ============================================================================
--- REMOVED: applyUpgrade, removeUpgrade, updateBag, registerHook,
---          executeHooks, STKBagUpgrade.hooks, STKBagUpgrade.PRIORITY
--- These now live in server/STK_UpgradeLogic.lua and are triggered via Events.
--- ============================================================================
+
+log.info("Modulo carregado v3.0 (shim — hooks removidos, Events ativos)")
 
 return STKBagUpgrade

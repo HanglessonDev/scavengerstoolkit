@@ -9,33 +9,13 @@
 --- OnSTKUpgradeAdded by STK_UpgradeLogic.applyUpgrade(). The client
 --- FeedbackSystem reads it from the event to display the HaloText popup.
 ---
---- NOTE (Refactor v3.0 — Dias 7+8 adiantados): Hook replaced by Event
---- listener. STKBagUpgrade.registerHook() no longer exists.
----
 --- @author Scavenger's Toolkit Development Team
 --- @version 3.0.0
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
 local STK_Utils = require("STK_Utils")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-TailoringXP] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado.")
+local log = require("STK_Logger").get("STK-TailoringXP")
 
 -- ============================================================================
 -- PUBLIC API
@@ -50,7 +30,7 @@ local STK_TailoringXP = {}
 --- @return number xpGained Amount granted (0 if disabled)
 function STK_TailoringXP.grant(player)
 	if not SandboxVars.STK.TailoringXPEnabled then
-		Logger.log("Feature desabilitada no Sandbox")
+		log.debug("Feature desabilitada no Sandbox")
 		return 0
 	end
 
@@ -59,11 +39,13 @@ function STK_TailoringXP.grant(player)
 
 	player:getXp():AddXP(Perks.Tailoring, xp)
 
-	Logger.log(string.format("XP concedido: %.1f (level=%d)", xp, level))
+	log.debug(string.format("XP concedido: %.1f (level=%d)", xp, level))
 
 	return xp
 end
 
 -- ============================================================================
+
+log.info("Modulo carregado.")
 
 return STK_TailoringXP

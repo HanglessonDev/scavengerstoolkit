@@ -6,11 +6,6 @@
 --- capacity), alphabetical sorting, and informative tooltips for
 --- unavailable options.
 ---
---- NOTE (Refactor v3.0): This file was renamed from
---- OnInventoryContextMenu_STK.lua. Logic is unchanged. In Fase 3 the
---- menu callbacks will send client commands instead of directly
---- enqueuing TimedActions.
----
 --- @author Scavenger's Toolkit Development Team
 --- @version 3.0.0
 --- @license MIT
@@ -20,25 +15,8 @@
 local STKContextMenu = {}
 
 local STKBagUpgrade = require("STKBagUpgrade")
+local log = require("STK_Logger").get("STK-ContextMenu")
 require("TimedActions/ISSTKBagUpgradeAction")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
---- @class STKLogger
-local Logger = {
-	--- Log a message if debug mode is enabled
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then return end
-		print("[STK-ContextMenu] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado.")
 
 -- ============================================================================
 -- HELPERS
@@ -69,9 +47,11 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 		selectedItem = selectedItem.items[1]
 	end
 
-	if not STKBagUpgrade.isBagValid(selectedItem) then return end
+	if not STKBagUpgrade.isBagValid(selectedItem) then
+		return
+	end
 
-	Logger.log("Mochila valida detectada: " .. selectedItem:getType())
+	log.debug("Mochila valida detectada: " .. selectedItem:getType())
 	local bag = selectedItem
 	STKBagUpgrade.initBag_Client(bag)
 
@@ -79,26 +59,24 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 	-- ADD UPGRADE BLOCK
 	-- ========================================================================
 	do
-		local addSubMenu  = ISContextMenu:getNew(context)
-		local addOption   = context:addOption(getText("ContextMenu_STK_AddUpgrade"))
+		local addSubMenu = ISContextMenu:getNew(context)
+		local addOption = context:addOption(getText("ContextMenu_STK_AddUpgrade"))
 		context:addSubMenu(addOption, addSubMenu)
 
 		if not STKBagUpgrade.canAddUpgrade(bag) then
-			Logger.log("Validacao ADD falhou: limite de upgrades atingido")
+			log.debug("Validacao ADD falhou: limite de upgrades atingido")
 			addOption.notAvailable = true
 			setTooltip(addOption, "ContextMenu_STK_MaxUpgrades")
-
 		elseif not STKBagUpgrade.hasRequiredTools(player, "add") then
-			Logger.log("Validacao ADD falhou: sem agulha ou linha")
+			log.debug("Validacao ADD falhou: sem agulha ou linha")
 			addOption.notAvailable = true
 			setTooltip(addOption, "ContextMenu_STK_NeedTools")
-
 		else
 			local availableUpgrades = STKBagUpgrade.getUpgradeItems(player:getInventory())
-			Logger.log("Upgrades disponiveis: " .. #availableUpgrades)
+			log.debug("Upgrades disponiveis: " .. #availableUpgrades)
 
 			if #availableUpgrades == 0 then
-				Logger.log("Validacao ADD falhou: nenhum item STK no inventario")
+				log.debug("Validacao ADD falhou: nenhum item STK no inventario")
 				addOption.notAvailable = true
 				setTooltip(addOption, "ContextMenu_STK_NoItems")
 			else
@@ -106,9 +84,9 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 					return a:getDisplayName() < b:getDisplayName()
 				end)
 
-				Logger.log("Validacoes ADD passaram, populando submenu")
+				log.debug("Validacoes ADD passaram, populando submenu")
 				for _, upgradeItem in ipairs(availableUpgrades) do
-					Logger.log("  + " .. upgradeItem:getType())
+					log.debug("  + " .. upgradeItem:getType())
 					addSubMenu:addOption(upgradeItem:getDisplayName(), nil, function()
 						ISTimedActionQueue.add(ISSTKBagAddUpgradeAction:new(player, bag, upgradeItem))
 					end)
@@ -122,15 +100,17 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 	-- ========================================================================
 	do
 		local imd = bag:getModData()
-		if not imd.LUpgrades or #imd.LUpgrades == 0 then return end
+		if not imd.LUpgrades or #imd.LUpgrades == 0 then
+			return
+		end
 
-		Logger.log("Mochila tem " .. #imd.LUpgrades .. " upgrade(s), criando submenu de remocao")
+		log.debug("Mochila tem " .. #imd.LUpgrades .. " upgrade(s), criando submenu de remocao")
 		local removeSubMenu = ISContextMenu:getNew(context)
-		local removeOption  = context:addOption(getText("ContextMenu_STK_RemoveUpgrade"))
+		local removeOption = context:addOption(getText("ContextMenu_STK_RemoveUpgrade"))
 		context:addSubMenu(removeOption, removeSubMenu)
 
 		if not STKBagUpgrade.hasRequiredTools(player, "remove") then
-			Logger.log("Validacao REMOVE falhou: sem tesoura ou faca")
+			log.debug("Validacao REMOVE falhou: sem tesoura ou faca")
 			removeOption.notAvailable = true
 			setTooltip(removeOption, "ContextMenu_STK_NeedScissors")
 		else
@@ -141,7 +121,9 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 				table.insert(upgradeList, { type = upgradeType, name = displayName })
 			end
 
-			table.sort(upgradeList, function(a, b) return a.name < b.name end)
+			table.sort(upgradeList, function(a, b)
+				return a.name < b.name
+			end)
 
 			for _, upgrade in ipairs(upgradeList) do
 				removeSubMenu:addOption(upgrade.name, nil, function()
@@ -152,6 +134,8 @@ local function onFillInventoryContextMenu(playerNum, context, items)
 	end
 end
 
-Events.OnFillInventoryObjectContextMenu.Add(onFillInventoryContextMenu)
+Events.OnFillInventoryObjectContextMenu.Add(log.wrap(onFillInventoryContextMenu, "onFillInventoryContextMenu"))
+
+log.info("Modulo carregado.")
 
 return STKContextMenu

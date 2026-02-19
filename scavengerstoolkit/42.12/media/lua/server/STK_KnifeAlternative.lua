@@ -9,34 +9,13 @@
 ---
 --- No hooks, no events. Pure logic called directly by the server pipeline.
 ---
---- NOTE (Refactor v3.0): Hooks removed. checkRemoveTools and afterRemove
---- hooks replaced by direct function calls in STK_Validation and
---- STK_UpgradeLogic respectively.
----
 --- @author Scavenger's Toolkit Development Team
 --- @version 3.0.0
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
 local STK_Constants = require("STK_Constants")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-KnifeAlternative] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado.")
+local log = require("STK_Logger").get("STK-KnifeAlternative")
 
 -- ============================================================================
 -- PUBLIC API
@@ -53,11 +32,11 @@ local STK_KnifeAlternative = {}
 function STK_KnifeAlternative.findViableKnife(player)
 	for _, knifeType in ipairs(STK_Constants.VIABLE_KNIVES) do
 		if player:getInventory():contains(knifeType) then
-			Logger.log("Faca viavel encontrada: " .. knifeType)
+			log.debug("Faca viavel encontrada: " .. knifeType)
 			return knifeType
 		end
 	end
-	Logger.log("Nenhuma faca viavel encontrada")
+	log.debug("Nenhuma faca viavel encontrada")
 	return nil
 end
 
@@ -75,9 +54,9 @@ function STK_KnifeAlternative.degradeKnife(player, knifeType)
 
 	if knife:getCondition() <= 0 then
 		knife:getContainer():Remove(knife)
-		Logger.log("Faca quebrou e foi removida: " .. knifeType)
+		log.info("Faca quebrou e foi removida: " .. knifeType)
 	else
-		Logger.log("Faca desgastada: " .. knifeType .. " -> " .. knife:getCondition())
+		log.debug("Faca desgastada: " .. knifeType .. " -> " .. knife:getCondition())
 	end
 end
 
@@ -88,5 +67,7 @@ function STK_KnifeAlternative.getViableKnives()
 end
 
 -- ============================================================================
+
+log.info("Modulo carregado.")
 
 return STK_KnifeAlternative

@@ -16,24 +16,7 @@
 local STK_Core = require("STK_Core")
 local STK_Utils = require("STK_Utils")
 local STK_TailoringXP = require("STK_TailoringXP")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-UpgradeLogic] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado.")
+local log = require("STK_Logger").get("STK-UpgradeLogic")
 
 -- ============================================================================
 -- INTERNAL HELPERS
@@ -55,7 +38,7 @@ local function updateBagStats(bag)
 	bag:setCapacity(finalCapacity)
 	bag:setWeightReduction(finalWR)
 
-	Logger.log(
+	log.debug(
 		string.format(
 			"Stats atualizados — Capacidade: %d (base %d), WeightReduction: %.0f%% (base %.0f%%)",
 			finalCapacity,
@@ -81,7 +64,7 @@ function STK_UpgradeLogic.initBag(bag)
 	local isFirstInit = STK_Core.initBagData(bag)
 	triggerEvent("OnSTKBagInit", bag, isFirstInit)
 
-	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
+	log.debug(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
 
 	return isFirstInit
 end
@@ -93,7 +76,7 @@ end
 --- @param player any IsoPlayer performing the action
 function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 	if not bag or not upgradeItem or not player then
-		Logger.log("ERRO: applyUpgrade chamado com parametros invalidos")
+		log.error("applyUpgrade chamado com parametros invalidos")
 		triggerEvent("OnSTKUpgradeAddFailed", bag, upgradeItem, player, "invalid_params")
 		return
 	end
@@ -113,7 +96,7 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 		needle:setCondition(needle:getCondition() - 1)
 		if needle:getCondition() <= 0 then
 			needle:getContainer():Remove(needle)
-			Logger.log("Agulha quebrou e foi removida")
+			log.info("Agulha quebrou e foi removida")
 		end
 	end
 
@@ -123,14 +106,14 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 		thread:setUses(thread:getUses() - 1)
 		if thread:getUses() <= 0 then
 			thread:getContainer():Remove(thread)
-			Logger.log("Linha esgotada e removida")
+			log.info("Linha esgotada e removida")
 		end
 	end
 
 	-- Recalculate stats from base values
 	updateBagStats(bag)
 
-	Logger.log(string.format("applyUpgrade OK: %s em %s por %s", upgradeType, bag:getType(), player:getUsername()))
+	log.info(string.format("applyUpgrade OK: %s em %s por %s", upgradeType, bag:getType(), player:getUsername()))
 
 	local xp = STK_TailoringXP.grant(player)
 	triggerEvent("OnSTKUpgradeAdded", bag, upgradeItem, player, xp)
@@ -147,7 +130,7 @@ end
 --- @param toolUsed string|nil "scissors" or a knife type string, for degradation
 function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 	if not bag or not upgradeType or not player then
-		Logger.log("ERRO: removeUpgrade chamado com parametros invalidos")
+		log.error("removeUpgrade chamado com parametros invalidos")
 		triggerEvent("OnSTKUpgradeRemoveFailed", bag, upgradeType, player, "invalid_params")
 		return
 	end
@@ -167,7 +150,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 			scissors:setCondition(scissors:getCondition() - 1)
 			if scissors:getCondition() <= 0 then
 				scissors:getContainer():Remove(scissors)
-				Logger.log("Tesoura quebrou e foi removida")
+				log.info("Tesoura quebrou e foi removida")
 			end
 		end
 	elseif toolUsed then
@@ -176,7 +159,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 			knife:setCondition(knife:getCondition() - 1)
 			if knife:getCondition() <= 0 then
 				knife:getContainer():Remove(knife)
-				Logger.log("Faca quebrou e foi removida: " .. toolUsed)
+				log.info("Faca quebrou e foi removida: " .. toolUsed)
 			end
 		end
 	end
@@ -193,7 +176,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 	updateBagStats(bag)
 
 	if failed then
-		Logger.log(
+		log.info(
 			string.format(
 				"removeUpgrade FALHOU: %s (roll=%d < failChance=%.0f%%, level=%d)",
 				upgradeType,
@@ -209,10 +192,10 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 	-- Return item to inventory
 	local newItem = player:getInventory():AddItem("STK." .. upgradeType)
 	if not newItem then
-		Logger.log("ERRO CRITICO: falha ao devolver item STK." .. upgradeType)
+		log.error("CRITICO: falha ao devolver item STK." .. upgradeType)
 	end
 
-	Logger.log(string.format("removeUpgrade OK: %s de %s por %s", upgradeType, bag:getType(), player:getUsername()))
+	log.info(string.format("removeUpgrade OK: %s de %s por %s", upgradeType, bag:getType(), player:getUsername()))
 
 	triggerEvent("OnSTKUpgradeRemoved", bag, upgradeType, player)
 end

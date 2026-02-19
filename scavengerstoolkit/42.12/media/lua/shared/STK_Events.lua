@@ -22,16 +22,13 @@
 ---
 ---   OnSTKBagInit(bag, isFirstInit)
 ---     Fired after a bag's ModData is initialised.
----     STK_ContainerLimits listens to set LMaxUpgrades.
 ---
 ---   OnSTKUpgradeAdded(bag, upgradeItem, player, xpGained)
 ---     Fired after an upgrade is successfully applied.
----     Client FeedbackSystem listens for visual feedback.
 ---     xpGained (number): XP granted by the server, for display purposes.
 ---
 ---   OnSTKUpgradeAddFailed(bag, upgradeItem, player, reason)
 ---     Fired when an upgrade could not be applied.
----     Client FeedbackSystem listens for visual feedback.
 ---     reason (string): one of "invalid_params", "limit_reached",
 ---                      "no_tools", "item_not_in_inventory"
 ---
@@ -53,16 +50,7 @@
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
-local DEBUG_MODE = true
-
-local Logger = {
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-Events] " .. tostring(message))
-	end,
-}
+local log = require("STK_Logger").get("STK-Events")
 
 --- TimedAction → Server
 LuaEventManager.AddEvent("OnSTKActionAddComplete")
@@ -75,4 +63,4 @@ LuaEventManager.AddEvent("OnSTKUpgradeAddFailed")
 LuaEventManager.AddEvent("OnSTKUpgradeRemoved")
 LuaEventManager.AddEvent("OnSTKUpgradeRemoveFailed")
 
-Logger.log("Events registrados (7)")
+log.info("Events registrados (7)")

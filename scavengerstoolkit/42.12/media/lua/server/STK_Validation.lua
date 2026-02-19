@@ -24,24 +24,7 @@
 
 local STK_Core = require("STK_Core")
 local STK_KnifeAlternative = require("STK_KnifeAlternative")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-Validation] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado.")
+local log = require("STK_Logger").get("STK-Validation")
 
 -- ============================================================================
 -- HELPERS
@@ -77,31 +60,31 @@ local STK_Validation = {}
 --- @return string|nil reason
 function STK_Validation.canApplyUpgrade(player, bag, upgradeItem)
 	if not player or not bag or not upgradeItem then
-		Logger.log("canApplyUpgrade: parametros invalidos")
+		log.warn("canApplyUpgrade: parametros invalidos")
 		return false, "invalid_params"
 	end
 
 	if not STK_Core.isValidBag(bag) then
-		Logger.log("canApplyUpgrade: bag invalida — " .. tostring(bag:getFullType()))
+		log.warn("canApplyUpgrade: bag invalida — " .. tostring(bag:getFullType()))
 		return false, "invalid_params"
 	end
 
 	if not STK_Core.canAddUpgrade(bag) then
-		Logger.log("canApplyUpgrade: limite de upgrades atingido")
+		log.debug("canApplyUpgrade: limite de upgrades atingido")
 		return false, "limit_reached"
 	end
 
 	if not playerHasItemInstance(player, upgradeItem) then
-		Logger.log("canApplyUpgrade: item nao encontrado no inventario do player (anti-cheat)")
+		log.warn("canApplyUpgrade: item nao encontrado no inventario do player (anti-cheat)")
 		return false, "item_not_in_inventory"
 	end
 
 	if not STK_Core.hasRequiredTools(player, "add") then
-		Logger.log("canApplyUpgrade: ferramentas insuficientes (agulha/linha)")
+		log.debug("canApplyUpgrade: ferramentas insuficientes (agulha/linha)")
 		return false, "no_tools"
 	end
 
-	Logger.log("canApplyUpgrade: OK")
+	log.debug("canApplyUpgrade: OK")
 	return true, nil
 end
 
@@ -115,12 +98,12 @@ end
 --- @return string|nil toolUsed "scissors" or knife type if successful
 function STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	if not player or not bag or not upgradeType then
-		Logger.log("canRemoveUpgrade: parametros invalidos")
+		log.warn("canRemoveUpgrade: parametros invalidos")
 		return false, "invalid_params"
 	end
 
 	if not STK_Core.isValidBag(bag) then
-		Logger.log("canRemoveUpgrade: bag invalida — " .. tostring(bag:getFullType()))
+		log.warn("canRemoveUpgrade: bag invalida — " .. tostring(bag:getFullType()))
 		return false, "invalid_params"
 	end
 
@@ -135,7 +118,7 @@ function STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	end
 
 	if not found then
-		Logger.log("canRemoveUpgrade: upgrade nao encontrado na mochila — " .. upgradeType)
+		log.warn("canRemoveUpgrade: upgrade nao encontrado na mochila — " .. upgradeType)
 		return false, "upgrade_not_found"
 	end
 
@@ -143,22 +126,24 @@ function STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	local hasScissors = player:getInventory():contains("Base.Scissors")
 
 	if hasScissors then
-		Logger.log("canRemoveUpgrade: OK (tesoura)")
+		log.debug("canRemoveUpgrade: OK (tesoura)")
 		return true, nil, "scissors"
 	end
 
 	if SandboxVars.STK.KnifeAlternative then
 		local knifeType = STK_KnifeAlternative.findViableKnife(player)
 		if knifeType then
-			Logger.log("canRemoveUpgrade: OK (faca — " .. knifeType .. ")")
+			log.debug("canRemoveUpgrade: OK (faca — " .. knifeType .. ")")
 			return true, nil, knifeType
 		end
 	end
 
-	Logger.log("canRemoveUpgrade: sem ferramentas (tesoura/faca)")
+	log.debug("canRemoveUpgrade: sem ferramentas (tesoura/faca)")
 	return false, "no_tools"
 end
 
 -- ============================================================================
+
+log.info("Modulo carregado.")
 
 return STK_Validation

@@ -6,32 +6,15 @@
 --- cannot be used in Build 42 with color parameters due to a
 --- double/float incompatibility between Lua and Java.
 ---
---- NOTE (Refactor v3.0): Moved from shared/ to client/. This was
---- always a visual-only utility; shared/ placement was a mistake.
---- STK_FeedbackSystem.lua also moves to client/ so the import chain
---- is now valid: client → client.
----
 --- @author Scavenger's Toolkit Development Team
 --- @version 3.0.0
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
+local log = require("STK_Logger").get("STK-SilentSpeaker")
+
 --- @class STKSilentSpeaker
 local STK_SilentSpeaker = {}
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = false
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then return end
-		print("[STK-SilentSpeaker] " .. tostring(message))
-	end,
-}
 
 -- ============================================================================
 -- CORE
@@ -46,7 +29,7 @@ local Logger = {
 --- @param b number Blue component (0.0–1.0)
 function STK_SilentSpeaker.speak(player, text, r, g, b)
 	if not player or not text then
-		Logger.log("Parametros invalidos — player ou text ausente")
+		log.warn("Parametros invalidos — player ou text ausente")
 		return
 	end
 
@@ -64,7 +47,7 @@ function STK_SilentSpeaker.speak(player, text, r, g, b)
 		true, true, true, true, true, true
 	)
 
-	Logger.log(player:getFullName() .. " falou silenciosamente: " .. tostring(text))
+	log.debug(player:getFullName() .. " falou silenciosamente: " .. tostring(text))
 end
 
 -- ============================================================================

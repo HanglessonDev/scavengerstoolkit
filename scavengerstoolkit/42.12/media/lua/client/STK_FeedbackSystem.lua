@@ -8,33 +8,13 @@
 --- Fully optional: removing this file disables all character speech and
 --- XP popups without affecting any other feature.
 ---
---- NOTE (Refactor v3.0 — Dias 7+8 adiantados): All hooks replaced by
---- Events listeners. No longer requires STKBagUpgrade.
----
 --- @author Scavenger's Toolkit Development Team
 --- @version 3.0.0
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
 local SilentSpeaker = require("STK_SilentSpeaker")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-FeedbackSystem] " .. tostring(message))
-	end,
-}
-
-Logger.log("Feature carregada: Humanized Feedback System (OPCIONAL)")
+local log = require("STK_Logger").get("STK-FeedbackSystem")
 
 -- ============================================================================
 -- CONFIGURATION
@@ -89,17 +69,15 @@ end
 --- @param player any
 --- @param xpGained number
 local function onUpgradeAdded(bag, upgradeItem, player, xpGained)
-	-- XP popup (HaloText uses INT RGB 0-255)
 	if xpGained and xpGained > 0 then
 		local xpText = string.format("+%.1f Tailoring", xpGained)
 		HaloTextHelper.addTextWithArrow(player, xpText, true, 102, 204, 102)
 	end
 
-	-- Speech bubble
 	if shouldSpeak(SPAM_CONTROL.ADD_SUCCESS_CHANCE) then
 		local message = pickRandomMessage("UI_STK_FB_AddSuccess", MESSAGE_COUNTS.ADD_SUCCESS)
 		SilentSpeaker.speakPositive(player, message)
-		Logger.log("ADD_SUCCESS: " .. message)
+		log.debug("ADD_SUCCESS: " .. message)
 	end
 end
 
@@ -114,7 +92,7 @@ local function onUpgradeAddFailed(bag, upgradeItem, player, reason)
 	end
 	local message = pickRandomMessage("UI_STK_FB_AddFailed", MESSAGE_COUNTS.ADD_FAILED)
 	SilentSpeaker.speakAlert(player, message)
-	Logger.log("ADD_FAILED (" .. (reason or "unknown") .. "): " .. message)
+	log.debug("ADD_FAILED (" .. (reason or "unknown") .. "): " .. message)
 end
 
 --- OnSTKUpgradeRemoved — expert speech if Tailoring level is high enough
@@ -126,7 +104,7 @@ local function onUpgradeRemoved(bag, upgradeType, player)
 	if level >= EXPERT_LEVEL and shouldSpeak(SPAM_CONTROL.REMOVE_EXPERT_CHANCE) then
 		local message = pickRandomMessage("UI_STK_FB_RemoveExpert", MESSAGE_COUNTS.REMOVE_EXPERT)
 		SilentSpeaker.speakInfo(player, message)
-		Logger.log("REMOVE_EXPERT (level=" .. level .. "): " .. message)
+		log.debug("REMOVE_EXPERT (level=" .. level .. "): " .. message)
 	end
 end
 
@@ -136,7 +114,6 @@ end
 --- @param player any
 --- @param reason string
 local function onUpgradeRemoveFailed(bag, upgradeType, player, reason)
-	-- HaloText popup (red, arrow down)
 	HaloTextHelper.addTextWithArrow(
 		player,
 		getText("UI_STK_MaterialDestroyed") or "Material Destruido!",
@@ -149,7 +126,7 @@ local function onUpgradeRemoveFailed(bag, upgradeType, player, reason)
 	if shouldSpeak(SPAM_CONTROL.REMOVE_FAILED_CHANCE) then
 		local message = pickRandomMessage("UI_STK_FB_RemoveFailed", MESSAGE_COUNTS.REMOVE_FAILED)
 		SilentSpeaker.speakAlert(player, message)
-		Logger.log("REMOVE_FAILED (" .. (reason or "unknown") .. "): " .. message)
+		log.debug("REMOVE_FAILED (" .. (reason or "unknown") .. "): " .. message)
 	end
 end
 
@@ -157,12 +134,12 @@ end
 -- REGISTER LISTENERS
 -- ============================================================================
 
-Events.OnSTKUpgradeAdded.Add(onUpgradeAdded)
-Events.OnSTKUpgradeAddFailed.Add(onUpgradeAddFailed)
-Events.OnSTKUpgradeRemoved.Add(onUpgradeRemoved)
-Events.OnSTKUpgradeRemoveFailed.Add(onUpgradeRemoveFailed)
+Events.OnSTKUpgradeAdded.Add(log.wrap(onUpgradeAdded, "onUpgradeAdded"))
+Events.OnSTKUpgradeAddFailed.Add(log.wrap(onUpgradeAddFailed, "onUpgradeAddFailed"))
+Events.OnSTKUpgradeRemoved.Add(log.wrap(onUpgradeRemoved, "onUpgradeRemoved"))
+Events.OnSTKUpgradeRemoveFailed.Add(log.wrap(onUpgradeRemoveFailed, "onUpgradeRemoveFailed"))
 
-Logger.log(
+log.info(
 	"Listeners registrados: OnSTKUpgradeAdded, OnSTKUpgradeAddFailed, OnSTKUpgradeRemoved, OnSTKUpgradeRemoveFailed"
 )
 
@@ -186,7 +163,7 @@ function STK_FeedbackSystem.setSpamChance(eventType, chance)
 	local key = eventType .. "_CHANCE"
 	if SPAM_CONTROL[key] ~= nil then
 		SPAM_CONTROL[key] = math.max(0, math.min(100, chance))
-		Logger.log("setSpamChance: " .. key .. " = " .. SPAM_CONTROL[key])
+		log.debug("setSpamChance: " .. key .. " = " .. SPAM_CONTROL[key])
 	end
 end
 
@@ -197,5 +174,7 @@ function STK_FeedbackSystem.getMessageCounts()
 end
 
 -- ============================================================================
+
+log.info("Modulo carregado.")
 
 return STK_FeedbackSystem

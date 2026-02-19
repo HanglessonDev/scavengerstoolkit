@@ -27,24 +27,7 @@
 
 local STK_Validation = require("STK_Validation")
 local STK_UpgradeLogic = require("STK_UpgradeLogic")
-
--- ============================================================================
--- LOGGING
--- ============================================================================
-
-local DEBUG_MODE = true
-
-local Logger = {
-	--- @param message string
-	log = function(message)
-		if not DEBUG_MODE then
-			return
-		end
-		print("[STK-Commands] " .. tostring(message))
-	end,
-}
-
-Logger.log("Modulo carregado.")
+local log = require("STK_Logger").get("STK-Commands")
 
 -- ============================================================================
 -- PIPELINE HANDLERS
@@ -56,7 +39,7 @@ Logger.log("Modulo carregado.")
 --- @param upgradeItem any InventoryItem upgrade
 --- @param player any IsoPlayer
 local function handleActionAddComplete(bag, upgradeItem, player)
-	Logger.log(
+	log.debug(
 		string.format(
 			"handleActionAddComplete: %s em %s por %s",
 			tostring(upgradeItem and upgradeItem:getType()),
@@ -67,12 +50,11 @@ local function handleActionAddComplete(bag, upgradeItem, player)
 
 	local isValid, reason = STK_Validation.canApplyUpgrade(player, bag, upgradeItem)
 	if not isValid then
-		Logger.log("Validacao falhou: " .. (reason or "unknown"))
+		log.warn("Validacao ADD falhou: " .. (reason or "unknown"))
 		triggerEvent("OnSTKUpgradeAddFailed", bag, upgradeItem, player, reason)
 		return
 	end
 
-	-- XP is granted inside STK_UpgradeLogic.applyUpgrade() via STK_TailoringXP.
 	STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 end
 
@@ -82,7 +64,7 @@ end
 --- @param upgradeType string Upgrade type without "STK." prefix
 --- @param player any IsoPlayer
 local function handleActionRemoveComplete(bag, upgradeType, player)
-	Logger.log(
+	log.debug(
 		string.format(
 			"handleActionRemoveComplete: %s de %s por %s",
 			tostring(upgradeType),
@@ -93,7 +75,7 @@ local function handleActionRemoveComplete(bag, upgradeType, player)
 
 	local isValid, reason, toolUsed = STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 	if not isValid then
-		Logger.log("Validacao falhou: " .. (reason or "unknown"))
+		log.warn("Validacao REMOVE falhou: " .. (reason or "unknown"))
 		triggerEvent("OnSTKUpgradeRemoveFailed", bag, upgradeType, player, reason)
 		return
 	end
@@ -105,7 +87,7 @@ end
 -- EVENT LISTENERS
 -- ============================================================================
 
-Events.OnSTKActionAddComplete.Add(handleActionAddComplete)
-Events.OnSTKActionRemoveComplete.Add(handleActionRemoveComplete)
+Events.OnSTKActionAddComplete.Add(log.wrap(handleActionAddComplete, "handleActionAddComplete"))
+Events.OnSTKActionRemoveComplete.Add(log.wrap(handleActionRemoveComplete, "handleActionRemoveComplete"))
 
-Logger.log("Listeners registrados: OnSTKActionAddComplete, OnSTKActionRemoveComplete")
+log.info("Listeners registrados: OnSTKActionAddComplete, OnSTKActionRemoveComplete")
