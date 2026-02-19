@@ -72,32 +72,13 @@ Documentação de melhorias de polimento e UX pendentes.
 
 ## 📜 UI/Feedback
 
-### [x] Tooltip mostra upgrades instalados ao passar o mouse
+### ✅ Tooltip mostra upgrades instalados ao passar o mouse
 
 **Status:** ✅ **Implementado** em `STK_Tooltips.lua`
 
 - Tooltip exibe slots disponíveis/usados
 - Mostra bônus de capacidade e weight reduction
 - Preview do valor do upgrade em itens STK
-
----
-
-### [ ] Feedback sonoro de sucesso/falha na remoção
-
----
-
-### [ ] Aumentar tamanho do texto do HaloText (XP popup e feedbacks)
-
-**Contexto:** Texto do `HaloTextHelper.addTextWithArrow()` está muito pequeno, dificulta leitura.
-
-**Solução sugerida:**
-- Ajustar parâmetro de fonte no `HaloTextHelper.addTextWithArrow()`
-- Testar tamanhos: 1.0 (padrão) → 1.5 ou 2.0
-- Arquivo: `STK_FeedbackSystem.lua` (linhas ~95 e ~147)
-
-**Status:** Pendente
-**Prioridade:** Baixa
-**Dificuldade:** Baixa
 
 ---
 
@@ -146,7 +127,7 @@ Documentação de melhorias de polimento e UX pendentes.
 
 ## ⚙️ Sandbox Options
 
-### [ ] Adicionar opções de limite para Hiking Bags e Duffel Bags
+### ✅ Adicionar opções de limite para Hiking Bags e Duffel Bags
 
 **Contexto:** `sandbox-options.txt` possui apenas:
 - `FannyPackLimit`
@@ -177,11 +158,6 @@ Mas `STK_Core.lua` valida também **Hiking Bags** (4 tipos) e **Duffel Bags** (7
 - Remoção permanente é frustrante para o jogador
 - Quebra de imersão: o objeto "desaparece" do nada
 
-**Solução sugerida:**
-- Em vez de `container:Remove(item)`, apenas reduzir condição para 0
-- Item quebrado permanece no inventário do jogador
-- Opcional: notificar jogador que a ferramenta quebrou (HaloText ou speech)
-
 **Arquivos afetados:**
 - `STK_UpgradeLogic.lua` — linhas de degradação de needle, thread, scissors, knife
 
@@ -189,6 +165,56 @@ Mas `STK_Core.lua` valida também **Hiking Bags** (4 tipos) e **Duffel Bags** (7
 **Prioridade:** Alta
 **Dificuldade:** Baixa
 **Impacto:** Alto (reduz frustração, preserva itens vanilla)
+
+---
+
+### [ ] Receitas de disassemble devem ignorar mochilas equipadas
+
+**Contexto:** Se o jogador acidentalmente selecionar uma mochila que está equipada para desmanchar (disassemble), ela será destruída e todo o conteúdo será perdido.
+
+**Problema:**
+- Perda acidental de mochila em uso + todo inventário dentro
+- Sem aviso ou prevenção contra erro do usuário
+- Frustração alta em caso de clique equivocado
+
+**Solução sugerida:**
+- Validar se a mochila alvo está equipada antes de iniciar a receita
+- Bloquear a ação se estiver equipada (exibir mensagem: "Não é possível desmanchar uma mochila equipada")
+- Alternativa: mover automaticamente para o chão/inventário antes de permitir
+
+**Arquivos afetados:**
+- `STK_UpgradeLogic.lua` — lógica de remoção de upgrade
+- `STK_Core.lua` — validações de itens
+
+**Status:** Pendente
+**Prioridade:** Alta
+**Dificuldade:** Baixa
+**Impacto:** Alto (previne perda catastrófica de itens)
+
+---
+
+### [ ] Buscar materiais e ferramentas em containers equipados
+
+**Contexto:** Atualmente, o sistema só detecta materiais e ferramentas no inventário direto do jogador. Se a agulha, tesoura, linha ou faca estiverem dentro de uma mochila equipada, não são encontrados.
+
+**Problema:**
+- Jogador precisa mover manualmente ferramentas para o inventário principal
+- Experiência frustrante: o item "está lá" (na mochila) mas o craft não funciona
+- Quebra de imersão: na vida real, você usaria sem precisar desembolsar
+
+**Solução sugerida:**
+- Expandir busca para incluir containers equipados (mochilas nas costas, cinturão, ombro)
+- Usar APIs vanilla do PZ para iterar sobre equipamentos equipados
+- Manter comportamento atual apenas para o item alvo (mochila sendo upada)
+
+**Arquivos afetados:**
+- `STK_Core.lua` — funções de busca/validação de materiais
+- `STK_UpgradeLogic.lua` — validação de pré-requisitos
+
+**Status:** Pendente
+**Prioridade:** Alta
+**Dificuldade:** Média
+**Impacto:** Alto (melhora significativa na UX)
 
 ---
 
@@ -210,19 +236,6 @@ Mas `STK_Core.lua` valida também **Hiking Bags** (4 tipos) e **Duffel Bags** (7
 
 ## 🧪 Validação
 
-### [ ] Validar se todas as timed actions estão funcionando em multiplayer
-
-**Contexto:** Ações funcionam em SP, mas podem ter problemas em servidor dedicado.
-
-**Solução sugerida:**
-- Testar em servidor multiplayer
-- Verificar sincronização de eventos
-
-**Status:** Pendente
-**Prioridade:** Alta
-**Dificuldade:** Alta
-
----
 
 ## 📋 Checklist de Revisão
 
@@ -239,16 +252,6 @@ Antes de considerar "polido", verificar:
 
 ## 📚 Referências Vanilla
 
-Ações do PZ para estudar como referência:
-
-| Ação | Arquivo | Uso |
-|------|---------|-----|
-| Costurar | `media/lua/shared/TimedActions/ISSew.lua` | Som de agulha |
-| Cortar tecido | `media/lua/shared/TimedActions/ISCutFabric.lua` | Som de tesoura |
-| Consertar | `media/lua/shared/TimedActions/ISRepairClothing.lua` | Animação de reparo |
-| Dye | `media/lua/shared/TimedActions/ISDye.lua` | UI de seleção |
-
----
 
 **Última atualização:** 2026-02-17
 **Versão do mod:** 3.0.0
