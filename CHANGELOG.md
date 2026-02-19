@@ -7,6 +7,19 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.14.2] - 2026-02-19
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: sons e animações específicas para ações de upgrade
+  - Adicionar upgrade: som "Sewing" + animação "SewingCloth"
+  - Remover upgrade: som "Sewing" + animação "SewingCloth"
+  - Função `stopSound()` para limpeza segura de sons ao interromper ação
+
+### Corrigido
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: timed actions das receitas atualizadas
+  - Receitas de desmontagem: alterado de `Making` para `RipSheets`
+  - Receitas de montagem: alterado de `Making` para `SewingCloth`
+
 ## [0.14.1] - 2026-02-19
 
 ### Removido
