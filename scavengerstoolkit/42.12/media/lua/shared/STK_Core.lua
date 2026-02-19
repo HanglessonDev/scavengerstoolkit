@@ -40,15 +40,16 @@ function STK_Core.isValidBag(item)
 end
 
 --- Returns true if the bag can still accept more upgrades.
---- Requires the bag to have been initialised (has LUpgrades and LMaxUpgrades).
+--- Limit is calculated dynamically from SandboxVars — always reflects
+--- current sandbox configuration without requiring ModData to be updated.
 --- @param bag any InventoryItem bag
 --- @return boolean
 function STK_Core.canAddUpgrade(bag)
 	local imd = bag:getModData()
-	if not imd.LUpgrades or not imd.LMaxUpgrades then
+	if not imd.LUpgrades then
 		return false
 	end
-	return #imd.LUpgrades < imd.LMaxUpgrades
+	return #imd.LUpgrades < STK_Core.getLimitForType(bag:getFullType())
 end
 
 -- ============================================================================
@@ -178,10 +179,9 @@ function STK_Core.getLimitForType(bagType)
 end
 
 --- Initialises the STK ModData fields on a bag if not already present.
---- Sets LUpgrades, LCapacity, LWeightReduction, STKInitialised flag, and
---- LMaxUpgrades with the correct type-based limit (including SandboxVars).
---- Safe to call from any context — SandboxVars is available in client,
---- server and shared in both SP and MP.
+--- Sets LUpgrades, LCapacity, LWeightReduction and STKInitialised flag.
+--- LMaxUpgrades is NOT stored — it is always calculated dynamically from
+--- SandboxVars via STK_Core.getLimitForType(), so it never goes stale.
 --- @param bag any InventoryItem bag
 --- @return boolean isFirstInit True if this was the first initialisation
 function STK_Core.initBagData(bag)
@@ -196,7 +196,6 @@ function STK_Core.initBagData(bag)
 		imd.LUpgrades = imd.LUpgrades or {}
 		imd.LCapacity = imd.LCapacity or bag:getCapacity()
 		imd.LWeightReduction = imd.LWeightReduction or bag:getWeightReduction()
-		imd.LMaxUpgrades = STK_Core.getLimitForType(bag:getFullType())
 		imd.STKInitialised = true
 	end
 
