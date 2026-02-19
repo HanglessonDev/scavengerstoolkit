@@ -1,6 +1,7 @@
 module STK
 {
     /* DISASSEMBLE RECIPES */
+    
     /* R001 - Schoolbag (Large) → 2x Basic Straps + 1x Basic Fabric */
     craftRecipe DisassembleSchoolBag
     {
@@ -13,7 +14,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[Schoolbag],
+            item 1 tags[Schoolbag] flags[IsNotWorn],
         }
         outputs
         {
@@ -34,7 +35,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[FannyPack],
+            item 1 tags[FannyPack] flags[IsNotWorn],
         }
         outputs
         {
@@ -55,7 +56,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[SatchelBag],
+            item 1 tags[SatchelBag] flags[IsNotWorn],
         }
         outputs
         {
@@ -76,7 +77,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[HikingBag],
+            item 1 tags[HikingBag] flags[IsNotWorn],
         }
         outputs
         {
@@ -97,7 +98,7 @@ module STK
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
-            item 1 tags[DuffelBag],
+            item 1 tags[DuffelBag] flags[IsNotWorn],
         }
         outputs
         {
@@ -107,6 +108,7 @@ module STK
     }
     
     /* UPGRADE RECIPES (Basic → Reinforced → Tactical) */
+    
     /* R006 - Upgrade Straps: Reinforced → Tactical */
     craftRecipe UpgradeStrapsToTactical
     {
