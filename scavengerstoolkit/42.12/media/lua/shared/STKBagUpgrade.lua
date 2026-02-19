@@ -12,9 +12,10 @@
 ---   - hasRequiredTools          (read-only, used by client ContextMenu + TimedActions)
 ---   - getUpgradeValue           (read-only, used by Tooltips + TimedActions)
 ---   - getUpgradeItems           (read-only, used by client ContextMenu)
+---   - updateBag                 (kept for TimedActions isValid() â€” read only)
 ---
---- All functions delegate to STK_Core. This file exists only to avoid
---- breaking requires() in files not yet migrated to require STK_Core directly.
+--- All functions delegate to STK_Core / STK_Utils. This file exists only
+--- to avoid breaking requires() in files not yet migrated.
 ---
 --- NOTE: This file will be deleted in Fase 4 (cleanup) once all callers
 --- have been updated to require STK_Core directly.
@@ -25,7 +26,24 @@
 --- @copyright 2026 Scavenger's Toolkit
 
 local STK_Core = require("STK_Core")
-local log = require("STK_Logger").get("STK-BagUpgrade")
+
+-- ============================================================================
+-- LOGGING
+-- ============================================================================
+
+local DEBUG_MODE = true
+
+local Logger = {
+	--- @param message string
+	log = function(message)
+		if not DEBUG_MODE then
+			return
+		end
+		print("[STKBagUpgrade] " .. tostring(message))
+	end,
+}
+
+Logger.log("Modulo carregado v3.0 (shim â€” hooks removidos, Events ativos)")
 
 -- ============================================================================
 -- MODULE
@@ -74,18 +92,22 @@ function STKBagUpgrade.hasRequiredTools(player, actionType)
 	return STK_Core.hasRequiredTools(player, actionType)
 end
 
---- Returns all STK upgrade items found in the container.
---- @param container any ItemContainer
+
+--- Returns all STK upgrade items found in the player's inventory and
+--- all equipped containers.
+--- @param player any IsoPlayer
 --- @return any[]
-function STKBagUpgrade.getUpgradeItems(container)
-	return STK_Core.getUpgradeItems(container)
+function STKBagUpgrade.getUpgradeItems(player)
+	return STK_Core.getUpgradeItems(player)
 end
 
 -- ============================================================================
 -- BAG INIT
 -- ============================================================================
 
---- Client-safe initialiser — only writes ModData, never triggers server events.
+--- Initialises a bag's ModData and triggers OnSTKBagInit.
+--- Safe to call multiple times â€” no-op if already initialised.
+--- Client-safe initialiser -- only writes ModData, never triggers server events.
 --- Use from UI code (tooltips, context menu) to avoid firing OnSTKBagInit
 --- in a render/hover context where server listeners may not be safe to run.
 --- @param bag any InventoryItem bag
@@ -104,13 +126,18 @@ function STKBagUpgrade.initBag(bag)
 	end
 
 	local isFirstInit = STK_Core.initBagData(bag)
+
+	-- Trigger event so STK_ContainerLimits (server) can set LMaxUpgrades.
+	-- In SP, server/ files run in the same process, so the listener fires immediately.
 	triggerEvent("OnSTKBagInit", bag, isFirstInit)
 
-	log.debug(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
+	Logger.log(string.format("initBag: %s (firstInit=%s)", bag:getType(), tostring(isFirstInit)))
 end
 
 -- ============================================================================
-
-log.info("Modulo carregado v3.0 (shim — hooks removidos, Events ativos)")
+-- REMOVED: applyUpgrade, removeUpgrade, updateBag, registerHook,
+--          executeHooks, STKBagUpgrade.hooks, STKBagUpgrade.PRIORITY
+-- These now live in server/STK_UpgradeLogic.lua and are triggered via Events.
+-- ============================================================================
 
 return STKBagUpgrade

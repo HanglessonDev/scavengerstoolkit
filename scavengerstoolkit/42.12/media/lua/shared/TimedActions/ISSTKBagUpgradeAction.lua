@@ -13,7 +13,7 @@
 ---   - Degrade tools (STK_UpgradeLogic, server)
 ---   - Display feedback (STK_FeedbackSystem, client)
 ---
---- NOTE (Refactor v3.0 — Dia 4): self.onComplete removed. perform() now
+--- NOTE (Refactor v3.0 â€” Dia 4): self.onComplete removed. perform() now
 --- triggers Events.OnSTKActionAddComplete / OnSTKActionRemoveComplete.
 --- The server (STK_Commands) listens and executes the actual logic.
 ---
@@ -24,6 +24,59 @@
 
 require("TimedActions/ISBaseTimedAction")
 local STK_Core = require("STK_Core")
+
+-- ============================================================================
+-- HELPERS
+-- ============================================================================
+
+--- Returns true if the player has the item type in main inventory or any
+--- equipped container. Mirrors STK_Core internal logic for use in isValid()
+--- checks during the timed action.
+--- @param character any IsoPlayer
+--- @param itemType string Full type string e.g. "Base.Needle"
+--- @return boolean
+local function characterHasItemType(character, itemType)
+	if character:getInventory():contains(itemType) then
+		return true
+	end
+	local wornItems = character:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			if worn:getInventory():contains(itemType) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+--- Returns true if the item instance exists in main inventory or any
+--- equipped container.
+--- @param character any IsoPlayer
+--- @param item any InventoryItem
+--- @return boolean
+local function characterHasItemInstance(character, item)
+	local items = character:getInventory():getItems()
+	for i = 0, items:size() - 1 do
+		if items:get(i) == item then
+			return true
+		end
+	end
+	local wornItems = character:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			local contents = worn:getInventory():getItems()
+			for j = 0, contents:size() - 1 do
+				if contents:get(j) == item then
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
 
 -- ============================================================================
 -- BASE CLASS
@@ -42,7 +95,7 @@ ISSTKBagUpgradeAction = ISBaseTimedAction:derive("ISSTKBagUpgradeAction")
 --- Returns false if the character or bag are no longer valid.
 --- @return boolean
 function ISSTKBagUpgradeAction:isValid()
-	return self.character ~= nil and self.bag ~= nil and self.character:getInventory():contains(self.bag)
+	return self.character ~= nil and self.bag ~= nil and characterHasItemInstance(self.character, self.bag)
 end
 
 --- Updates the metabolic target and progress bar each tick.
@@ -79,14 +132,13 @@ function ISSTKBagAddUpgradeAction:isValid()
 		return false
 	end
 
-	local inv = self.character:getInventory()
-	if not inv:contains("Base.Needle") then
+	if not characterHasItemType(self.character, "Base.Needle") then
 		return false
 	end
-	if not inv:contains("Base.Thread") then
+	if not characterHasItemType(self.character, "Base.Thread") then
 		return false
 	end
-	if not self.upgradeItem or not inv:contains(self.upgradeItem) then
+	if not self.upgradeItem or not characterHasItemInstance(self.character, self.upgradeItem) then
 		return false
 	end
 
@@ -137,7 +189,7 @@ function ISSTKBagRemoveUpgradeAction:isValid()
 		return false
 	end
 
-	-- Check tool: scissors OR knife (if enabled) — read-only via STK_Core
+	-- Check tool: scissors OR knife (if enabled) â€” read-only via STK_Core
 	if not STK_Core.hasRequiredTools(self.character, "remove") then
 		return false
 	end

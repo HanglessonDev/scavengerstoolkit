@@ -49,6 +49,33 @@ local function updateBagStats(bag)
 	)
 end
 
+--- Returns the first item of the given type found in the player's main
+--- inventory or in any equipped container.
+--- Used so that tools/consumables stored inside an equipped bag are found
+--- and consumed/degraded correctly after validation passes.
+--- @param player any IsoPlayer
+--- @param itemType string Full type string e.g. "Base.Needle"
+--- @return any|nil InventoryItem or nil
+local function getFirstItemOfType(player, itemType)
+	local item = player:getInventory():getFirstType(itemType)
+	if item then
+		return item
+	end
+
+	local wornItems = player:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			item = worn:getInventory():getFirstType(itemType)
+			if item then
+				return item
+			end
+		end
+	end
+
+	return nil
+end
+
 -- ============================================================================
 -- PUBLIC API
 -- ============================================================================
@@ -91,7 +118,7 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 	upgradeItem:getContainer():Remove(upgradeItem)
 
 	-- Degrade needle (-1 condition). Stays in inventory when broken — vanilla behavior.
-	local needle = player:getInventory():getFirstType("Base.Needle")
+	local needle = getFirstItemOfType(player, "Base.Needle")
 	if needle then
 		needle:setCondition(needle:getCondition() - 1)
 		if needle:getCondition() <= 0 then
@@ -101,7 +128,7 @@ function STK_UpgradeLogic.applyUpgrade(bag, upgradeItem, player)
 
 	-- Consume one thread use. Thread is a consumable — removed when depleted,
 	-- unlike tools (needle, scissors, knife) which stay as broken items.
-	local thread = player:getInventory():getFirstType("Base.Thread")
+	local thread = getFirstItemOfType(player, "Base.Thread")
 	if thread then
 		thread:setUses(thread:getUses() - 1)
 		if thread:getUses() <= 0 then
@@ -145,7 +172,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 
 	-- Degrade tool regardless of outcome
 	if toolUsed == "scissors" then
-		local scissors = player:getInventory():getFirstType("Base.Scissors")
+		local scissors = getFirstItemOfType(player, "Base.Scissors")
 		if scissors then
 			scissors:setCondition(scissors:getCondition() - 1)
 			if scissors:getCondition() <= 0 then
@@ -153,7 +180,7 @@ function STK_UpgradeLogic.removeUpgrade(bag, upgradeType, player, toolUsed)
 			end
 		end
 	elseif toolUsed then
-		local knife = player:getInventory():getFirstType(toolUsed)
+		local knife = getFirstItemOfType(player, toolUsed)
 		if knife then
 			knife:setCondition(knife:getCondition() - 1)
 			if knife:getCondition() <= 0 then

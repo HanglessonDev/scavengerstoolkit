@@ -30,17 +30,59 @@ local log = require("STK_Logger").get("STK-Validation")
 -- HELPERS
 -- ============================================================================
 
---- Checks item identity in the player's inventory (prevents ID spoofing).
+--- Checks item identity by scanning the player's main inventory and all
+--- equipped containers. Prevents ID spoofing while supporting items stored
+--- inside equipped bags.
 --- @param player any IsoPlayer
 --- @param item any InventoryItem
 --- @return boolean
 local function playerHasItemInstance(player, item)
+	-- Check main inventory first (fast path)
 	local items = player:getInventory():getItems()
 	for i = 0, items:size() - 1 do
 		if items:get(i) == item then
 			return true
 		end
 	end
+
+	-- Check all equipped containers
+	local wornItems = player:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			local wornContents = worn:getInventory():getItems()
+			for j = 0, wornContents:size() - 1 do
+				if wornContents:get(j) == item then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
+end
+
+--- Returns true if the player has the item type in main inventory or any
+--- equipped container. Mirrors STK_Core.playerHasItem but local to avoid
+--- exposing internals — validation needs its own copy for anti-cheat checks.
+--- @param player any IsoPlayer
+--- @param itemType string Full type string e.g. "Base.Scissors"
+--- @return boolean
+local function playerHasItemType(player, itemType)
+	if player:getInventory():contains(itemType) then
+		return true
+	end
+
+	local wornItems = player:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			if worn:getInventory():contains(itemType) then
+				return true
+			end
+		end
+	end
+
 	return false
 end
 
@@ -70,7 +112,7 @@ function STK_Validation.canApplyUpgrade(player, bag, upgradeItem)
 	end
 
 	if not STK_Core.canAddUpgrade(bag) then
-		log.debug("canApplyUpgrade: limite de upgrades atingido")
+		log.warn("canApplyUpgrade: limite de upgrades atingido")
 		return false, "limit_reached"
 	end
 
@@ -80,7 +122,7 @@ function STK_Validation.canApplyUpgrade(player, bag, upgradeItem)
 	end
 
 	if not STK_Core.hasRequiredTools(player, "add") then
-		log.debug("canApplyUpgrade: ferramentas insuficientes (agulha/linha)")
+		log.warn("canApplyUpgrade: ferramentas insuficientes (agulha/linha)")
 		return false, "no_tools"
 	end
 
@@ -90,6 +132,7 @@ end
 
 --- Returns true if the player can remove the given upgrade from the bag.
 --- On failure, also returns a reason string.
+--- Also returns the tool that will be used for degradation.
 --- @param player any IsoPlayer
 --- @param bag any InventoryItem bag
 --- @param upgradeType string Upgrade type without "STK." prefix
@@ -122,23 +165,26 @@ function STK_Validation.canRemoveUpgrade(player, bag, upgradeType)
 		return false, "upgrade_not_found"
 	end
 
-	-- Check tools: scissors first, then knife alternative
-	local hasScissors = player:getInventory():contains("Base.Scissors")
-
-	if hasScissors then
+	-- Scissors check: main inventory + equipped containers
+	if playerHasItemType(player, "Base.Scissors") then
 		log.debug("canRemoveUpgrade: OK (tesoura)")
 		return true, nil, "scissors"
 	end
 
-	if SandboxVars.STK.KnifeAlternative then
-		local knifeType = STK_KnifeAlternative.findViableKnife(player)
-		if knifeType then
-			log.debug("canRemoveUpgrade: OK (faca — " .. knifeType .. ")")
-			return true, nil, knifeType
+	-- Knife alternative: STK_KnifeAlternative already searches main inventory.
+	-- For equipped containers, we search here since findViableKnife only checks
+	-- player:getInventory(). This keeps KnifeAlternative module simple.
+	if SandboxVars.STK and SandboxVars.STK.KnifeAlternative then
+		local STK_Constants = require("STK_Constants")
+		for _, knifeType in ipairs(STK_Constants.VIABLE_KNIVES) do
+			if playerHasItemType(player, knifeType) then
+				log.debug("canRemoveUpgrade: OK (faca — " .. knifeType .. ")")
+				return true, nil, knifeType
+			end
 		end
 	end
 
-	log.debug("canRemoveUpgrade: sem ferramentas (tesoura/faca)")
+	log.warn("canRemoveUpgrade: sem ferramentas (tesoura/faca)")
 	return false, "no_tools"
 end
 

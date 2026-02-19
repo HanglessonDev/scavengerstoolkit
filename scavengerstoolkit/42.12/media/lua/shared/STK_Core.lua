@@ -92,7 +92,35 @@ end
 -- TOOL VALIDATION
 -- ============================================================================
 
+--- Searches for an item type in the player's main inventory and in all
+--- equipped containers (any worn item that IsInventoryContainer).
+--- This ensures tools stored inside an equipped bag are found automatically,
+--- improving UX without requiring the player to move items manually.
+--- @param player any IsoPlayer
+--- @param itemType string Full type string e.g. "Base.Scissors"
+--- @return boolean
+local function playerHasItem(player, itemType)
+	-- Check main inventory first (most common case, fast path)
+	if player:getInventory():contains(itemType) then
+		return true
+	end
+
+	-- Check all equipped containers
+	local wornItems = player:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			if worn:getInventory():contains(itemType) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
 --- Returns true if the player has the required tools for the given action.
+--- Searches both main inventory and all equipped containers.
 ---
 --- "add"    requires: Needle + Thread
 --- "remove" requires: Scissors, or a viable knife if KnifeAlternative is enabled
@@ -105,18 +133,16 @@ function STK_Core.hasRequiredTools(player, actionType)
 		return false
 	end
 
-	local inv = player:getInventory()
-
 	if actionType == "add" then
-		return inv:contains("Base.Needle") and inv:contains("Base.Thread")
+		return playerHasItem(player, "Base.Needle") and playerHasItem(player, "Base.Thread")
 	elseif actionType == "remove" then
-		if inv:contains("Base.Scissors") then
+		if playerHasItem(player, "Base.Scissors") then
 			return true
 		end
 
 		if SandboxVars.STK and SandboxVars.STK.KnifeAlternative then
 			for _, knifeType in ipairs(STK_Constants.VIABLE_KNIVES) do
-				if inv:contains(knifeType) then
+				if playerHasItem(player, knifeType) then
 					return true
 				end
 			end
@@ -132,25 +158,42 @@ end
 -- INVENTORY SCAN
 -- ============================================================================
 
---- Returns all STK upgrade items found in the given container.
---- Caches getItems() and size() outside the loop for performance.
---- @param container any ItemContainer to scan
---- @return any[] Array of InventoryItem upgrade items
-function STK_Core.getUpgradeItems(container)
-	local result = {}
+--- Scans a single ItemContainer and appends found STK upgrade items to result.
+--- @param container any ItemContainer
+--- @param result any[] Accumulator table
+local function scanContainerForUpgrades(container, result)
 	if not container then
+		return
+	end
+	local items = container:getItems()
+	local size = items:size()
+	for i = 0, size - 1 do
+		local item = items:get(i)
+		if item and item:getType() and STK_Core.getUpgradeValue(item:getType()) then
+			table.insert(result, item)
+		end
+	end
+end
+
+--- Returns all STK upgrade items found in the player's main inventory and
+--- in all equipped containers (any worn item that IsInventoryContainer).
+--- @param player any IsoPlayer
+--- @return any[] Array of InventoryItem upgrade items
+function STK_Core.getUpgradeItems(player)
+	local result = {}
+	if not player then
 		return result
 	end
 
-	local items = container:getItems()
-	local size = items:size()
+	-- Main inventory
+	scanContainerForUpgrades(player:getInventory(), result)
 
-	for i = 0, size - 1 do
-		local item = items:get(i)
-		if item and item:getType() then
-			if STK_Core.getUpgradeValue(item:getType()) then
-				table.insert(result, item)
-			end
+	-- All equipped containers
+	local wornItems = player:getWornItems()
+	for i = 0, wornItems:size() - 1 do
+		local worn = wornItems:getItemByIndex(i)
+		if worn and worn:IsInventoryContainer() then
+			scanContainerForUpgrades(worn:getInventory(), result)
 		end
 	end
 
