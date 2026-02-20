@@ -1,6 +1,7 @@
 module STK
 {
-    /* DISASSEMBLE RECIPES */
+    /* DISASSEMBLE RECIPES                                                     */
+    /* Sem requisito de Tailoring — desmontar é destruição, não precisão.     */
     
     /* R001 - Schoolbag (Large) → 2x Basic Straps + 1x Basic Fabric */
     craftRecipe DisassembleSchoolBag
@@ -10,7 +11,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 100,
         xpaward         = Tailoring:2,
-        timedaction     = RipSheets,
+        timedaction     = RipClothing,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -18,8 +19,8 @@ module STK
         }
         outputs
         {
-            item 2 STK.BackpackStrapsBasic,
             item 1 STK.BackpackFabricBasic,
+            item 2 STK.BackpackStrapsBasic,
         }
     }
     
@@ -31,7 +32,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 80,
         xpaward         = Tailoring:2,
-        timedaction     = RipSheets,
+        timedaction     = RipClothing,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -39,8 +40,8 @@ module STK
         }
         outputs
         {
-            item 1 STK.BackpackStrapsBasic,
             item 1 STK.BackpackFabricBasic,
+            item 1 STK.BackpackStrapsBasic,
         }
     }
     
@@ -52,7 +53,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 100,
         xpaward         = Tailoring:2,
-        timedaction     = RipSheets,
+        timedaction     = RipClothing,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -60,8 +61,8 @@ module STK
         }
         outputs
         {
-            item 1 STK.BackpackStrapsBasic,
             item 1 STK.BackpackFabricBasic,
+            item 1 STK.BackpackStrapsBasic,
         }
     }
     
@@ -73,7 +74,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 150,
         xpaward         = Tailoring:5,
-        timedaction     = RipSheets,
+        timedaction     = RipClothing,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -81,8 +82,8 @@ module STK
         }
         outputs
         {
-            item 2 STK.BackpackStrapsReinforced,
             item 1 STK.BackpackFabricReinforced,
+            item 2 STK.BackpackStrapsReinforced,
         }
     }
     
@@ -94,7 +95,7 @@ module STK
         tags            = AnySurfaceCraft,
         time            = 150,
         xpaward         = Tailoring:5,
-        timedaction     = RipSheets,
+        timedaction     = RipClothing,
         inputs
         {
             item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
@@ -102,14 +103,66 @@ module STK
         }
         outputs
         {
+            item 1 STK.BackpackFabricReinforced,
             item 2 STK.BackpackStrapsReinforced,
+        }
+    }
+    
+    /* UPGRADE RECIPES: Basic → Reinforced                                     */
+    /* Tailoring 2 — transformar material exige conhecimento técnico.         */
+    /* Lossy: 2x basic + materiais → 1x reinforced.                           */
+    
+    /* R006 - Upgrade Straps: Basic → Reinforced */
+    craftRecipe UpgradeStrapsToReinforced
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 150,
+        xpaward         = Tailoring:4,
+        timedaction     = SewingCloth,
+        skillrequired   = Tailoring:2,
+        inputs
+        {
+            item 1 [Base.Needle] mode:keep,
+            item 1 [Base.Thread],
+            item 1 [Base.LeatherStrips],
+            item 2 [STK.BackpackStrapsBasic],
+        }
+        outputs
+        {
+            item 1 STK.BackpackStrapsReinforced,
+        }
+    }
+    
+    /* R007 - Upgrade Fabric: Basic → Reinforced */
+    craftRecipe UpgradeFabricToReinforced
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 150,
+        xpaward         = Tailoring:4,
+        timedaction     = SewingCloth,
+        skillrequired   = Tailoring:2,
+        inputs
+        {
+            item 1 [Base.Needle] mode:keep,
+            item 1 [Base.Thread],
+            item 1 [Base.DenimStrips],
+            item 2 [STK.BackpackFabricBasic],
+        }
+        outputs
+        {
             item 1 STK.BackpackFabricReinforced,
         }
     }
     
-    /* UPGRADE RECIPES (Basic → Reinforced → Tactical) */
+    /* UPGRADE RECIPES: Reinforced → Tactical                                  */
+    /* Tailoring 4 — trabalho especializado, custo alto.                      */
+    /* Lossy: 2x reinforced + materiais → 1x tactical.                        */
     
-    /* R006 - Upgrade Straps: Reinforced → Tactical */
+    /* R008 - Upgrade Straps: Reinforced → Tactical */
     craftRecipe UpgradeStrapsToTactical
     {
         allowbatchcraft = true,
@@ -118,6 +171,7 @@ module STK
         time            = 200,
         xpaward         = Tailoring:8,
         timedaction     = SewingCloth,
+        skillrequired   = Tailoring:4,
         inputs
         {
             item 1 [Base.Needle] mode:keep,
@@ -131,7 +185,7 @@ module STK
         }
     }
     
-    /* R007 - Upgrade Fabric: Reinforced → Tactical */
+    /* R009 - Upgrade Fabric: Reinforced → Tactical */
     craftRecipe UpgradeFabricToTactical
     {
         allowbatchcraft = true,
@@ -140,6 +194,7 @@ module STK
         time            = 200,
         xpaward         = Tailoring:8,
         timedaction     = SewingCloth,
+        skillrequired   = Tailoring:4,
         inputs
         {
             item 1 [Base.Needle] mode:keep,
