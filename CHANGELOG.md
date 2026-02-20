@@ -7,6 +7,28 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.14.3] - 2026-02-20
+       
+### Adicionado
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: novas receitas de upgrade Basic→Reinforced
+  - Upgrade de alças: 2x Basic + agulha + linha + couro → 1x Reinforced (Tailoring 2)
+  - Upgrade de tecido: 2x Basic + agulha + linha + denim → 1x Reinforced (Tailoring 2)
+       
+### Modificado
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: receitas de desmontagem atualizadas       
+  - Adicionado comentário explicativo sobre ausência de requisito de Tailoring
+  - Corrigido ordem dos outputs para consistência
+* `scavengerstoolkit/42.12/media/lua/client/STK_FeedbackSystem.lua`: sistema de mensagens reformulado        
+  - Implementado sistema de raridade com pesos (Common=13, Incommon=5, Rare=2)
+  - Adicionado anti-repetição: nunca repete última mensagem por categoria
+  - Adicionado cooldown de raras: cada mensagem rara dispara no máximo uma vez por sessão
+  - Atualizado catálogo de mensagens com chaves estruturadas (`UI_STK_FB_<Category>_<Rarity><Index>`)
+  - Adicionados métodos `resetRares()` e `resetLastUsed()` para testes
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`: traduções expandidas
+  - Adicionadas mensagens humanizadas por raridade (Comum, Incomum, Rara)
+  - Categorias: AddSuccess, RemoveFailed, RemoveExpert
+  - Removida categoria AddFailed (não utilizada)
+
 ## [0.14.2] - 2026-02-19
 
 ### Adicionado
