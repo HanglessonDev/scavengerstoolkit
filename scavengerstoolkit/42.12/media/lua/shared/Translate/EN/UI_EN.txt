@@ -8,28 +8,80 @@ UI_EN = {
     
     /* Tailoring XP - Visual Popups */
     UI_STK_MaterialDestroyed = "Material Destroyed!",
-
-    /* STK Feedback System - Humanized Add Success Messages */
-    UI_STK_FB_AddSuccess1 = "Turned out well!",
-    UI_STK_FB_AddSuccess2 = "I'm getting better at this.",
-    UI_STK_FB_AddSuccess3 = "Perfect.",
-    UI_STK_FB_AddSuccess4 = "Got it!",
-
-    /* STK Feedback System - Humanized Remove Failed Messages */
-    UI_STK_FB_RemoveFailed1 = "Damn! I tore it all...",
-    UI_STK_FB_RemoveFailed2 = "Shit, I ruined the material!",
-    UI_STK_FB_RemoveFailed3 = "I should have been more careful...",
-    UI_STK_FB_RemoveFailed4 = "Maybe I need more practice...",
-    UI_STK_FB_RemoveFailed5 = "What a disaster...",
-    UI_STK_FB_RemoveFailed6 = "Well, at least it can't get any worse.",
-
-    /* STK Feedback System - Humanized Remove Expert Messages */
-    UI_STK_FB_RemoveExpert1 = "Too easy for me.",
-    UI_STK_FB_RemoveExpert2 = "Years of practice make a difference.",
-    UI_STK_FB_RemoveExpert3 = "Effortless.",
-
-    /* STK Feedback System - Humanized Add Failed Messages */
-    UI_STK_FB_AddFailed1 = "I need tools...",
-    UI_STK_FB_AddFailed2 = "I don't have what I need.",
-    UI_STK_FB_AddFailed3 = "Impossible without needle and thread.",
+    
+    /* ------------------------------------------------------------------ */
+    /* STK Feedback System - Add Upgrade: Success                          */
+    /* ------------------------------------------------------------------ */
+    
+    /* Common */
+    UI_STK_FB_AddSuccess_C1 = "Done.",
+    UI_STK_FB_AddSuccess_C2 = "Good enough.",
+    UI_STK_FB_AddSuccess_C3 = "Not pretty, but it'll hold.",
+    UI_STK_FB_AddSuccess_C4 = "At least that worked.",
+    UI_STK_FB_AddSuccess_C5 = "There we go.",
+    UI_STK_FB_AddSuccess_C6 = "That'll do.",
+    UI_STK_FB_AddSuccess_C7 = "Hands still steady.",
+    
+    /* Incommon */
+    UI_STK_FB_AddSuccess_I1 = "Should hold. Unlike everything else.",
+    UI_STK_FB_AddSuccess_I2 = "End of the world made me a tailor. Sure.",
+    UI_STK_FB_AddSuccess_I3 = "At least the bag outlasts me.",
+    UI_STK_FB_AddSuccess_I4 = "Crooked, but stitched. Like everything here.",
+    UI_STK_FB_AddSuccess_I5 = "Hands still steady. For now.",
+    UI_STK_FB_AddSuccess_I6 = "Getting better at this.",
+    UI_STK_FB_AddSuccess_I7 = "Still getting use out of this needle.",
+    
+    /* Rare */
+    UI_STK_FB_AddSuccess_R1 = "My grandma stitched better than this. She's gone too.",
+    UI_STK_FB_AddSuccess_R2 = "Learned this from a woman at a shelter. Haven't seen anyone at a shelter in a while.",
+    UI_STK_FB_AddSuccess_R3 = "If anyone's left to tell, I'll say I was always this good.",
+    
+    /* ------------------------------------------------------------------ */
+    /* STK Feedback System - Remove Upgrade: Failed (material destroyed)   */
+    /* ------------------------------------------------------------------ */
+    
+    /* Common */
+    UI_STK_FB_RemoveFailed_C1 = "Damn.",
+    UI_STK_FB_RemoveFailed_C2 = "Wasted it.",
+    UI_STK_FB_RemoveFailed_C3 = "Hell.",
+    UI_STK_FB_RemoveFailed_C4 = "Gone.",
+    UI_STK_FB_RemoveFailed_C5 = "Not this time.",
+    UI_STK_FB_RemoveFailed_C6 = "Ruined.",
+    UI_STK_FB_RemoveFailed_C7 = "Of course.",
+    
+    /* Incommon */
+    UI_STK_FB_RemoveFailed_I1 = "Scissors win this round.",
+    UI_STK_FB_RemoveFailed_I2 = "Getting worse at this or just worse at everything?",
+    UI_STK_FB_RemoveFailed_I3 = "Even the tools are against me.",
+    UI_STK_FB_RemoveFailed_I4 = "Makes sense. Nothing else works either.",
+    UI_STK_FB_RemoveFailed_I5 = "Should've been more careful. Like it matters.",
+    UI_STK_FB_RemoveFailed_I6 = "Wasted something good. Wouldn't be the first time.",
+    
+    /* Rare */
+    UI_STK_FB_RemoveFailed_R1 = "A zombie would be a faster way to go than this.",
+    UI_STK_FB_RemoveFailed_R2 = "My dad always said I'd ruin it. He was right. About a lot of things.",
+    UI_STK_FB_RemoveFailed_R3 = "Lost people, lost places, now losing materials. List keeps growing.",
+    
+    /* ------------------------------------------------------------------ */
+    /* STK Feedback System - Remove Upgrade: Expert                        */
+    /* ------------------------------------------------------------------ */
+    
+    /* Common */
+    UI_STK_FB_RemoveExpert_C1 = "Easy.",
+    UI_STK_FB_RemoveExpert_C2 = "Know what I'm doing.",
+    UI_STK_FB_RemoveExpert_C3 = "Never fails.",
+    UI_STK_FB_RemoveExpert_C4 = "Done.",
+    UI_STK_FB_RemoveExpert_C5 = "No problem.",
+    
+    /* Incommon */
+    UI_STK_FB_RemoveExpert_I1 = "Not talent. Just desperation repeated enough times.",
+    UI_STK_FB_RemoveExpert_I2 = "Learned from the mistakes. There were a lot of mistakes.",
+    UI_STK_FB_RemoveExpert_I3 = "Apocalypse tailor. Sure, why not.",
+    UI_STK_FB_RemoveExpert_I4 = "Steady when it counts. Rest doesn't count for much anymore.",
+    UI_STK_FB_RemoveExpert_I5 = "Hundreds of times. Figured it out alone. Like everything since.",
+    
+    /* Rare */
+    UI_STK_FB_RemoveExpert_R1 = "World's a better teacher than any school. Charged a hell of a tuition.",
+    UI_STK_FB_RemoveExpert_R2 = "My therapist would've loved knowing I'm good at something. Probably not around to hear it.",
+    UI_STK_FB_RemoveExpert_R3 = "If anyone's left to tell, I'll say I was always like this.",
 }

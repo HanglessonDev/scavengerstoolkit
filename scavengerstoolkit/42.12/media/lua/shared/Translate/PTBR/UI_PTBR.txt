@@ -8,28 +8,80 @@ UI_PTBR = {
     
     /* Tailoring XP - Popups Visuais */
     UI_STK_MaterialDestroyed = "Material Destruido!",
-
-    /* STK Feedback System - Mensagens Humanizadas de Sucesso (Adicionar) */
-    UI_STK_FB_AddSuccess1 = "Ficou bom!",
-    UI_STK_FB_AddSuccess2 = "Estou melhorando nisso.",
-    UI_STK_FB_AddSuccess3 = "Perfeito.",
-    UI_STK_FB_AddSuccess4 = "Consegui!",
-
-    /* STK Feedback System - Mensagens Humanizadas de Falha (Remover) */
-    UI_STK_FB_RemoveFailed1 = "Droga! Rasguei tudo...",
-    UI_STK_FB_RemoveFailed2 = "Merda, estraguei o material!",
-    UI_STK_FB_RemoveFailed3 = "Deveria ter mais cuidado...",
-    UI_STK_FB_RemoveFailed4 = "Talvez eu precise praticar mais...",
-    UI_STK_FB_RemoveFailed5 = "Que desastre...",
-    UI_STK_FB_RemoveFailed6 = "Bom, pelo menos não pode piorar.",
-
-    /* STK Feedback System - Mensagens Humanizadas de Expert (Remover) */
-    UI_STK_FB_RemoveExpert1 = "Fácil demais para mim.",
-    UI_STK_FB_RemoveExpert2 = "Anos de prática fazem diferença.",
-    UI_STK_FB_RemoveExpert3 = "Sem esforço.",
-
-    /* STK Feedback System - Mensagens Humanizadas de Falha (Adicionar) */
-    UI_STK_FB_AddFailed1 = "Preciso de ferramentas...",
-    UI_STK_FB_AddFailed2 = "Não tenho o que preciso.",
-    UI_STK_FB_AddFailed3 = "Impossível sem agulha e linha.",
+    
+    /* ------------------------------------------------------------------ */
+    /* STK Feedback System - Adicionar Upgrade: Sucesso                    */
+    /* ------------------------------------------------------------------ */
+    
+    /* Comum */
+    UI_STK_FB_AddSuccess_C1 = "Pronto.",
+    UI_STK_FB_AddSuccess_C2 = "Serve.",
+    UI_STK_FB_AddSuccess_C3 = "Não ficou bonito, mas tá firme.",
+    UI_STK_FB_AddSuccess_C4 = "Pelo menos isso deu certo.",
+    UI_STK_FB_AddSuccess_C5 = "Tá bom isso.",
+    UI_STK_FB_AddSuccess_C6 = "Feito.",
+    UI_STK_FB_AddSuccess_C7 = "Mão firme ainda.",
+    
+    /* Incomum */
+    UI_STK_FB_AddSuccess_I1 = "Vai aguentar. Diferente de tudo mais.",
+    UI_STK_FB_AddSuccess_I2 = "Quem diria que eu ia saber costurar no fim do mundo.",
+    UI_STK_FB_AddSuccess_I3 = "Pelo menos a mochila vai durar mais do que eu.",
+    UI_STK_FB_AddSuccess_I4 = "Ficou torto mas tá costurado. Como tudo aqui.",
+    UI_STK_FB_AddSuccess_I5 = "Mão firme ainda. Por enquanto.",
+    UI_STK_FB_AddSuccess_I6 = "Tô melhorando nisso.",
+    UI_STK_FB_AddSuccess_I7 = "Com essa agulha ainda dá pra fazer alguma coisa.",
+    
+    /* Rara */
+    UI_STK_FB_AddSuccess_R1 = "Minha vó costurava melhor que isso... mas ela também tá morta.",
+    UI_STK_FB_AddSuccess_R2 = "Aprendi isso com uma senhora num abrigo. Já faz tempo que não vejo ninguém num abrigo.",
+    UI_STK_FB_AddSuccess_R3 = "Se sobrar alguém pra contar, vou dizer que sempre soube fazer isso.",
+    
+    /* ------------------------------------------------------------------ */
+    /* STK Feedback System - Remover Upgrade: Falha (material destruido)   */
+    /* ------------------------------------------------------------------ */
+    
+    /* Comum */
+    UI_STK_FB_RemoveFailed_C1 = "Merda.",
+    UI_STK_FB_RemoveFailed_C2 = "Estraguei.",
+    UI_STK_FB_RemoveFailed_C3 = "Que raiva.",
+    UI_STK_FB_RemoveFailed_C4 = "Desperdicei.",
+    UI_STK_FB_RemoveFailed_C5 = "Não foi dessa vez.",
+    UI_STK_FB_RemoveFailed_C6 = "Virou trapo.",
+    UI_STK_FB_RemoveFailed_C7 = "Porcaria.",
+    
+    /* Incomum */
+    UI_STK_FB_RemoveFailed_I1 = "A tesoura ganhou dessa vez.",
+    UI_STK_FB_RemoveFailed_I2 = "Tô piorando nisso ou piorando em tudo?",
+    UI_STK_FB_RemoveFailed_I3 = "Até as ferramentas estão contra mim.",
+    UI_STK_FB_RemoveFailed_I4 = "Faz sentido. Nada mais dá certo mesmo.",
+    UI_STK_FB_RemoveFailed_I5 = "Devia ter caprichado mais. Como se isso importasse.",
+    UI_STK_FB_RemoveFailed_I6 = "Estraguei coisa boa. Já tô acostumado.",
+    
+    /* Rara */
+    UI_STK_FB_RemoveFailed_R1 = "Antes o zumbi me pega do que eu continuar estragando coisa boa.",
+    UI_STK_FB_RemoveFailed_R2 = "Meu pai diria que eu ia estragar. Ele estava certo. Em tudo.",
+    UI_STK_FB_RemoveFailed_R3 = "Já perdi gente, já perdi lugar, agora perco material. A lista não para.",
+    
+    /* ------------------------------------------------------------------ */
+    /* STK Feedback System - Remover Upgrade: Expert                       */
+    /* ------------------------------------------------------------------ */
+    
+    /* Comum */
+    UI_STK_FB_RemoveExpert_C1 = "Fácil.",
+    UI_STK_FB_RemoveExpert_C2 = "Isso eu sei fazer.",
+    UI_STK_FB_RemoveExpert_C3 = "Saio dessa toda vez.",
+    UI_STK_FB_RemoveExpert_C4 = "Feito.",
+    UI_STK_FB_RemoveExpert_C5 = "Sem problema.",
+    
+    /* Incomum */
+    UI_STK_FB_RemoveExpert_I1 = "Não é talento, é desespero repetido.",
+    UI_STK_FB_RemoveExpert_I2 = "Aprendi com os erros. Foram muitos erros.",
+    UI_STK_FB_RemoveExpert_I3 = "Quem diria. Costureiro do apocalipse.",
+    UI_STK_FB_RemoveExpert_I4 = "Mão firme quando importa. O resto já não importa tanto.",
+    UI_STK_FB_RemoveExpert_I5 = "Centenas de vezes. Aprendi sozinho. Como tudo desde então.",
+    
+    /* Rara */
+    UI_STK_FB_RemoveExpert_R1 = "Tem coisa que o mundo ensina melhor que escola. O mundo cobrou caro por isso.",
+    UI_STK_FB_RemoveExpert_R2 = "Minha terapeuta ia adorar saber que sou bom em alguma coisa. Ela provavelmente não tá mais aqui pra ouvir.",
+    UI_STK_FB_RemoveExpert_R3 = "Se sobrar alguém pra contar, vou dizer que sempre fui assim.",
 }
