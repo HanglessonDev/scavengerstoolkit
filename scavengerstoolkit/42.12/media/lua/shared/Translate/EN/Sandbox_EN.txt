@@ -11,12 +11,21 @@ Sandbox_EN = {
     
     Sandbox_STK_SchoolbagLimit = "Upgrade Limit - Schoolbag",
     Sandbox_STK_SchoolbagLimit_tooltip = "Maximum number of upgrades a schoolbag can have.",
-
+    
     Sandbox_STK_HikingBagLimit = "Upgrade Limit - Hiking Bag",
     Sandbox_STK_HikingBagLimit_tooltip = "Maximum number of upgrades a hiking bag can have.",
-
+    
     Sandbox_STK_DuffelBagLimit = "Upgrade Limit - Duffel Bag",
     Sandbox_STK_DuffelBagLimit_tooltip = "Maximum number of upgrades a duffel bag can have. Applies to all duffel variants.",
+    
+    Sandbox_STK_MilitaryBagLimit = "Upgrade Limit - Military Bag",
+    Sandbox_STK_MilitaryBagLimit_tooltip = "Maximum number of upgrades a military bag can have (ALICE pack, Survivor bag). Found in high-risk zones.",
+    
+    Sandbox_STK_CraftedBagLimit = "Upgrade Limit - Crafted Bag",
+    Sandbox_STK_CraftedBagLimit_tooltip = "Maximum number of upgrades a crafted bag can have (Framepacks, Crude/Tarp bags). Early to mid-game crafted bags.",
+    
+    Sandbox_STK_CraftedBagLargeLimit = "Upgrade Limit - Large Crafted Bag",
+    Sandbox_STK_CraftedBagLargeLimit_tooltip = "Maximum number of upgrades a large crafted bag can have (Large Framepack 2 and 3). Requires tanned leather and advanced crafting skills.",
     
     /* Straps */
     Sandbox_STK_StrapsBasicBonus = "Bonus - Basic Straps (%)",

@@ -18,6 +18,15 @@ Sandbox_PTBR = {
     Sandbox_STK_DuffelBagLimit = "Limite de Upgrades - Mochila Duffel",
     Sandbox_STK_DuffelBagLimit_tooltip = "Numero maximo de upgrades que uma mochila duffel pode ter. Aplica-se a todas as variantes de duffel.",
     
+    Sandbox_STK_MilitaryBagLimit = "Limite de Upgrades - Mochila Militar",
+    Sandbox_STK_MilitaryBagLimit_tooltip = "Numero maximo de upgrades que uma mochila militar pode ter (ALICE pack, Survivor bag). Encontradas em zonas de alto risco.",
+    
+    Sandbox_STK_CraftedBagLimit = "Limite de Upgrades - Mochila Artesanal",
+    Sandbox_STK_CraftedBagLimit_tooltip = "Numero maximo de upgrades que uma mochila artesanal pode ter (Framepacks, bolsas Crude/Tarp). Mochilas artesanais de early a mid-game.",
+    
+    Sandbox_STK_CraftedBagLargeLimit = "Limite de Upgrades - Mochila Artesanal Grande",
+    Sandbox_STK_CraftedBagLargeLimit_tooltip = "Numero maximo de upgrades que uma mochila artesanal grande pode ter (Large Framepack 2 e 3). Requer couro curtido e habilidades avancadas de crafting.",
+    
     /* Straps (Alcas) */
     Sandbox_STK_StrapsBasicBonus = "Bonus - Alcas Basicas (%)",
     Sandbox_STK_StrapsReinforcedBonus = "Bonus - Alcas Reforcadas (%)",

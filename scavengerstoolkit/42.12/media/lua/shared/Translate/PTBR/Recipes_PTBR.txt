@@ -5,6 +5,9 @@ Recipes_PTBR = {
     Recipe_DisassembleSatchelBag = "Desmontar Bolsa de Ombro"
     Recipe_DisassembleHikingBag = "Desmontar Mochila de Trilha",
     Recipe_DisassembleDuffelBag = "Desmontar Mochila Duffel",
+    Recipe_DisassembleMilitaryBag = "Desmontar Mochila Militar",
+    Recipe_DisassembleCraftedBag = "Desmontar Mochila Artesanal",
+    Recipe_DisassembleCraftedBagLarge = "Desmontar Mochila Artesanal Grande",
 
     Recipe_UpgradeStrapsToTactical = "Melhorar Alças para Tático",
     Recipe_UpgradeFabricToTactical = "Melhorar Tecido para Tático",

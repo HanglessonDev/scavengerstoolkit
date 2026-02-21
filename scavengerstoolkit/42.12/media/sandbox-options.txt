@@ -1,8 +1,6 @@
 VERSION = 1,
 
-/* ============================================================================
-CONTAINER LIMITS (Limites de Upgrades por Tipo de Mochila)
-============================================================================ */
+/* CONTAINER LIMITS (Limites de Upgrades por Tipo de Mochila) */
 
 option STK.FannyPackLimit
 {
@@ -27,7 +25,7 @@ option STK.SatchelLimit
 option STK.SchoolbagLimit
 {
     type = integer,
-    default = 3,
+    default = 2,
     min = 0,
     max = 6,
     page = STK,
@@ -37,7 +35,7 @@ option STK.SchoolbagLimit
 option STK.HikingBagLimit
 {
     type = integer,
-    default = 2,
+    default = 3,
     min = 0,
     max = 6,
     page = STK,
@@ -47,16 +45,44 @@ option STK.HikingBagLimit
 option STK.DuffelBagLimit
 {
     type = integer,
-    default = 2,
+    default = 3,
     min = 0,
     max = 6,
     page = STK,
     translation = STK_DuffelBagLimit,
 }
 
-/* ============================================================================
-UPGRADE VALUES - STRAPS (Alcas - Weight Reduction)
-============================================================================ */
+option STK.MilitaryBagLimit
+{
+    type = integer,
+    default = 4,
+    min = 0,
+    max = 8,
+    page = STK,
+    translation = STK_MilitaryBagLimit,
+}
+
+option STK.CraftedBagLimit
+{
+    type = integer,
+    default = 2,
+    min = 0,
+    max = 6,
+    page = STK,
+    translation = STK_CraftedBagLimit,
+}
+
+option STK.CraftedBagLargeLimit
+{
+    type = integer,
+    default = 3,
+    min = 0,
+    max = 8,
+    page = STK,
+    translation = STK_CraftedBagLargeLimit,
+}
+
+/* UPGRADE VALUES - STRAPS (Alcas - Weight Reduction) */
 
 option STK.StrapsBasicBonus
 {
@@ -91,9 +117,7 @@ option STK.StrapsTacticalBonus
     tooltip = STK_WeightReductionTooltip,
 }
 
-/* ============================================================================
-UPGRADE VALUES - FABRIC (Tecido - Capacidade)
-============================================================================ */
+/* UPGRADE VALUES - FABRIC (Tecido - Capacidade) */
 
 option STK.FabricBasicBonus
 {
@@ -128,24 +152,7 @@ option STK.FabricTacticalBonus
     tooltip = STK_CapacityTooltip,
 }
 
-/* ============================================================================
-UPGRADE VALUES - BELT BUCKLE (Fivela - Weight Reduction)
-============================================================================ */
-
-option STK.BeltBuckleBonus
-{
-    type = integer,
-    default = 10,
-    min = 1,
-    max = 50,
-    page = STK,
-    translation = STK_BeltBuckleBonus,
-    tooltip = STK_WeightReductionTooltip,
-}
-
-/* ============================================================================
-TAILORING SKILL BONUS
-============================================================================ */
+/* TAILORING SKILL BONUS */
 
 option STK.TailoringEnabled
 {
@@ -166,9 +173,7 @@ option STK.TailoringModifier
     tooltip = STK_TailoringModifierTooltip,
 }
 
-/* ============================================================================
-KNIFE ALTERNATIVE
-============================================================================ */
+/* KNIFE ALTERNATIVE */
 
 option STK.KnifeAlternative
 {
@@ -179,9 +184,7 @@ option STK.KnifeAlternative
     tooltip = STK_KnifeAlternativeTooltip,
 }
 
-/* ============================================================================
-CRAFTING TIME (Tempo de Craft)
-============================================================================ */
+/* CRAFTING TIME (Tempo de Craft) */
 
 option STK.AddUpgradeTime
 {
@@ -205,9 +208,7 @@ option STK.RemoveUpgradeTime
     tooltip = STK_CraftTimeTooltip,
 }
 
-/* ============================================================================
-TAILORING XP SYSTEM (NEW!)
-============================================================================ */
+/* TAILORING XP SYSTEM */
 
 option STK.TailoringXPEnabled
 {
@@ -251,9 +252,7 @@ option STK.MinimumXP
     tooltip = STK_MinimumXPTooltip,
 }
 
-/* ============================================================================
-REMOVAL FAILURE SYSTEM (NEW!)
-============================================================================ */
+/* REMOVAL FAILURE SYSTEM */
 
 option STK.RemovalFailureEnabled
 {

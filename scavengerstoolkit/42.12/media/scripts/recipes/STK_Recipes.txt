@@ -207,4 +207,67 @@ module STK
             item 1 STK.BackpackFabricTactical,
         }
     }
+    
+    /* R010 - DisassembleMilitaryBag */
+    craftRecipe DisassembleMilitaryBag
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 200,
+        xpaward         = Tailoring:8,
+        timedaction     = RipClothing,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[MilitaryBag] flags[IsNotWorn],
+        }
+        outputs
+        {
+            item 1 STK.BackpackFabricTactical,
+            item 2 STK.BackpackStrapsTactical,
+        }
+    }
+    
+    /* R011 - DisassembleCraftedBag */
+    craftRecipe DisassembleCraftedBag
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 150,
+        xpaward         = Tailoring:5,
+        timedaction     = RipClothing,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[CraftedBag] flags[IsNotWorn],
+        }
+        outputs
+        {
+            item 1 STK.BackpackFabricReinforced,
+            item 2 STK.BackpackStrapsReinforced,
+        }
+    }
+    
+    /* R012 - DisassembleCraftedBagLarge */
+    craftRecipe DisassembleCraftedBagLarge
+    {
+        allowbatchcraft = true,
+        category        = Tailoring,
+        tags            = AnySurfaceCraft,
+        time            = 200,
+        xpaward         = Tailoring:8,
+        timedaction     = RipClothing,
+        inputs
+        {
+            item 1 tags[Scissors] mode:keep flags[SharpnessCheck;IsNotDull],
+            item 1 tags[CraftedBagLarge] flags[IsNotWorn],
+        }
+        outputs
+        {
+            item 1 STK.BackpackFabricTactical,
+            item 2 STK.BackpackStrapsReinforced,
+        }
+    }
 }

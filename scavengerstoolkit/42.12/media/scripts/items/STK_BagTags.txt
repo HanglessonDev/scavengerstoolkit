@@ -11,6 +11,45 @@ module Base
         tags = FannyPack,
     }
     
+    item Bag_FannyPackFront_Hide
+    {
+        tags = FannyPack,
+    }
+    
+    item Bag_FannyPackBack_Hide
+    {
+        tags = FannyPack,
+    }
+    
+    item Bag_FannyPackFront_Tarp
+    {
+        tags = FannyPack,
+    }
+    
+    item Bag_FannyPackBack_Tarp
+    {
+        tags = FannyPack,
+    }
+    
+    /* ALICE BELT AND SUSPENDERS */
+/* Categorizado como FannyPack: ocupa o mesmo slot de equipamento.
+Nao pode ser usado simultaneamente com pochetes — limite de 1
+    upgrade reflete essa restricao de slot. */
+    item Bag_ALICE_BeltSus
+    {
+        tags = FannyPack,
+    }
+    
+    item Bag_ALICE_BeltSus_Camo
+    {
+        tags = FannyPack,
+    }
+    
+    item Bag_ALICE_BeltSus_Green
+    {
+        tags = FannyPack,
+    }
+    
     /* SATCHEL BAGS */
     item Bag_Satchel
     {
@@ -43,6 +82,26 @@ module Base
     }
     
     item Bag_Satchel_Fishing
+    {
+        tags = SatchelBag,
+    }
+    
+    item Bag_ClothSatchel_Burlap
+    {
+        tags = SatchelBag,
+    }
+    
+    item Bag_ClothSatchel_Cotton
+    {
+        tags = SatchelBag,
+    }
+    
+    item Bag_ClothSatchel_Denim
+    {
+        tags = SatchelBag,
+    }
+    
+    item Bag_HideSatchel
     {
         tags = SatchelBag,
     }
@@ -128,5 +187,159 @@ module Base
     item Bag_MedicalBag
     {
         tags = DuffelBag,
+    }
+    
+    item Bag_InmateEscapedBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_MoneyBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_WorkerBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_WeaponBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_BreakdownBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_ShotgunBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_ShotgunSawnoffBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_ShotgunDblBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_ShotgunDblSawnoffBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_BurglarBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_BaseballBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_TennisBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_GolfBag
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_GolfBag_Melee
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_FoodCanned
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_FoodSnacks
+    {
+        tags = DuffelBag,
+    }
+    
+    item Bag_ToolBag
+    {
+        tags = DuffelBag,
+    }
+    
+    /* MILITARY BAGS */
+/* Tag proprio para recipe de disassemble (rende materiais Tactical).
+    Bags encontradas em zonas de alto risco — 200+ zumbis no vanilla. */
+    item Bag_SurvivorBag
+    {
+        tags = MilitaryBag,
+    }
+    
+    item Bag_ALICEpack
+    {
+        tags = MilitaryBag,
+    }
+    
+    item Bag_ALICEpack_Army
+    {
+        tags = MilitaryBag,
+    }
+    
+    item Bag_ALICEpack_DesertCamo
+    {
+        tags = MilitaryBag,
+    }
+    
+    /* CRAFTED BAGS (early/mid game) */
+/* Bags artesanais de couro cru e lona. Rende materiais Reinforced
+    ao desmontar — duraveis mas nao taticos. */
+    item Bag_CraftedFramepack_Large
+    {
+        tags = CraftedBag,
+    }
+    
+    item Bag_TarpFramepack_Large
+    {
+        tags = CraftedBag,
+    }
+    
+    item Bag_CraftedFramepack_Small
+    {
+        tags = CraftedBag,
+    }
+    
+    item Bag_TarpFramepack_Small
+    {
+        tags = CraftedBag,
+    }
+    
+    item Bag_CrudeLeatherBag
+    {
+        tags = CraftedBag,
+    }
+    
+    item Bag_CrudeTarpBag
+    {
+        tags = CraftedBag,
+    }
+    
+    /* CRAFTED BAGS LARGE (late game) */
+/* Bags artesanais de couro curtido — exigem tanning, sinew e skills
+    encadeadas. Rende Fabric Tactical + Straps Reinforced ao desmontar. */
+    item Bag_CraftedFramepack_Large2
+    {
+        tags = CraftedBagLarge,
+    }
+    
+    item Bag_CraftedFramepack_Large3
+    {
+        tags = CraftedBagLarge,
     }
 }

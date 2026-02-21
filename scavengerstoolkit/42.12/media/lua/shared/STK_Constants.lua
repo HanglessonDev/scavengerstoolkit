@@ -13,7 +13,7 @@
 ---   - Safe to require from shared, client and server contexts
 ---
 --- @author Scavenger's Toolkit Development Team
---- @version 3.0.0
+--- @version 4.0.0
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
@@ -21,101 +21,158 @@
 local STK_Constants = {}
 
 -- ============================================================================
--- VALID BAGS
+-- BAGS
 -- ============================================================================
 
---- Lookup table of valid bag full types.
---- O(1) access. Only bags listed here can receive STK upgrades.
---- @type table<string, true>
-STK_Constants.VALID_BAGS = {
-	-- Schoolbags (5)
-	["Base.Bag_Schoolbag"] = true,
-	["Base.Bag_Schoolbag_Kids"] = true,
-	["Base.Bag_Schoolbag_Medical"] = true,
-	["Base.Bag_Schoolbag_Patches"] = true,
-	["Base.Bag_Schoolbag_Travel"] = true,
+--- Maps each supported bag full type to its sandbox limit key.
+---
+--- A bag present here is valid for STK upgrades (replaces VALID_BAGS) and
+--- carries its upgrade limit category (replaces BAG_LIMIT_RULES).
+--- A single table eliminates the sync invariant that two separate tables
+--- would require — if a full type is here, it is both valid and categorised.
+---
+--- To add a new bag: insert one line with the full type and the appropriate
+--- sandboxKey. No ordering concerns, no pattern matching, no risk of a
+--- generic pattern shadowing a specific one.
+---
+--- sandboxKeys must have a matching entry in BAG_LIMIT_DEFAULTS below and
+--- a matching option in sandbox-options.txt.
+---
+--- @type table<string, string>
+STK_Constants.BAGS = {
 
-	-- Satchels (7)
-	["Base.Bag_Satchel"] = true,
-	["Base.Bag_SatchelPhoto"] = true,
-	["Base.Bag_Satchel_Military"] = true,
-	["Base.Bag_Satchel_Medical"] = true,
-	["Base.Bag_Satchel_Leather"] = true,
-	["Base.Bag_Satchel_Mail"] = true,
-	["Base.Bag_Satchel_Fishing"] = true,
+	-- -------------------------------------------------------------------------
+	-- FannyPack — limit 1
+	-- Includes ALICE Belt and Suspenders: occupies the same equipment slot.
+	-- You cannot equip both a fanny pack and an ALICE belt simultaneously,
+	-- so they share the same category and upgrade limit.
+	-- -------------------------------------------------------------------------
+	["Base.Bag_FannyPackFront"] = "FannyPackLimit",
+	["Base.Bag_FannyPackBack"] = "FannyPackLimit",
+	["Base.Bag_FannyPackFront_Hide"] = "FannyPackLimit",
+	["Base.Bag_FannyPackBack_Hide"] = "FannyPackLimit",
+	["Base.Bag_FannyPackFront_Tarp"] = "FannyPackLimit",
+	["Base.Bag_FannyPackBack_Tarp"] = "FannyPackLimit",
+	["Base.Bag_ALICE_BeltSus"] = "FannyPackLimit",
+	["Base.Bag_ALICE_BeltSus_Camo"] = "FannyPackLimit",
+	["Base.Bag_ALICE_BeltSus_Green"] = "FannyPackLimit",
 
-	-- FannyPacks (2)
-	["Base.Bag_FannyPackFront"] = true,
-	["Base.Bag_FannyPackBack"] = true,
+	-- -------------------------------------------------------------------------
+	-- Satchel — limit 2
+	-- -------------------------------------------------------------------------
+	["Base.Bag_Satchel"] = "SatchelLimit",
+	["Base.Bag_SatchelPhoto"] = "SatchelLimit",
+	["Base.Bag_Satchel_Military"] = "SatchelLimit",
+	["Base.Bag_Satchel_Medical"] = "SatchelLimit",
+	["Base.Bag_Satchel_Leather"] = "SatchelLimit",
+	["Base.Bag_Satchel_Mail"] = "SatchelLimit",
+	["Base.Bag_Satchel_Fishing"] = "SatchelLimit",
+	["Base.Bag_ClothSatchel_Burlap"] = "SatchelLimit",
+	["Base.Bag_ClothSatchel_Cotton"] = "SatchelLimit",
+	["Base.Bag_ClothSatchel_Denim"] = "SatchelLimit",
+	["Base.Bag_HideSatchel"] = "SatchelLimit",
 
-	-- Hiking Bags (4)
-	["Base.Bag_NormalHikingBag"] = true,
-	["Base.Bag_HikingBag_Travel"] = true,
-	["Base.Bag_BigHikingBag"] = true,
-	["Base.Bag_BigHikingBag_Travel"] = true,
+	-- -------------------------------------------------------------------------
+	-- Schoolbag — limit 2
+	-- -------------------------------------------------------------------------
+	["Base.Bag_Schoolbag"] = "SchoolbagLimit",
+	["Base.Bag_Schoolbag_Kids"] = "SchoolbagLimit",
+	["Base.Bag_Schoolbag_Medical"] = "SchoolbagLimit",
+	["Base.Bag_Schoolbag_Patches"] = "SchoolbagLimit",
+	["Base.Bag_Schoolbag_Travel"] = "SchoolbagLimit",
 
-	-- Duffel Bags (18)
-	["Base.Bag_DuffelBag"] = true,
-	["Base.Bag_DuffelBagTINT"] = true,
-	["Base.Bag_InmateEscapedBag"] = true,
-	["Base.Bag_MoneyBag"] = true,
-	["Base.Bag_WorkerBag"] = true,
-	["Base.Bag_WeaponBag"] = true,
-	["Base.Bag_BreakdownBag"] = true,
-	["Base.Bag_ShotgunBag"] = true,
-	["Base.Bag_ShotgunSawnoffBag"] = true,
-	["Base.Bag_ShotgunDblBag"] = true,
-	["Base.Bag_ShotgunDblSawnoffBag"] = true,
-	["Base.Bag_BurglarBag"] = true,
-	["Base.Bag_BaseballBag"] = true,
-	["Base.Bag_TennisBag"] = true,
-	["Base.Bag_Military"] = true,
-	["Base.Bag_Police"] = true,
-	["Base.Bag_SWAT"] = true,
-	["Base.Bag_Sheriff"] = true,
-	["Base.Bag_MedicalBag"] = true,
+	-- -------------------------------------------------------------------------
+	-- Hiking Bag — limit 3
+	-- -------------------------------------------------------------------------
+	["Base.Bag_NormalHikingBag"] = "HikingBagLimit",
+	["Base.Bag_HikingBag_Travel"] = "HikingBagLimit",
+	["Base.Bag_BigHikingBag"] = "HikingBagLimit",
+	["Base.Bag_BigHikingBag_Travel"] = "HikingBagLimit",
+
+	-- -------------------------------------------------------------------------
+	-- Duffel Bag — limit 3
+	-- Covers a wide range of thematic variants that share the same capacity
+	-- and weight reduction profile as the base duffel bag.
+	-- -------------------------------------------------------------------------
+	["Base.Bag_DuffelBag"] = "DuffelBagLimit",
+	["Base.Bag_DuffelBagTINT"] = "DuffelBagLimit",
+	["Base.Bag_InmateEscapedBag"] = "DuffelBagLimit",
+	["Base.Bag_MoneyBag"] = "DuffelBagLimit",
+	["Base.Bag_WorkerBag"] = "DuffelBagLimit",
+	["Base.Bag_WeaponBag"] = "DuffelBagLimit",
+	["Base.Bag_BreakdownBag"] = "DuffelBagLimit",
+	["Base.Bag_ShotgunBag"] = "DuffelBagLimit",
+	["Base.Bag_ShotgunSawnoffBag"] = "DuffelBagLimit",
+	["Base.Bag_ShotgunDblBag"] = "DuffelBagLimit",
+	["Base.Bag_ShotgunDblSawnoffBag"] = "DuffelBagLimit",
+	["Base.Bag_BurglarBag"] = "DuffelBagLimit",
+	["Base.Bag_BaseballBag"] = "DuffelBagLimit",
+	["Base.Bag_TennisBag"] = "DuffelBagLimit",
+	["Base.Bag_GolfBag"] = "DuffelBagLimit",
+	["Base.Bag_GolfBag_Melee"] = "DuffelBagLimit",
+	["Base.Bag_FoodCanned"] = "DuffelBagLimit",
+	["Base.Bag_FoodSnacks"] = "DuffelBagLimit",
+	["Base.Bag_ToolBag"] = "DuffelBagLimit",
+	["Base.Bag_Military"] = "DuffelBagLimit",
+	["Base.Bag_Police"] = "DuffelBagLimit",
+	["Base.Bag_SWAT"] = "DuffelBagLimit",
+	["Base.Bag_Sheriff"] = "DuffelBagLimit",
+	["Base.Bag_MedicalBag"] = "DuffelBagLimit",
+
+	-- -------------------------------------------------------------------------
+	-- Military Bag — limit 4
+	-- Found exclusively in high-risk zones (200+ zombies in vanilla).
+	-- Higher limit rewards the danger required to obtain them.
+	-- -------------------------------------------------------------------------
+	["Base.Bag_SurvivorBag"] = "MilitaryBagLimit",
+	["Base.Bag_ALICEpack"] = "MilitaryBagLimit",
+	["Base.Bag_ALICEpack_Army"] = "MilitaryBagLimit",
+	["Base.Bag_ALICEpack_DesertCamo"] = "MilitaryBagLimit",
+
+	-- -------------------------------------------------------------------------
+	-- Crafted Bag — limit 2
+	-- Player-crafted bags using common materials (early/mid game).
+	-- -------------------------------------------------------------------------
+	["Base.Bag_CraftedFramepack_Large"] = "CraftedBagLimit",
+	["Base.Bag_TarpFramepack_Large"] = "CraftedBagLimit",
+	["Base.Bag_CraftedFramepack_Small"] = "CraftedBagLimit",
+	["Base.Bag_TarpFramepack_Small"] = "CraftedBagLimit",
+	["Base.Bag_CrudeLeatherBag"] = "CraftedBagLimit",
+	["Base.Bag_CrudeTarpBag"] = "CraftedBagLimit",
+	["Base.Bag_HideSlingBag"] = "CraftedBagLimit",
+	["Base.Bag_TarpSlingBag"] = "CraftedBagLimit",
+
+	-- -------------------------------------------------------------------------
+	-- Crafted Bag Large — limit 3
+	-- Player-crafted bags requiring tanned leather, sinew and chained skills
+	-- (late game). Higher limit rewards the crafting investment.
+	-- -------------------------------------------------------------------------
+	["Base.Bag_CraftedFramepack_Large2"] = "CraftedBagLargeLimit",
+	["Base.Bag_CraftedFramepack_Large3"] = "CraftedBagLargeLimit",
 }
 
 -- ============================================================================
 -- BAG UPGRADE LIMITS
 -- ============================================================================
 
---- Default upgrade limits per bag type pattern.
---- Evaluated in order — first matching pattern wins.
---- sandboxKey: if set, STK_Core.initBagData will read this key from
----             SandboxVars.STK to allow player configuration.
---- default: fallback value if SandboxVars is unavailable or unset.
---- @type {pattern: string, sandboxKey: string|nil, default: number}[]
-STK_Constants.BAG_LIMIT_RULES = {
-	{ pattern = "FannyPack", sandboxKey = "FannyPackLimit", default = 1 },
-	{ pattern = "Satchel", sandboxKey = "SatchelLimit", default = 2 },
-	{ pattern = "Schoolbag", sandboxKey = "SchoolbagLimit", default = 2 },
-	{ pattern = "HikingBag", sandboxKey = "HikingBagLimit", default = 2 },
-	-- Duffel bags — pattern covers Bag_DuffelBag and Bag_DuffelBagTINT
-	{ pattern = "DuffelBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	-- Named duffel variants that don't match "DuffelBag" pattern
-	{ pattern = "Bag_Military", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_Police", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_SWAT", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_Sheriff", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_MedicalBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_InmateEscapedBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_MoneyBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_WorkerBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_WeaponBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_BreakdownBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_ShotgunBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_ShotgunSawnoffBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_ShotgunDblBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_ShotgunDblSawnoffBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_BurglarBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_BaseballBag", sandboxKey = "DuffelBagLimit", default = 2 },
-	{ pattern = "Bag_TennisBag", sandboxKey = "DuffelBagLimit", default = 2 },
-}
-
---- Fallback limit for bag types not matched by BAG_LIMIT_RULES.
+--- Fallback upgrade limit for bag types not present in BAGS.
 --- @type number
-STK_Constants.BAG_LIMIT_DEFAULT = 3
+STK_Constants.BAG_LIMIT_DEFAULT = 2
+
+--- Default upgrade limits per sandbox key.
+--- Used as fallback when SandboxVars is unavailable or unset.
+--- Must have one entry per unique sandboxKey used in BAGS.
+--- @type table<string, number>
+STK_Constants.BAG_LIMIT_DEFAULTS = {
+	FannyPackLimit = 1,
+	SatchelLimit = 2,
+	SchoolbagLimit = 2,
+	HikingBagLimit = 3,
+	DuffelBagLimit = 3,
+	MilitaryBagLimit = 4,
+	CraftedBagLimit = 2,
+	CraftedBagLargeLimit = 3,
+}
 
 -- ============================================================================
 -- VIABLE KNIVES (KnifeAlternative feature)

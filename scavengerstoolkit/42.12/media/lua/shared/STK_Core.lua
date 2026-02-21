@@ -16,7 +16,7 @@
 ---   - Server, client and shared code may all require() this file
 ---
 --- @author Scavenger's Toolkit Development Team
---- @version 3.0.0
+--- @version 4.0.0
 --- @license MIT
 --- @copyright 2026 Scavenger's Toolkit
 
@@ -30,13 +30,14 @@ local STK_Core = {}
 -- ============================================================================
 
 --- Returns true if the item is a valid bag for STK upgrades.
+--- A bag is valid when its full type is present in STK_Constants.BAGS.
 --- @param item any InventoryItem to validate
 --- @return boolean
 function STK_Core.isValidBag(item)
 	if not item or not item:IsInventoryContainer() then
 		return false
 	end
-	return STK_Constants.VALID_BAGS[item:getFullType()] == true
+	return STK_Constants.BAGS[item:getFullType()] ~= nil
 end
 
 --- Returns true if the bag can still accept more upgrades.
@@ -50,6 +51,25 @@ function STK_Core.canAddUpgrade(bag)
 		return false
 	end
 	return #imd.LUpgrades < STK_Core.getLimitForType(bag:getFullType())
+end
+
+-- ============================================================================
+-- UPGRADE LIMITS
+-- ============================================================================
+
+--- Returns the correct upgrade limit for a bag full type.
+--- Reads SandboxVars when available, falls back to BAG_LIMIT_DEFAULTS,
+--- and falls back to BAG_LIMIT_DEFAULT for unrecognised types.
+--- O(1) lookup — no pattern matching, no ordering concerns.
+--- @param fullType string Full type string e.g. "Base.Bag_FannyPackFront"
+--- @return number
+function STK_Core.getLimitForType(fullType)
+	local sandboxKey = STK_Constants.BAGS[fullType]
+	if not sandboxKey then
+		return STK_Constants.BAG_LIMIT_DEFAULT
+	end
+	local stk = SandboxVars.STK
+	return (stk and stk[sandboxKey]) or STK_Constants.BAG_LIMIT_DEFAULTS[sandboxKey]
 end
 
 -- ============================================================================
@@ -203,23 +223,6 @@ end
 -- ============================================================================
 -- MOD DATA INITIALISATION
 -- ============================================================================
-
---- Returns the correct upgrade limit for a bag type, reading SandboxVars
---- when a sandboxKey is configured, falling back to the default otherwise.
---- @param bagType string Full type string e.g. "Base.Bag_FannyPackFront"
---- @return number
-function STK_Core.getLimitForType(bagType)
-	local stk = SandboxVars.STK
-	for _, rule in ipairs(STK_Constants.BAG_LIMIT_RULES) do
-		if bagType:find(rule.pattern) then
-			if rule.sandboxKey and stk and stk[rule.sandboxKey] then
-				return stk[rule.sandboxKey]
-			end
-			return rule.default
-		end
-	end
-	return STK_Constants.BAG_LIMIT_DEFAULT
-end
 
 --- Initialises the STK ModData fields on a bag if not already present.
 --- Sets LUpgrades, LCapacity, LWeightReduction and STKInitialised flag.
