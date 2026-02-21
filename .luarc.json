@@ -57,7 +57,8 @@
             "CharacterActionAnims"
         ],
         "disable": [
-            "lowercase-global"
+            "lowercase-global",
+            "duplicate-set-field"
         ]
     },
     "hint": {

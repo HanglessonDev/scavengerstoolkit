@@ -2,84 +2,96 @@
 Sandbox_PTBR = {
     Sandbox_STK = "Scavenger's Toolkit",
     
+    /* Separadores de Grupo */
+    Sandbox_STK_ContainerLimitsGroupTitle = "Limites de Upgrades",
+    Sandbox_STK_StrapsBonusGroupTitle     = "Bônus - Alças",
+    Sandbox_STK_FabricBonusGroupTitle     = "Bônus - Tecido",
+    Sandbox_STK_TailoringGroupTitle       = "Costura",
+    Sandbox_STK_TailoringXPGroupTitle     = "XP de Costura",
+    Sandbox_STK_CraftingGroupTitle        = "Craft",
+    Sandbox_STK_RemovalGroupTitle         = "Falha na Remoção",
+    
     /* Container Limits */
-    Sandbox_STK_FannyPackLimit = "Limite de Upgrades - Pochete",
-    Sandbox_STK_FannyPackLimit_tooltip = "Numero maximo de upgrades que uma pochete pode ter.",
+    /* O titulo da secao ja diz "Limites de Upgrades", entao o label mostra apenas o tipo de mochila */
+    Sandbox_STK_FannyPackLimit         = "Pochete",
+    Sandbox_STK_FannyPackLimit_tooltip = "Limite para pochetes.",
     
-    Sandbox_STK_SatchelLimit = "Limite de Upgrades - Satchel",
-    Sandbox_STK_SatchelLimit_tooltip = "Numero maximo de upgrades que uma satchel pode ter.",
+    Sandbox_STK_SatchelLimit         = "Satchel",
+    Sandbox_STK_SatchelLimit_tooltip = "Limite para satchels.",
     
-    Sandbox_STK_SchoolbagLimit = "Limite de Upgrades - Mochila Escolar",
-    Sandbox_STK_SchoolbagLimit_tooltip = "Numero maximo de upgrades que uma mochila escolar pode ter.",
+    Sandbox_STK_SchoolbagLimit         = "Mochila Escolar",
+    Sandbox_STK_SchoolbagLimit_tooltip = "Limite para mochilas escolares.",
     
-    Sandbox_STK_HikingBagLimit = "Limite de Upgrades - Mochila de Trilha",
-    Sandbox_STK_HikingBagLimit_tooltip = "Numero maximo de upgrades que uma mochila de trilha pode ter.",
+    Sandbox_STK_HikingBagLimit         = "Mochila de Trilha",
+    Sandbox_STK_HikingBagLimit_tooltip = "Limite para mochilas de trilha.",
     
-    Sandbox_STK_DuffelBagLimit = "Limite de Upgrades - Mochila Duffel",
-    Sandbox_STK_DuffelBagLimit_tooltip = "Numero maximo de upgrades que uma mochila duffel pode ter. Aplica-se a todas as variantes de duffel.",
+    Sandbox_STK_DuffelBagLimit         = "Mochila Duffel",
+    Sandbox_STK_DuffelBagLimit_tooltip = "Aplica-se à todas as variantes de duffel.",
     
-    Sandbox_STK_MilitaryBagLimit = "Limite de Upgrades - Mochila Militar",
-    Sandbox_STK_MilitaryBagLimit_tooltip = "Numero maximo de upgrades que uma mochila militar pode ter (ALICE pack, Survivor bag). Encontradas em zonas de alto risco.",
+    Sandbox_STK_MilitaryBagLimit         = "Mochila Militar",
+    Sandbox_STK_MilitaryBagLimit_tooltip = "ALICE pack e Survivor bag. Encontradas em zonas de alto risco.",
     
-    Sandbox_STK_CraftedBagLimit = "Limite de Upgrades - Mochila Artesanal",
-    Sandbox_STK_CraftedBagLimit_tooltip = "Numero maximo de upgrades que uma mochila artesanal pode ter (Framepacks, bolsas Crude/Tarp). Mochilas artesanais de early a mid-game.",
+    Sandbox_STK_CraftedBagLimit         = "Mochila Artesanal",
+    Sandbox_STK_CraftedBagLimit_tooltip = "Framepacks e bolsas Crude/Tarp. Early a mid-game.",
     
-    Sandbox_STK_CraftedBagLargeLimit = "Limite de Upgrades - Mochila Artesanal Grande",
-    Sandbox_STK_CraftedBagLargeLimit_tooltip = "Numero maximo de upgrades que uma mochila artesanal grande pode ter (Large Framepack 2 e 3). Requer couro curtido e habilidades avancadas de crafting.",
+    Sandbox_STK_CraftedBagLargeLimit         = "Mochila Artesanal Grande",
+    Sandbox_STK_CraftedBagLargeLimit_tooltip = "Large Framepack 2 e 3. Requer couro curtido e crafting avançado.",
     
     /* Straps (Alcas) */
-    Sandbox_STK_StrapsBasicBonus = "Bonus - Alcas Basicas (%)",
-    Sandbox_STK_StrapsReinforcedBonus = "Bonus - Alcas Reforcadas (%)",
-    Sandbox_STK_StrapsTacticalBonus = "Bonus - Alcas Taticas (%)",
+    /* O titulo da secao ja diz "Bonus - Alcas", entao o label mostra apenas o tier */
+    Sandbox_STK_StrapsBasicBonus      = "Básicas (%)",
+    Sandbox_STK_StrapsBasicBonus_tooltip = "Redução de peso.",
+    Sandbox_STK_StrapsReinforcedBonus = "Reforçadas (%)",
+    Sandbox_STK_StrapsReinforcedBonus_tooltip = "Redução de peso.",
+    Sandbox_STK_StrapsTacticalBonus   = "Táticas (%)",
+    Sandbox_STK_StrapsTacticalBonus_tooltip = "Redução de peso.",
     
     /* Fabric (Tecido) */
-    Sandbox_STK_FabricBasicBonus = "Bonus - Tecido Basico",
-    Sandbox_STK_FabricReinforcedBonus = "Bonus - Tecido Reforcado",
-    Sandbox_STK_FabricTacticalBonus = "Bonus - Tecido Tatico",
-    
-    /* Belt Buckle */
-    Sandbox_STK_BeltBuckleBonus = "Bonus - Fivela de Cinto (%)",
-    
-    /* Tooltips */
-    Sandbox_STK_WeightReductionTooltip = "Bonus de reducao de peso.",
-    Sandbox_STK_CapacityTooltip = "Bonus de capacidade (quantidade de slots adicionados).",
+    /* O titulo da secao ja diz "Bonus - Tecido", entao o label mostra apenas o tier */
+    Sandbox_STK_FabricBasicBonus      = "Básico",
+    Sandbox_STK_FabricBasicBonus_tooltip = "Capacidade (slots adicionados)."
+    Sandbox_STK_FabricReinforcedBonus = "Reforçado",
+    Sandbox_STK_FabricReinforcedBonus_tooltip = "Capacidade (slots adicionados)."
+    Sandbox_STK_FabricTacticalBonus   = "Tático",
+    Sandbox_STK_FabricTacticalBonus_tooltip = "Capacidade (slots adicionados)."
     
     /* Tailoring */
-    Sandbox_STK_TailoringEnabled = "Habilitar Bonus de Costura",
-    Sandbox_STK_TailoringEnabled_tooltip = "Se ativado, nivel de Costura afeta limite de upgrades.",
+    Sandbox_STK_TailoringEnabled         = "Bônus de Costura",
+    Sandbox_STK_TailoringEnabled_tooltip = "Nível de Costura afeta o limite de upgrades.",
     
-    Sandbox_STK_TailoringModifier = "Niveis de Costura por Slot Extra",
-    Sandbox_STK_TailoringModifierTooltip = "A cada X niveis de Costura, ganhe +1 slot de upgrade.<br>(0 para desativar)",
+    Sandbox_STK_TailoringModifier        = "Níveis por Slot Extra",
+    Sandbox_STK_TailoringModifier_tooltip = "A cada X níveis de Costura, +1 slot de upgrade.<br>(0 para desativar)",
     
     /* Knife Alternative */
-    Sandbox_STK_KnifeAlternative = "Facas Podem Remover Upgrades",
-    Sandbox_STK_KnifeAlternativeTooltip = "Se ativado, facas podem ser usadas no lugar de tesouras para remover upgrades.",
+    Sandbox_STK_KnifeAlternative        = "Facas Removem Upgrades",
+    Sandbox_STK_KnifeAlternative_tooltip = "Facas podem substituir tesouras para remover upgrades.",
     
     /* Craft Time */
-    Sandbox_STK_AddUpgradeTime = "Tempo para Adicionar Upgrade",
-    Sandbox_STK_RemoveUpgradeTime = "Tempo para Remover Upgrade",
-    Sandbox_STK_CraftTimeTooltip = "Tempo em ticks (100 ticks = ~3 segundos).",
+    Sandbox_STK_AddUpgradeTime    = "Tempo para Adicionar",
+    Sandbox_STK_AddUpgradeTime_tooltip = "Em ticks (100 ticks = ~3 segundos).",
+    Sandbox_STK_RemoveUpgradeTime = "Tempo para Remover",
+    Sandbox_STK_RemoveUpgradeTime_tooltip  = "Em ticks (100 ticks = ~3 segundos).",
     
     /* Tailoring XP System */
-    Sandbox_STK_TailoringXPEnabled = "Habilitar XP de Costura",
-    Sandbox_STK_TailoringXPEnabledTooltip = "Se ativado, adicionar upgrades concede XP de Costura.<br>XP diminui conforme habilidade aumenta para evitar exploits.",
+    Sandbox_STK_TailoringXPEnabled        = "XP de Costura",
+    Sandbox_STK_TailoringXPEnabled_tooltip = "Adicionar upgrades concede XP de Costura.<br>A quantidade diminui conforme a habilidade aumenta.",
     
-    Sandbox_STK_AddUpgradeXP = "XP Base ao Adicionar Upgrade",
-    Sandbox_STK_AddUpgradeXPTooltip = "XP base de Costura concedido ao adicionar upgrade.<br>XP real diminui com nivel de habilidade.",
+    Sandbox_STK_AddUpgradeXP        = "XP Base",
+    Sandbox_STK_AddUpgradeXP_tooltip = "XP concedido ao adicionar um upgrade no nível 0 de Costura.",
     
-    Sandbox_STK_XPReductionPerLevel = "Reducao de XP por Nivel (%)",
-    Sandbox_STK_XPReductionPerLevelTooltip = "Quanto o XP diminui por nivel de Costura.<br>Exemplo: 20 = 0.20 XP de reducao por nivel.<br>(Armazenado como porcentagem: 20% = 0.20)",
+    Sandbox_STK_XPReductionPerLevel        = "Redução por Nível (%)",
+    Sandbox_STK_XPReductionPerLevel_tooltip = "Reduãoo de XP a cada nível de Costura.<br>Exemplo: 20 = -0.20 XP por nível.",
     
-    Sandbox_STK_MinimumXP = "XP Minimo de Recompensa (%)",
-    Sandbox_STK_MinimumXPTooltip = "XP minimo que pode ser concedido, mesmo em niveis altos.<br>Exemplo: 20 = 0.20 XP minimo.<br>(Armazenado como porcentagem: 20% = 0.20)",
+    Sandbox_STK_MinimumXP        = "XP Mínimo (%)",
+    Sandbox_STK_MinimumXP_tooltip = "XP mínimo garantido independente do nível.<br>Exemplo: 20 = 0.20 XP mínimo.",
     
     /* Removal Failure System */
-    Sandbox_STK_RemovalFailureEnabled = "Habilitar Chance de Falha ao Remover",
-    Sandbox_STK_RemovalFailureEnabledTooltip = "Se ativado, remover upgrades tem chance de falhar e destruir o material.<br>Chance diminui com habilidade de Costura.",
+    Sandbox_STK_RemovalFailureEnabled        = "Chance de Falha",
+    Sandbox_STK_RemovalFailureEnabled_tooltip = "Remover upgrades tem chance de destruir o material.<br>A chance diminui com o nível de Costura.",
     
-    Sandbox_STK_BaseFailureChance = "Chance Base de Falha (%)",
-    Sandbox_STK_BaseFailureChanceTooltip = "Chance de destruir material ao remover no nivel 0.<br>Exemplo: 50 = 50% de chance de falhar.",
+    Sandbox_STK_BaseFailureChance        = "Chance Base (%)",
+    Sandbox_STK_BaseFailureChance_tooltip = "Chance de destruir o material no nível 0.<br>Exemplo: 50 = 50%.",
     
-    Sandbox_STK_FailureReductionPerLevel = "Reducao de Falha por Nivel (%)",
-    Sandbox_STK_FailureReductionPerLevelTooltip = "Quanto a chance de falha diminui por nivel de Costura.<br>Exemplo: 5 = -5% por nivel.",
+    Sandbox_STK_FailureReductionPerLevel        = "Redução por Nível (%)",
+    Sandbox_STK_FailureReductionPerLevel_tooltip = "Redução da chance de falha a cada nível de Costura.<br>Exemplo: 5 = -5% por nível.",
 }

@@ -2,6 +2,12 @@ VERSION = 1,
 
 /* CONTAINER LIMITS (Limites de Upgrades por Tipo de Mochila) */
 
+option STKUI.ContainerLimitsGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_ContainerLimitsGroupTitle,
+}
+
 option STK.FannyPackLimit
 {
     type = integer,
@@ -84,6 +90,12 @@ option STK.CraftedBagLargeLimit
 
 /* UPGRADE VALUES - STRAPS (Alcas - Weight Reduction) */
 
+option STKUI.StrapsBonusGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_StrapsBonusGroupTitle,
+}
+
 option STK.StrapsBasicBonus
 {
     type = integer,
@@ -92,7 +104,6 @@ option STK.StrapsBasicBonus
     max = 50,
     page = STK,
     translation = STK_StrapsBasicBonus,
-    tooltip = STK_WeightReductionTooltip,
 }
 
 option STK.StrapsReinforcedBonus
@@ -103,7 +114,6 @@ option STK.StrapsReinforcedBonus
     max = 50,
     page = STK,
     translation = STK_StrapsReinforcedBonus,
-    tooltip = STK_WeightReductionTooltip,
 }
 
 option STK.StrapsTacticalBonus
@@ -114,10 +124,15 @@ option STK.StrapsTacticalBonus
     max = 50,
     page = STK,
     translation = STK_StrapsTacticalBonus,
-    tooltip = STK_WeightReductionTooltip,
 }
 
 /* UPGRADE VALUES - FABRIC (Tecido - Capacidade) */
+
+option STKUI.FabricBonusGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_FabricBonusGroupTitle,
+}
 
 option STK.FabricBasicBonus
 {
@@ -127,7 +142,6 @@ option STK.FabricBasicBonus
     max = 20,
     page = STK,
     translation = STK_FabricBasicBonus,
-    tooltip = STK_CapacityTooltip,
 }
 
 option STK.FabricReinforcedBonus
@@ -138,7 +152,6 @@ option STK.FabricReinforcedBonus
     max = 20,
     page = STK,
     translation = STK_FabricReinforcedBonus,
-    tooltip = STK_CapacityTooltip,
 }
 
 option STK.FabricTacticalBonus
@@ -149,10 +162,15 @@ option STK.FabricTacticalBonus
     max = 20,
     page = STK,
     translation = STK_FabricTacticalBonus,
-    tooltip = STK_CapacityTooltip,
 }
 
 /* TAILORING SKILL BONUS */
+
+option STKUI.TailoringGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_TailoringGroupTitle,
+}
 
 option STK.TailoringEnabled
 {
@@ -170,45 +188,15 @@ option STK.TailoringModifier
     max = 20,
     page = STK,
     translation = STK_TailoringModifier,
-    tooltip = STK_TailoringModifierTooltip,
-}
-
-/* KNIFE ALTERNATIVE */
-
-option STK.KnifeAlternative
-{
-    type = boolean,
-    default = false,
-    page = STK,
-    translation = STK_KnifeAlternative,
-    tooltip = STK_KnifeAlternativeTooltip,
-}
-
-/* CRAFTING TIME (Tempo de Craft) */
-
-option STK.AddUpgradeTime
-{
-    type = integer,
-    default = 100,
-    min = 10,
-    max = 500,
-    page = STK,
-    translation = STK_AddUpgradeTime,
-    tooltip = STK_CraftTimeTooltip,
-}
-
-option STK.RemoveUpgradeTime
-{
-    type = integer,
-    default = 80,
-    min = 10,
-    max = 500,
-    page = STK,
-    translation = STK_RemoveUpgradeTime,
-    tooltip = STK_CraftTimeTooltip,
 }
 
 /* TAILORING XP SYSTEM */
+
+option STKUI.TailoringXPGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_TailoringXPGroupTitle,
+}
 
 option STK.TailoringXPEnabled
 {
@@ -216,7 +204,6 @@ option STK.TailoringXPEnabled
     default = true,
     page = STK,
     translation = STK_TailoringXPEnabled,
-    tooltip = STK_TailoringXPEnabledTooltip,
 }
 
 option STK.AddUpgradeXP
@@ -227,7 +214,6 @@ option STK.AddUpgradeXP
     max = 10.0,
     page = STK,
     translation = STK_AddUpgradeXP,
-    tooltip = STK_AddUpgradeXPTooltip,
 }
 
 option STK.XPReductionPerLevel
@@ -238,7 +224,6 @@ option STK.XPReductionPerLevel
     max = 100,
     page = STK,
     translation = STK_XPReductionPerLevel,
-    tooltip = STK_XPReductionPerLevelTooltip,
 }
 
 option STK.MinimumXP
@@ -249,10 +234,51 @@ option STK.MinimumXP
     max = 200,
     page = STK,
     translation = STK_MinimumXP,
-    tooltip = STK_MinimumXPTooltip,
+}
+
+/* CRAFTING TIME (Tempo de Craft) */
+
+option STKUI.CraftingGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_CraftingGroupTitle,
+}
+
+option STK.AddUpgradeTime
+{
+    type = integer,
+    default = 100,
+    min = 10,
+    max = 500,
+    page = STK,
+    translation = STK_AddUpgradeTime,
+}
+
+option STK.RemoveUpgradeTime
+{
+    type = integer,
+    default = 80,
+    min = 10,
+    max = 500,
+    page = STK,
+    translation = STK_RemoveUpgradeTime,
+}
+
+option STK.KnifeAlternative
+{
+    type = boolean,
+    default = false,
+    page = STK,
+    translation = STK_KnifeAlternative,
 }
 
 /* REMOVAL FAILURE SYSTEM */
+
+option STKUI.RemovalGroupTitle
+{
+    type = boolean, default = false,
+    page = STK, translation = STK_RemovalGroupTitle,
+}
 
 option STK.RemovalFailureEnabled
 {
@@ -260,7 +286,6 @@ option STK.RemovalFailureEnabled
     default = true,
     page = STK,
     translation = STK_RemovalFailureEnabled,
-    tooltip = STK_RemovalFailureEnabledTooltip,
 }
 
 option STK.BaseFailureChance
@@ -271,7 +296,6 @@ option STK.BaseFailureChance
     max = 100,
     page = STK,
     translation = STK_BaseFailureChance,
-    tooltip = STK_BaseFailureChanceTooltip,
 }
 
 option STK.FailureReductionPerLevel
@@ -282,5 +306,4 @@ option STK.FailureReductionPerLevel
     max = 10,
     page = STK,
     translation = STK_FailureReductionPerLevel,
-    tooltip = STK_FailureReductionPerLevelTooltip,
 }

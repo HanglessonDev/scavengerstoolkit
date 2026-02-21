@@ -2,84 +2,100 @@
 Sandbox_EN = {
     Sandbox_STK = "Scavenger's Toolkit",
     
+    /* Group Title Separators */
+    Sandbox_STK_ContainerLimitsGroupTitle = "Container Limits",
+    Sandbox_STK_StrapsBonusGroupTitle     = "Bonus - Straps",
+    Sandbox_STK_FabricBonusGroupTitle     = "Bonus - Fabric",
+    Sandbox_STK_TailoringGroupTitle       = "Tailoring",
+    Sandbox_STK_TailoringXPGroupTitle     = "Tailoring XP",
+    Sandbox_STK_CraftingGroupTitle        = "Crafting",
+    Sandbox_STK_RemovalGroupTitle         = "Removal Failure",
+    
     /* Container Limits */
-    Sandbox_STK_FannyPackLimit = "Upgrade Limit - Fanny Pack",
-    Sandbox_STK_FannyPackLimit_tooltip = "Maximum number of upgrades a fanny pack can have.",
+    /* The section title already says "Container Limits", so labels show only the bag type */
+    Sandbox_STK_FannyPackLimit         = "Fanny Pack",
+    Sandbox_STK_FannyPackLimit_tooltip = "Upgrade limit for fanny packs.",
     
-    Sandbox_STK_SatchelLimit = "Upgrade Limit - Satchel",
-    Sandbox_STK_SatchelLimit_tooltip = "Maximum number of upgrades a satchel can have.",
+    Sandbox_STK_SatchelLimit         = "Satchel",
+    Sandbox_STK_SatchelLimit_tooltip = "Upgrade limit for satchels.",
     
-    Sandbox_STK_SchoolbagLimit = "Upgrade Limit - Schoolbag",
-    Sandbox_STK_SchoolbagLimit_tooltip = "Maximum number of upgrades a schoolbag can have.",
+    Sandbox_STK_SchoolbagLimit         = "Schoolbag",
+    Sandbox_STK_SchoolbagLimit_tooltip = "Upgrade limit for schoolbags.",
     
-    Sandbox_STK_HikingBagLimit = "Upgrade Limit - Hiking Bag",
-    Sandbox_STK_HikingBagLimit_tooltip = "Maximum number of upgrades a hiking bag can have.",
+    Sandbox_STK_HikingBagLimit         = "Hiking Bag",
+    Sandbox_STK_HikingBagLimit_tooltip = "Upgrade limit for hiking bags.",
     
-    Sandbox_STK_DuffelBagLimit = "Upgrade Limit - Duffel Bag",
-    Sandbox_STK_DuffelBagLimit_tooltip = "Maximum number of upgrades a duffel bag can have. Applies to all duffel variants.",
+    Sandbox_STK_DuffelBagLimit         = "Duffel Bag",
+    Sandbox_STK_DuffelBagLimit_tooltip = "Applies to all duffel variants.",
     
-    Sandbox_STK_MilitaryBagLimit = "Upgrade Limit - Military Bag",
-    Sandbox_STK_MilitaryBagLimit_tooltip = "Maximum number of upgrades a military bag can have (ALICE pack, Survivor bag). Found in high-risk zones.",
+    Sandbox_STK_MilitaryBagLimit         = "Military Bag",
+    Sandbox_STK_MilitaryBagLimit_tooltip = "ALICE pack and Survivor bag. Found in high-risk zones.",
     
-    Sandbox_STK_CraftedBagLimit = "Upgrade Limit - Crafted Bag",
-    Sandbox_STK_CraftedBagLimit_tooltip = "Maximum number of upgrades a crafted bag can have (Framepacks, Crude/Tarp bags). Early to mid-game crafted bags.",
+    Sandbox_STK_CraftedBagLimit         = "Crafted Bag",
+    Sandbox_STK_CraftedBagLimit_tooltip = "Framepacks, Crude and Tarp bags. Early to mid-game.",
     
-    Sandbox_STK_CraftedBagLargeLimit = "Upgrade Limit - Large Crafted Bag",
-    Sandbox_STK_CraftedBagLargeLimit_tooltip = "Maximum number of upgrades a large crafted bag can have (Large Framepack 2 and 3). Requires tanned leather and advanced crafting skills.",
+    Sandbox_STK_CraftedBagLargeLimit         = "Large Crafted Bag",
+    Sandbox_STK_CraftedBagLargeLimit_tooltip = "Large Framepack 2 and 3. Requires tanned leather and advanced crafting.",
     
     /* Straps */
-    Sandbox_STK_StrapsBasicBonus = "Bonus - Basic Straps (%)",
-    Sandbox_STK_StrapsReinforcedBonus = "Bonus - Reinforced Straps (%)",
-    Sandbox_STK_StrapsTacticalBonus = "Bonus - Tactical Straps (%)",
+    /* The section title already says "Bonus - Straps", so labels show only the tier */
+    Sandbox_STK_StrapsBasicBonus = "Basic (%)",
+    Sandbox_STK_StrapsBasicBonus_tooltip = "Weight reduction.",
+    Sandbox_STK_StrapsReinforcedBonus = "Reinforced (%)",
+    Sandbox_STK_StrapsReinforcedBonus_tooltip = "Weight reduction.",
+    Sandbox_STK_StrapsTacticalBonus = "Tactical (%)",
+    Sandbox_STK_StrapsTacticalBonus_tooltip = "Weight reduction.",
     
     /* Fabric */
-    Sandbox_STK_FabricBasicBonus = "Bonus - Basic Fabric",
-    Sandbox_STK_FabricReinforcedBonus = "Bonus - Reinforced Fabric",
-    Sandbox_STK_FabricTacticalBonus = "Bonus - Tactical Fabric",
+    /* The section title already says "Bonus - Fabric", so labels show only the tier */
+    Sandbox_STK_FabricBasicBonus = "Basic",
+    Sandbox_STK_FabricBasicBonus_tooltip = "Capacity (slots added).",
+    Sandbox_STK_FabricReinforcedBonus = "Reinforced",
+    Sandbox_STK_FabricReinforcedBonus_tooltip = "Capacity (slots added).",
+    Sandbox_STK_FabricTacticalBonus = "Tactical",
+    Sandbox_STK_FabricTacticalBonus_tooltip = "Capacity (slots added).",
     
-    /* Belt Buckle */
-    Sandbox_STK_BeltBuckleBonus = "Bonus - Belt Buckle (%)",
-    
-    /* Tooltips */
-    Sandbox_STK_WeightReductionTooltip = "Weight reduction bonus.",
-    Sandbox_STK_CapacityTooltip = "Capacity bonus (number of slots added).",
+    /* Shared Tooltips */
+    Sandbox_STK_WeightReductionTooltip = "Weight reduction.",
+    Sandbox_STK_CapacityTooltip        = "Capacity (slots added).",
     
     /* Tailoring */
-    Sandbox_STK_TailoringEnabled = "Enable Tailoring Bonus",
-    Sandbox_STK_TailoringEnabled_tooltip = "If enabled, Tailoring skill level affects upgrade limit.",
+    Sandbox_STK_TailoringEnabled         = "Tailoring Bonus",
+    Sandbox_STK_TailoringEnabled_tooltip = "Tailoring skill level affects the upgrade limit.",
     
-    Sandbox_STK_TailoringModifier = "Tailoring Levels per Extra Slot",
-    Sandbox_STK_TailoringModifierTooltip = "Every X levels of Tailoring grants +1 upgrade slot.<br>(0 to disable)",
+    Sandbox_STK_TailoringModifier        = "Levels per Extra Slot",
+    Sandbox_STK_TailoringModifierTooltip = "Every X Tailoring levels grants +1 upgrade slot.<br>(0 to disable)",
     
     /* Knife Alternative */
-    Sandbox_STK_KnifeAlternative = "Knives Can Remove Upgrades",
-    Sandbox_STK_KnifeAlternativeTooltip = "If enabled, knives can be used instead of scissors to remove upgrades.",
+    Sandbox_STK_KnifeAlternative        = "Knives Remove Upgrades",
+    Sandbox_STK_KnifeAlternative_tooltip = "Knives can be used instead of scissors to remove upgrades.",
     
     /* Craft Time */
-    Sandbox_STK_AddUpgradeTime = "Time to Add Upgrade",
-    Sandbox_STK_RemoveUpgradeTime = "Time to Remove Upgrade",
-    Sandbox_STK_CraftTimeTooltip = "Time in ticks (100 ticks = ~3 seconds).",
+    Sandbox_STK_AddUpgradeTime    = "Time to Add",
+    Sandbox_STK_AddUpgradeTime_tooltip = "In ticks (100 ticks = ~3 seconds).",
+    Sandbox_STK_RemoveUpgradeTime = "Time to Remove",
+    Sandbox_STK_RemoveUpgradeTime_tooltip = "In ticks (100 ticks = ~3 seconds).",
     
     /* Tailoring XP System */
-    Sandbox_STK_TailoringXPEnabled = "Enable Tailoring XP",
-    Sandbox_STK_TailoringXPEnabledTooltip = "If enabled, adding upgrades grants Tailoring XP.<br>XP decreases as skill increases to prevent exploits.",
+    Sandbox_STK_TailoringXPEnabled        = "Tailoring XP",
+    Sandbox_STK_TailoringXPEnabled_tooltip = "Adding upgrades grants Tailoring XP.<br>Amount decreases as skill level increases.",
     
-    Sandbox_STK_AddUpgradeXP = "Base XP for Adding Upgrade",
-    Sandbox_STK_AddUpgradeXPTooltip = "Base Tailoring XP granted when adding an upgrade.<br>Actual XP decreases with skill level.",
+    Sandbox_STK_AddUpgradeXP        = "Base XP",
+    Sandbox_STK_AddUpgradeXP_tooltip = "XP granted when adding an upgrade at Tailoring level 0.",
     
-    Sandbox_STK_XPReductionPerLevel = "XP Reduction per Level (%)",
-    Sandbox_STK_XPReductionPerLevelTooltip = "How much XP decreases per Tailoring level.<br>Example: 20 = 0.20 XP reduction per level.<br>(Stored as percentage: 20% = 0.20)",
+    Sandbox_STK_XPReductionPerLevel        = "Reduction per Level (%)",
+    Sandbox_STK_XPReductionPerLevel_tooltip = "XP reduction per Tailoring level.<br>Example: 20 = -0.20 XP per level.",
     
-    Sandbox_STK_MinimumXP = "Minimum XP Reward (%)",
-    Sandbox_STK_MinimumXPTooltip = "Minimum XP that can be granted, even at high skill levels.<br>Example: 20 = 0.20 XP minimum.<br>(Stored as percentage: 20% = 0.20)",
+    Sandbox_STK_MinimumXP        = "Minimum XP (%)",
+    Sandbox_STK_MinimumXP_tooltip = "Minimum XP granted regardless of skill level.<br>Example: 20 = 0.20 XP minimum.",
     
     /* Removal Failure System */
-    Sandbox_STK_RemovalFailureEnabled = "Enable Removal Failure Chance",
-    Sandbox_STK_RemovalFailureEnabledTooltip = "If enabled, removing upgrades has a chance to fail and destroy the material.<br>Chance decreases with Tailoring skill.",
+    Sandbox_STK_RemovalFailureEnabled        = "Enable Failure Chance",
+    Sandbox_STK_RemovalFailureEnabled_tooltip = "Removing upgrades has a chance to destroy the material.<br>Chance decreases with Tailoring skill.",
     
-    Sandbox_STK_BaseFailureChance = "Base Failure Chance (%)",
-    Sandbox_STK_BaseFailureChanceTooltip = "Chance to destroy material when removing at skill level 0.<br>Example: 50 = 50% chance to fail.",
+    Sandbox_STK_BaseFailureChance        = "Base Chance (%)",
+    Sandbox_STK_BaseFailureChance_tooltip = "Chance to destroy material at skill level 0.<br>Example: 50 = 50%.",
     
-    Sandbox_STK_FailureReductionPerLevel = "Failure Reduction per Level (%)",
-    Sandbox_STK_FailureReductionPerLevelTooltip = "How much failure chance decreases per Tailoring level.<br>Example: 5 = -5% per level.",
+    Sandbox_STK_FailureReductionPerLevel        = "Reduction per Level (%)",
+    Sandbox_STK_FailureReductionPerLevel_tooltip = "Failure chance reduction per Tailoring level.<br>Example: 5 = -5% per level.",
 }
