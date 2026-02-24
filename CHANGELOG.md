@@ -7,6 +7,15 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.16.1] - 2026-02-24
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/client/STK_BagSync.lua`: novo módulo de sincronização de stats STK em bags equipadas
+  - Implementa listener `OnClothingUpdated` para detectar mudanças em clothing items
+  - Reaplica automaticamente capacity e weightReduction quando divergem do ModData
+  - Atua como rede de segurança para bags que perdem stats após troca de slot (ex: fannypack frente/trás)
+  - Varre todos worn items do personagem e synca apenas bags STK válidas com upgrades
+
 ## [0.16.0] - 2026-02-21
 
 ### Adicionado
@@ -347,7 +356,7 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
   - Atualiza lógica de validação de ferramentas para remover upgrades
   - Remove código morto (tabela upgradeItemValues comentada)
   - Otimiza função getUpgradeItems() com cache de container.getItems()
-  - Otimiza função isBagValid() usando lookup table O(1) ao invés de loop O(n)
+  - Otimiza função isBagValid() usando lookup table O(1) ao invés de pattern matching
   - Corrige acentuação em mensagens de log
   - Atualiza documentação com mudanças realizadas
 * `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
