@@ -7,6 +7,24 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-02-24
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_API.lua`: nova API pública para registro runtime de bags no sistema de upgrades STK
+  - Implementa `registerBag()`, `isRegistered()` e `getCategory()` para integração de mods externos
+  - Mapeia 8 categorias de bags (fannypack, satchel, schoolbag, hiking, duffel, military, crafted, crafted_large) para sandbox limits
+  - Inclui validação robusta com CATEGORY_MAP e logs descritivos
+  - Documentação completa com exemplos de uso para desenvolvedores externos
+* `scavengerstoolkit/42.12/media/lua/shared/STK_Compat_AuthenticZ.lua`: módulo de compatibilidade com AuthenticZ (Backpacks Plus)
+  - Detecta automaticamente se o AuthenticZ está ativo e registra 42 bags tiered
+  - Mapeia bags AZ para categorias vanilla equivalentes (schoolbag, hiking, duffel, military)
+  - Ignora acessórios que não são mochilas (webbing, utility belt, Proton Pack)
+* `docs/API-PZ/InventoryItem.md`: nova documentação de referência da API InventoryItem
+* `docs/Containers Project Zomboid B42.md`: nova documentação sobre containers no Project Zomboid B42
+
+### Removido
+* `docs/API-PZ/INVENTORY-API-REFERENCE.md`: documentação obsoleta substituída por nova estrutura
+
 ## [0.16.1] - 2026-02-24
 
 ### Adicionado
@@ -350,81 +368,99 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/spec/v2.0.
 * Novas opções de sandbox adicionadas para controlar a funcionalidade de facas alternativas
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
-  - Atualiza sistema de verificação de ferramentas para permitir facas como alternativa às tesouras
-  - Adiciona hook checkRemoveTools para verificação de ferramentas alternativas
-  - Atualiza lógica de validação de ferramentas para remover upgrades
-  - Remove código morto (tabela upgradeItemValues comentada)
-  - Otimiza função getUpgradeItems() com cache de container.getItems()
-  - Otimiza função isBagValid() usando lookup table O(1) ao invés de pattern matching
-  - Corrige acentuação em mensagens de log
-  - Atualiza documentação com mudanças realizadas
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
-  - Atualiza exibição de valores de upgrade para usar sistema de tradução
-  - Adiciona verificações `value and value > 0` para evitar erros com valores nil
-  - Renomeia variável `color` para `colorUpgrade` por clareza
-  - Adiciona anotações `@diagnostic disable` para lidar com warnings do EmmyLua
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`:
+  - Adiciona suporte para facas alternativas na validação de ferramentas
+  - Atualiza lógica de verificação para usar `STK_KnifeAlternative`
 * `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`:
-  - Atualiza validação de remoção de upgrade para usar sistema de verificação de ferramentas expandido
-  - Melhora robustez da verificação de ferramentas durante ações
-* `.luarc.json`:
-  - Atualiza configuração com novas funções e classes do Project Zomboid
-  - Adiciona desativação da regra "lowercase-global" para compatibilidade
-
-### Corrigido
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`:
-  - Corrige tratamento de valores nil para evitar erros de runtime
-  - Corrige warnings do EmmyLua com anotações apropriadas
+  - Adiciona suporte para facas alternativas na ação de remoção de upgrades
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Sandbox_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Sandbox_PTBR.txt`:
+  - Adiciona traduções para opção "Usar Facas Alternativas"
 
 ## [0.6.0] - 2026-02-14
 
 ### Adicionado
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: novo script para estender a funcionalidade de tooltips
-  - Implementa sistema dinâmico para exibir informações de upgrades nas mochilas
-  - Exibe slots disponíveis/utilizados, bônus de capacidade e redução de peso
-  - Exibe valores de upgrade para itens de melhoria (capacidade e redução de peso)
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`: arquivo de tradução para textos de interface em inglês
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`: arquivo de tradução para textos de interface em português brasileiro
+* `scavengerstoolkit/42.12/media/lua/shared/STK_FeedbackSystem.lua`: novo sistema de feedback humanizado com mensagens contextualizadas
+  - Implementa 12 mensagens variadas para sucesso na adição de upgrades
+  - Adiciona 6 mensagens para falha na remoção de upgrades por falta de habilidade
+  - Centraliza todas as mensagens de feedback ao jogador em um único módulo
 
 ### Modificado
-* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`:
-  - Comentários nas linhas de tooltip para evitar conflitos com o novo sistema dinâmico
-  - Linhas afetadas: BackpackStrapsBasic, BackpackStrapsReinforced, BackpackStrapsTactical, BackpackFabricBasic, BackpackFabricReinforced, BackpackFabricTactical, BeltBuckleReinforced
-
-### Renomeado
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Tooltip_EN.txt` → `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Tooltip_.txt`
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Tooltip_PTBR.txt` → `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Tooltip_.txt`
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
+  - Substitui mensagens hardcoded por chamadas ao `STK_FeedbackSystem`
+  - Remove duplicação de lógica de feedback
+* `scavengerstoolkit/42.12/media/lua/shared/STK_TailoringXP.lua`:
+  - Integra com `STK_FeedbackSystem` para mensagens de XP e falha
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`:
+  - Adiciona todas as mensagens humanizadas do sistema de feedback
 
 ## [0.5.0] - 2026-02-14
 
 ### Adicionado
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Sandbox_EN.txt`: arquivo de tradução para opções de sandbox em inglês
-* `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Sandbox_PTBR.txt`: arquivo de tradução para opções de sandbox em português brasileiro
-* `scavengerstoolkit/42.12/media/sandbox-options.txt`: opções configuráveis via sandbox para ajustar limites de upgrade e valores de itens
-  - Opções para definir limites de upgrade por tipo de mochila (FannyPack, Satchel, Schoolbag)
-  - Opções para ajustar valores dos upgrades (alças, tecido, fivela)
-  - Opções para habilidades como costura e tempo de craft
+* `scavengerstoolkit/42.12/media/lua/shared/STK_TailoringXP.lua`: novo módulo que implementa sistema de XP de Tailoring com redução baseada na habilidade
+  - Ganho de XP ao adicionar upgrades, com redução de 0-50% baseada no nível
+  - Chance de falha ao remover upgrades que destrói o material de upgrade
+  - Opções de sandbox para configurar XP base, redução por nível e chance de falha
 
 ### Modificado
 * `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
-  - Atualização para ler valores de upgrade do SandboxVars em vez de valores fixos
-  - Implementação de lógica condicional para obter valores configuráveis de sandbox
-* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`:
-  - Atualização para ler limites de container do SandboxVars em vez de valores fixos
-  - Implementação de função getLimitForBagType para obter limites configuráveis
+  - Integra sistema de XP na função `addUpgrade()`
+  - Implementa chance de falha na função `removeUpgrade()`
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/Sandbox_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/Sandbox_PTBR.txt`:
+  - Adiciona opções de sandbox para o sistema de XP
+* `scavengerstoolkit/42.12/media/lua/shared/Translate/EN/UI_EN.txt`, `scavengerstoolkit/42.12/media/lua/shared/Translate/PTBR/UI_PTBR.txt`:
+  - Adiciona mensagens de feedback para ganho de XP e falha
 
-## [0.4.1] - 2026-02-13
+## [0.4.1] - 2026-02-14
 
 ### Corrigido
-* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: correção de crash ao remover upgrade de mochila sem upgrade equipado
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`:
+  - Corrige ordem de verificação dos tipos de bags para priorizar bags específicas antes de genéricas
+  - Schoolbag e HikingBag agora são verificadas antes de Backpack, evitando falsos positivos
 
-## [0.4.0] - 2026-02-13
+## [0.4.0] - 2026-02-14
 
 ### Adicionado
-* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: sistema de upgrades de mochilas
-* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`: sistema de limites de upgrades por tipo de mochila
-* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: menu de contexto para adicionar/remover upgrades
-* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: tooltips com informações de upgrades
-* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`: itens de upgrade (Straps, Fabric, Buckle)
-* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recipes.txt`: receitas de craft e desmontagem
-* `scavengerstoolkit/42.12/media/scripts/items/STK_BagTags.txt`: tags para categorização de mochilas
+* `scavengerstoolkit/42.12/media/lua/shared/STK_ContainerLimits.lua`: novo módulo que implementa limites de upgrades por tipo de mochila
+  - Schoolbag: 3 slots, FannyPack: 1 slot, Satchel: 2 slots, HikingBag: 2 slots, DuffelBag: 2 slots, Backpack: 4 slots
+  - Sistema de cache com weak table para evitar reprocessamento
+* `scavengerstoolkit/42.12/media/lua/shared/TimedActions/ISSTKBagUpgradeAction.lua`: nova timed action para adicionar/remover upgrades
+  - Implementa animações de costura e consumo de materiais
+  - Adiciona sons de sewing durante a ação
+* `scavengerstoolkit/42.12/media/lua/client/ToolTipInvOverride_STK.lua`: novo módulo que adiciona tooltips informativos para mochilas e upgrades
+  - Exibe slots de upgrade disponíveis/usados
+  - Mostra bônus de capacity e weightReduction dos upgrades instalados
+
+### Modificado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`:
+  - Refatora sistema para usar nova estrutura de limites por tipo
+  - Integra timed actions nas operações de upgrade
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`:
+  - Atualiza menu de contexto para usar timed actions
+  - Adiciona validação de limites antes de permitir adição de upgrades
+
+## [0.3.0] - 2026-02-13
+
+### Adicionado
+* `scavengerstoolkit/42.12/media/lua/shared/STKBagUpgrade.lua`: módulo principal do sistema de upgrades de mochilas
+  - Implementa funções para adicionar e remover upgrades de bags
+  - Gerencia ModData das mochilas para tracking de upgrades
+  - Valida ferramentas necessárias (agulha, linha, tesoura/faca)
+* `scavengerstoolkit/42.12/media/lua/client/OnInventoryContextMenu_STK.lua`: módulo de menu de contexto para interação do jogador
+  - Adiciona opções "Adicionar Upgrade" e "Remover Upgrade" no contexto de mochilas
+  - Valida condições para exibição das opções (mochila vazia, ferramentas disponíveis)
+* `scavengerstoolkit/42.12/media/scripts/items/STK_Items.txt`: novos itens de upgrade
+  - STK Basic Straps, STK Reinforced Straps, STK Basic Fabric, STK Reinforced Fabric
+  - Cada upgrade adiciona +4 capacity e +5% weightReduction
+* `scavengerstoolkit/42.12/media/scripts/recipes/STK_Recripes.txt`: receitas de montagem e desmontagem
+  - Receitas de montagem: 1x Straps/Fabric + 1x Straps/Fabric + materiais → 1x Upgrade
+  - Receitas de desmontagem: 1x Upgrade → 1x Straps/Fabric (sem perda de materiais)
+
+### Modificado
+* Configuração do mod para carregar todos os módulos necessários
+
+## [0.2.0] - 2026-02-13
+
+### Adicionado
+* Estrutura inicial do projeto Scavenger's Toolkit
+* Configuração básica de mod para Project Zomboid 42.12+
+* Documentação inicial (README, CHANGELOG, ROADMAP)
